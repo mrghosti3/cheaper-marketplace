@@ -1,13 +1,34 @@
 require('dotenv').config();
 
-const dbHost = process.env.DB_HOST;
-const dbPort = process.env.DB_PORT;
-const dbUser = process.env.DB_USR;
-const dbPass = process.env.DB_PSW;
+const { DB_HOST, DB_PORT, DB_NAME, DB_USR, DB_PSW } = process.env;
+console.log({ DB_HOST, DB_PORT, DB_NAME, DB_USR, DB_PSW });
 
-console.log({
-    host: dbHost,
-    port: dbPort,
-    user: dbUser,
-    password: dbPass
+const mariadb = require('mariadb');
+
+const pool = mariadb.createPool({
+    host: DB_HOST,
+    port: DB_PORT,
+    database: DB_NAME,
+    user: DB_USR,
+    password: DB_PSW,
+    connectionLimit: 5
 });
+
+async function asyncRead() {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query("select * from hello_world");
+        rows.forEach(row => {
+            console.log(row);
+        });
+        await conn.end();
+        process.exit(0);
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) return conn.end();
+    }
+}
+
+asyncRead().catch(console.error);
