@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    background: #E5E5E5 !important;
+}
+
+.searchbar {
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 30px;
+	background-color: white;
+	border-radius: 30px;
+	padding: 0 10px;
+	border: 1px solid black;
+	box-sizing: border-box;
+    width: 40vw;
+}
+.search_input {
+	color: black;
+	border: 0;
+	outline: 0;
+	background: none;
+	width: 0;
+	caret-color: transparent;
+	line-height: 10px;
+	padding: 0 6px;
+    width: 96%;
+	caret-color: #505050;
+	margin-bottom: 5px;
+	margin-top: 6px;
+	font-size: 80%;
+}
+.search_icon {
+    display: flex;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	height: 16px;
+	width: 4%;
+	float: right;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	color: #505050;
+	text-decoration: none;
+}
+nav {
+    background: white;
+    .navbar-brand{
+        color: black;
+        margin-left: 30px;
+        font-weight: bold;
+    }
+    .navbar-toggler-icon{
+        color: black;
+    }
+}
+
+.col-md{
+    flex: 0 !important;
+}
+
+.container-fluid{
+    max-width: 80vw !important;
+}
+
+.card{
+    margin: 1rem, 2rem !important;
+    padding-bottom: 1rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    height: auto;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    .store-img img{
+        position: relative;
+        width: auto;
+        height: 50px;
+        padding-top: 10px;
+    }
+    .prod-img{
+        text-align: center;
+    }
+    .prod-img img{
+        position: relative;
+        margin-top: 1rem;
+        width: auto;
+        height: 160px;
+        align-self: center;
+    }
+    .prod-name{
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+    .prod-price{
+        text-align: center;
+        margin-top: 2rem;
+        vertical-align: middle;
+        span{
+            vertical-align: middle;
+        }
+        .prod-current-price{
+            font-size: 1.5rem;
+            font-weight: 450;
+            color: black;
+        }
+        .prod-old-price{
+            color: #707070;
+            font-size: 1rem;
+            font-weight: 400;
+            padding-right: 10px;
+            text-decoration: line-through;
+        }
+    }
+    .price-date{
+        text-align: center;
+        font-size: 0.75rem;
+        color: #707070;
+    }
+}
+
+#popup{
+    #popup-dialog{
+        // max-width: 70vw !important;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
+        
+        #popup-content{
+            border: none !important;
+            border-style: none !important;
+            #popup-body{
+                .best-price{
+                    box-shadow: 0px 0px 2px 3px #FFD700;
+                }
+                .popup-prod-best-price{
+                    margin-top: 1rem;
+                    text-align: center;
+                    color: #FF1B1B;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .popup-store-img{
+                    margin-top: 1rem;
+                    text-align: center;
+                }
+                .popup-store-img img{
+                    position: relative;
+                    width: auto;
+                    height: 5rem;
+                    align-self: center;
+                }
+                .popup-prod-name{
+                    margin-top: 1rem;
+                    text-align: center;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+                .popup-prod-price{
+                    margin-top: 2rem;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    font-weight: 450;
+                    color: black;
+                }
+                .popup-store-btn{
+                    margin-top: 1rem;
+                    align-self: center;
+                    button{
+                        width: 140px;
+                        height: 30px;
+                        background: #40E647;
+                        border-radius: 20px;
+                        border-style: none;
+                        text-align: center;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                    }
+            }
+                // .chart-container {
+                //     width: 60vw;
+                //     height: auto;
+                //     margin: auto;
+                //   }
+            }
+        }
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #popup-dialog{
+        max-width: 100% !important;
+    }
+    .searchbar{
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 60%;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    #popup-dialog{
+        max-width: 70% !important;
+    }
+}

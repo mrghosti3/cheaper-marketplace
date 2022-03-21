@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Cheaper</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="../contrast-bootstrap-pro/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../contrast-bootstrap-pro/css/cdb.css" />
+  <script src="../contrast-bootstrap-pro/js/cdb.js"></script>
+  <script src="../contrast-bootstrap-pro/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">CHEAPER</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="container">
+          <div class="d-flex justify-content-center">
+            <div class="searchbar">
+              <input class="search_input" type="text" name="" placeholder="Enter product name...">
+              <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+
+    <!-- Product price comparison popup -->
+    <div id="popup" class="modal justify-content-center" id="myModal">
+      <div id="popup-dialog" class="modal-dialog d-block">
+        <div id="popup-content" class="modal-content">
+
+          <!-- Header -->
+          <div id="popup-header" class="modal-header">
+            <h4 class="modal-title ps-5">Product name</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <!-- Body -->
+          <div id="popup-body" class="modal-body">
+            <!-- <div class="row justify-content-center">
+              <div class="col-md-12 d-flex justify-content-center mt-5 mb-5">
+                <h3>Price change history</h3>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart"></canvas>
+            </div> -->
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-start mt-5 mb-2 ms-5">
+                <h5>This product is available in:</h5>
+              </div>
+            </div>
+            <div class="row justify-content-center mb-5 mt-5 ms-5 me-5">
+              <div class="col-md d-block mb-4">
+                <div class="card best-price pb-3">
+                  <!-- <div class="popup-prod-best-price"><span>BEST PRICE!</span></div> -->
+                  <div class="popup-store-img"><img src="./img/Lidl_logo.png" alt=""></div>
+                  <div class="popup-prod-name"><span>Exapmle name for a product</span></div>
+                  <div class="popup-prod-price"><span>3.99 €</span></div>
+                  <div class="popup-store-btn"><button href="#">GO TO STORE</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product price comparison popup -->
+
+    <div class="row justify-content-center">
+      <div class="col-md-12 d-flex justify-content-center mt-5 mb-5">
+        <h3>Recently updated prices</h3>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md d-block mb-4">
+        <div class="card pb-3">
+          <div class="store-img"><img src="./img/Lidl_logo.png" alt=""></div>
+          <div class="prod-img"><img src="./img/product.jpg" alt="" data-bs-toggle="modal" data-bs-target="#popup">
+          </div>
+          <div class="prod-name"><span>Exapmle name for a product</span></div>
+          <div class="prod-price">
+            <span class="prod-old-price">4.99€</span>
+            <span class="prod-current-price">3.99€</span>
+          </div>
+          <div class="price-date"><span>Price updated: 2022-02-24</span></div>
+        </div>
+      </div>
+    </div>
+</body>
+<!-- Price chart -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
+</script>
+<script>
+  const ctx = document.getElementById("chart").getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["2022-03-16", "2022-03-17", "2022-03-19", "2022-03-23"],
+      datasets: [{
+        label: 'Price change',
+        backgroundColor: 'rgba(161, 198, 247, 1)',
+        borderColor: 'rgb(47, 128, 237)',
+        data: [3.99, 3.31, 1.79, 2.78],
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    },
+  });
+</script> -->
+
+</html>
