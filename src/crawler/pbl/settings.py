@@ -7,10 +7,11 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'pbl'
+BOT_NAME = 'Shop Spider'
 
 SPIDER_MODULES = ['pbl.spiders']
 NEWSPIDER_MODULE = 'pbl.spiders'
+
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -87,4 +88,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-FEED_EXPORT_ENCODING = 'utf-8'
+
