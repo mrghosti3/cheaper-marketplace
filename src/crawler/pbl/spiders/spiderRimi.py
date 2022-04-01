@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup
 import re
 from pbl.items import PblSpider
 
+base_url = 'https://www.rimi.lt'
 
 class PblItem(scrapy.Spider):
     name = 'spiderRimi'
     allowed_domains = ['rimi.lt']
     start_urls = ['https://www.rimi.lt/e-parduotuve/']
+
     
 
     def __init__(self):
@@ -15,12 +17,13 @@ class PblItem(scrapy.Spider):
 
         #All the XPaths the spider needs to know go here
     def declare_xpath(self):
-        self.getAllCategoriesXpath = '/html/body/main/nav[1]/div/ul/li[1]/a/@href'
+        self.getAllCategoriesXpath = '/html/body/main/nav[1]/div/ul/li[1]/a[1]/@href'
         #self.getAllSubCategoriesXpath = ""
-        self.getAllItemsXpath = '//*[@id="main"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li/div/a/@href'
-        self.TitleXpath  = '//*[@id="main"]/section/div[1]/div/div[2]/section/div/div/div[2]/h3//text()'
-        self.PriceXpath = '//*[@id="main"]/section/div[1]/div/div[2]/section/div/div/div[2]/div[1]/div[1]/span'
-        self.SubPriceXpath = '//*[@id="main"]/section/div[1]/div/div[2]/section/div/div/div[2]/div[1]/div[1]/div/sup'
+        self.getAllItemsXpath = '/html/body/main/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li/div/a/@href'
+        self.TitleXpath  = '/html/body/main/section/div[1]/div/div[2]/section/div/div/div[2]/h3/text()'
+        self.ImageXpath = '/html/body/main/section/div[1]/div/div[2]/section/div/div/div[1]/img/@src'      
+        self.PriceXpath = '//*[@id="main"]/section/div[1]/div/div[2]/section/div/div/div[2]/div[1]/div[1]/span/text()'
+        self.SubPriceXpath = '//*[@id="main"]/section/div[1]/div/div[2]/section/div/div/div[2]/div[1]/div[1]/div/sup/text()'
 
     def parse(self, response):
         for href in response.xpath(self.getAllCategoriesXpath):
@@ -32,9 +35,10 @@ class PblItem(scrapy.Spider):
             url = response.urljoin(href.extract())
             yield scrapy.Request(url,callback=self.parse_main_item, dont_filter=True)
 
-            next_page = response.xpath('//*[@id="main"]/section/div[1]/div/div[2]/div[1]/div/div[2]/div[3]/ul/li/a/@href').extract_first()
-            if next_page is not None:
-                url = response.urljoin(next_page)
+        next_page = response.xpath('/html/body/main/section/div[1]/div/div[2]/div[1]/div/div[2]/div[3]/ul/li/a[@rel="next"]/@href').extract_first()
+        if next_page is not None:
+            url = response.urljoin(next_page)
+            yield scrapy.Request(url, callback=self.parse_category, dont_filter=True)
 
     #def parse_subcategory(self,response):
     #    for href in response.xpath(self.getAllItemsXpath):
@@ -47,10 +51,13 @@ class PblItem(scrapy.Spider):
  
         Title = response.xpath(self.TitleXpath).extract()
         Title = self.cleanText(self.parseText(self.listToStr(Title)))
- 
+
         #Category = response.xpath(self.CategoryXpath).extract()
         #Category = self.cleanText(self.parseText(Category))
- 
+        Link = response.url
+        
+        Image = response.xpath(self.ImageXpath).extract_first()
+
         Price = response.xpath(self.PriceXpath).extract()
         Price = self.cleanText(self.parseText(self.listToStr(Price)))
 
@@ -69,12 +76,13 @@ class PblItem(scrapy.Spider):
         #Specs = self.cleanText(self.parseText(Specs))
 
         #Put each element into its item attribute.
-        item['Title']           = Title
-        #item['Category']        = Category
-        item['Price']           = WholePrice
-        #item['Features']        = Features
-        #item['Description']     = Description
-        #item['Specs']           = Specs
+        item['Title']          = Title
+        #item['Category']      = Category
+        item['Price']          = WholePrice
+        #item['Features']      = Features
+        item['Image']          = Image
+        item['Link']           = Link
+
         return item
  
     #Methods to clean and format text to make it easier to work with later
@@ -93,3 +101,5 @@ class PblItem(scrapy.Spider):
         text = soup.get_text()
         text = re.sub("( +|\n|\r|\t|\0|\x0b|\xa0|\xbb|\xab)+",' ',text).strip()
         return text
+
+
