@@ -1,0 +1,10 @@
+{
+    "ignore": [
+        "test.js",
+        "test.json",
+        "node_modules/*",
+        ".env.local"
+    ],
+    "verbose": true,
+    "ext": "js,json"
+}
