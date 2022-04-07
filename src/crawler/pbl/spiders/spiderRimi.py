@@ -10,7 +10,6 @@ class PblItem(scrapy.Spider):
     allowed_domains = ['rimi.lt']
     start_urls = ['https://www.rimi.lt/e-parduotuve/']
 
-    
 
     def __init__(self):
         self.declare_xpath()
@@ -39,12 +38,6 @@ class PblItem(scrapy.Spider):
         if next_page is not None:
             url = response.urljoin(next_page)
             yield scrapy.Request(url, callback=self.parse_category, dont_filter=True)
-
-    #def parse_subcategory(self,response):
-    #    for href in response.xpath(self.getAllItemsXpath):
-    #       url = response.urljoin(href.extract())
-    #       yield scrapy.Request(url,callback=self.parse_main_item)
-
     
     def parse_main_item(self,response):
         item = PblSpider()
@@ -65,15 +58,6 @@ class PblItem(scrapy.Spider):
         sub_price = self.cleanText(self.parseText(self.listToStr(sub_price)))
 
         WholePrice = Price + "." + sub_price
-
-        #Features = response.xpath(self.FeaturesXpath).extract()
-        #Features = self.cleanText(self.parseText(self.listToStr(Features)))
- 
-        #Description = response.xpath(self.DescriptionXpath).extract()
-        #Description = self.cleanText(self.parseText(self.listToStr(Description)))
-
-        #Specs = response.xpath(self.SpecsXpath).extract()
-        #Specs = self.cleanText(self.parseText(Specs))
 
         #Put each element into its item attribute.
         item['Title']          = Title
