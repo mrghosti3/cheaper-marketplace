@@ -80,6 +80,7 @@ nav {
     .store-img img{
         position: relative;
         width: auto;
+        max-width: 100px;
         height: 50px;
         padding-top: 10px;
     }
@@ -152,6 +153,7 @@ nav {
                 .popup-store-img img{
                     position: relative;
                     width: auto;
+                    max-width: 12rem;
                     height: 5rem;
                     align-self: center;
                 }

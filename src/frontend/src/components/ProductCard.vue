@@ -11,15 +11,17 @@
         data-bs-target="#popup"
       />
     </div>
-    <div class="prod-name"><span>Exapmle name for a product</span></div>
+    <div class="prod-name"><span>{{prodName}}</span></div>
     <div class="prod-price">
-      <span class="prod-old-price">4.99€</span>
-      <span class="prod-current-price">3.99€</span>
+      <span v-show="prodOldPrice !== null" class="prod-old-price">{{prodOldPrice}}€</span>
+      <span class="prod-current-price">{{prodPrice}}€</span>
     </div>
-    <div class="price-date"><span>Price updated: 2022-02-24</span></div>
+    <div class="price-date"><span>Price updated: {{priceDate}}</span></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['prodName', 'prodOldPrice', 'prodPrice', 'priceDate'],
+};
 </script>

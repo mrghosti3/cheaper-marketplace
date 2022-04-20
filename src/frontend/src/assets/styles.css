@@ -96,6 +96,7 @@ nav .navbar-toggler-icon {
 .card .store-img img {
   position: relative;
   width: auto;
+  max-width: 100px;
   height: 50px;
   padding-top: 10px;
 }
@@ -182,6 +183,7 @@ nav .navbar-toggler-icon {
 #popup #popup-dialog #popup-content #popup-body .popup-store-img img {
   position: relative;
   width: auto;
+  max-width: 12rem;
   height: 5rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;

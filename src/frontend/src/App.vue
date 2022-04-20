@@ -1,14 +1,13 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
-import ProductCard from "./components/ProductCard.vue"
-import PopupCard from "./components/PopupCard.vue"
+import PopupCard from "./components/PopupCard.vue";
 </script>
 
 <template>
   <main>
     <NavBar />
     <div class="container-fluid">
-      <PopupCard />
+      <PopupCard/>
       <!-- Front page product listings -->
       <div class="row justify-content-center">
         <div class="col-md-12 d-flex justify-content-center mt-5 mb-5">
@@ -16,8 +15,13 @@ import PopupCard from "./components/PopupCard.vue"
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-md d-block mb-4" v-for='index in 10' :key= 'index'>
-          <ProductCard />
+        <div class="col-md d-block mb-4" v-for='prod in products' :key= 'prod.name'>
+          <ProductCard
+            :prodName="prod.name"
+            :prodOldPrice="prod.oldPrice"
+            :prodPrice="prod.currentPrice"
+            :priceDate="prod.date"
+          />
         </div>
       </div>
     </div>
@@ -27,3 +31,23 @@ import PopupCard from "./components/PopupCard.vue"
 <style>
 @import "./assets/styles.css";
 </style>
+
+<script>
+import ProductCard from "./components/ProductCard.vue";
+export default {
+  data(){
+    return{
+      products: []
+    }
+  },
+  components: {
+    ProductCard
+  },
+  mounted(){
+    fetch('http://localhost:4000/products')
+      .then(res => res.json())
+      .then(data => this.products = data)
+      .catch(err => console.log(err.message))
+  }
+};
+</script>
