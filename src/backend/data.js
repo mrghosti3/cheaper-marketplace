@@ -12,6 +12,9 @@ class DataInterface {
     async getShops() {
         throw new Error("Method 'getShops()' must be implemented.");
     }
+    async getTags() {
+        throw new Error("Method 'getShops()' must be implemented.");
+    }
 }
 
 /**
@@ -97,6 +100,12 @@ class DevDB extends DataInterface {
                 url: this.domains[1],
                 shop_icon_url: this.shop_icon_urls[1]
             }
+        ];
+    }
+
+    getTags() {
+        return [
+            { hello: "world" }
         ];
     }
 }

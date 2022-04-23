@@ -2,7 +2,8 @@ import http from 'http';
 
 const paths = [
     '/product',
-    '/shop'
+    '/shop',
+    '/tag'
 ];
 
 paths.forEach(path => {
