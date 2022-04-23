@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
-import Data from './data.js';
+import dataInstance from './data/index.js';
 
-const { PORT, CORS } = process.env;
-const db = Data();
+const { ENV, PORT, CORS, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
+const db = dataInstance(ENV, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW);
 
 var app = express();
 app.use(express.json());
