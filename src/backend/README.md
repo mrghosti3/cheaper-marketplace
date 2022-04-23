@@ -21,6 +21,7 @@ cp .env.example .env
 |---------|----------------------------------------------------------------|
 | ENV     | either 'dev' or 'prod' values. Dev will use built-in test data |
 | PORT    | open backend server on specified port                          |
+| CORS    | origin for Access-Control-Allow-Origin header field            |
 | DB_HOST | host domain/ip address where DB is located (can be localhost)  |
 | DB_PORT | open port to DB service communication (default: 3306)          |
 | DB_NAME | Created database name                                          |

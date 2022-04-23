@@ -6,13 +6,13 @@ const { ENV } = process.env;
  * @class DataInterface
  */
 class DataInterface {
-    async getProducts() {
+    getProducts() {
         throw new Error("Method 'getProducts()' must be implemented.");
     }
-    async getShops() {
+    getShops() {
         throw new Error("Method 'getShops()' must be implemented.");
     }
-    async getTags() {
+    getTags() {
         throw new Error("Method 'getShops()' must be implemented.");
     }
 }
