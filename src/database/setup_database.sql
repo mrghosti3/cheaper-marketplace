@@ -5,23 +5,23 @@ CREATE DATABASE cheaper;
 CREATE TABLE cheaper.product (
     pid        INT PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(50) NOT NULL,
-    image_path VARCHAR(1024) NOT NULL DEFAULT '/'
+    image_url  VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/product_image_path'
 );
 
 CREATE TABLE cheaper.shop (
     sid        INT PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(50)   NOT NULL UNIQUE,
-    domain     VARCHAR(1024) NOT NULL DEFAULT 'domain.lt',
-    image_path VARCHAR(1024) NOT NULL DEFAULT '/'
+    domain     VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt',
+    image_url  VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/shop_image_path'
 );
 
-CREATE TABLE cheaper.current_price (
-    pid       INT,
-    sid       INT,
-    price     DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 1,
-    address   VARCHAR(1024) NOT NULL DEFAULT '/',
-    last_scan DATE NOT NULL DEFAULT CURRENT_DATE,
-    PRIMARY KEY(pid, sid),
+CREATE TABLE cheaper.pdata (
+    pid          INT,
+    sid          INT,
+    last_scan    DATE NOT NULL DEFAULT CURRENT_DATE,
+    price        DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 1,
+    product_path VARCHAR(1024) NOT NULL DEFAULT '/product_path',
+    PRIMARY KEY(pid, sid, last_scan),
     FOREIGN KEY (pid) REFERENCES cheaper.product(pid),
     FOREIGN KEY (sid) REFERENCES cheaper.shop(sid)
 );

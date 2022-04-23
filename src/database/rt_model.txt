@@ -2,9 +2,7 @@ product(__pid__ , name , image_path )
 shop( __sid__ , name , image_path , domain )
 tags(__tid__, term)
 
-current_price( __pid__ , __sid__ , price , address , last_scan )
-featured( __pid__ , __sid__ , price , address , last_scan )
-previous_price( __pid__ , __sid__ , price , address , last_scan )
+price( __pid__ , __sid__ , last_scan , price , product_path )
 
 product_tags(__tid__, __pid__)
 shop_tags(__tid__, __sid__)
