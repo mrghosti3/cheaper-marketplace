@@ -1,11 +1,15 @@
+<script setup>
+import PopupProduct from "./PopupProduct.vue";
+</script>
+
 <template>
   <!-- Product price comparison popup -->
-  <div id="popup" class="modal justify-content-center">
+  <div :id="`popup${popProd.pid}`" class="modal justify-content-center">
     <div id="popup-dialog" class="modal-dialog d-block">
       <div id="popup-content" class="modal-content">
         <!-- Header -->
         <div id="popup-header" class="modal-header">
-          <h4 class="modal-title ps-5">Lavaza</h4>
+          <h4 class="modal-title ps-5">{{popProd.name}}</h4>
           <button
             type="button"
             class="btn-close"
@@ -23,44 +27,22 @@
             <div class="col-md d-block mb-4">
               <div class="card best-price pb-3">
                 <div class="popup-store-img">
-                  <img src="../assets/img/Lidl_logo.png" alt="" />
+                  <img :src=popProd.shops[0].shop_icon_url alt="">
                 </div>
                 <div class="popup-prod-name">
-                  <span>Lavaza 500g</span>
+                  <span>{{popProd.name}}</span>
                 </div>
-                <div class="popup-prod-price"><span>5.59€</span></div>
+                <div class="popup-prod-price"><span>{{popProd.shops[0].price}}€</span></div>
                 <div class="popup-store-btn">
-                  <button href="#">GO TO STORE</button>
+                  <button><a :href=popProd.shops[0].product_url target="_blank" rel="noopener noreferrer">Go to store</a></button>
                 </div>
               </div>
             </div>
-            <div class="col-md d-block mb-4">
-              <div class="card pb-3">
-                <div class="popup-store-img">
-                  <img src="https://iki.lt/wp-content/themes/iki_design/assets/svg/iki-logo-u.svg" alt="" />
-                </div>
-                <div class="popup-prod-name">
-                  <span>Lavaza 500g</span>
-                </div>
-                <div class="popup-prod-price"><span>5.99€</span></div>
-                <div class="popup-store-btn">
-                  <button href="#">GO TO STORE</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md d-block mb-4">
-              <div class="card pb-3">
-                <div class="popup-store-img">
-                  <img src="https://www.norfa.lt/assets/Uploads/Images/Norfa_Logo-v2.svg2x.png" alt="" />
-                </div>
-                <div class="popup-prod-name">
-                  <span>Lavaza 500g</span>
-                </div>
-                <div class="popup-prod-price"><span>6.49€</span></div>
-                <div class="popup-store-btn">
-                  <button href="#">GO TO STORE</button>
-                </div>
-              </div>
+            <div class="other-products col-md d-block mb-4" v-for='item in popProd.shops.slice(1)' :key= 'item'>
+              <PopupProduct
+                :prod='item'
+                :name='popProd.name'
+              />
             </div>
           </div>
         </div>
@@ -71,6 +53,6 @@
 
 <script>
 export default {
-  props: ['prodName', 'prodOldPrice', 'prodPrice', 'priceDate'],
+  props: ['popProd']
 };
 </script>
