@@ -21,7 +21,7 @@ app.route('/product').get((req, res) => {
 // });
 
 app.route('/product/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getProducts());
+    res.status(200).send(db.getProduct());
 });
 
 app.route('/shop').get((req, res) => {
@@ -29,7 +29,7 @@ app.route('/shop').get((req, res) => {
 });
 
 app.route('/shop/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getShops());
+    res.status(200).send(db.getShop());
 });
 
 app.route('/tag').get((req, res) => {
@@ -37,5 +37,5 @@ app.route('/tag').get((req, res) => {
 });
 
 app.route('/tag/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getTags());
+    res.status(200).send(db.getTag());
 });
