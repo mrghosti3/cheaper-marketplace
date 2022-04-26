@@ -24,11 +24,15 @@ paths.forEach(path => {
         if (res.statusCode === 404) return;
 
         res.on('data', (chunk) => {
-            let items = JSON.parse(chunk);
-            items.forEach((el) => console.log(el));
+            try {
+                let items = JSON.parse(chunk);
+                items.forEach((el) => console.log(el));
+            } catch(e) {
+                console.log("Bad response !!!");
+            }
             console.log();
         })
     });
 
-    req.end()
+    req.end();
 });
