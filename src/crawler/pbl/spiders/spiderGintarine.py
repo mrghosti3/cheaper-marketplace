@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import re
 from pbl.items import PblSpider
 
-
 class SpidergintarineSpider(scrapy.Spider):
     name = 'spiderGintarine'
     allowed_domains = ['www.gintarine.lt']
@@ -35,45 +34,18 @@ class SpidergintarineSpider(scrapy.Spider):
             url = response.urljoin(href.extract())
             yield scrapy.Request(url,callback=self.parse_main_item,dont_filter=True)
                         
-
     def parse_main_item(self,response):
             item = PblSpider()
-    
-            Title = response.xpath(self.TitleXpath).extract()
-            Title = self.cleanText(self.parseText(self.listToStr(Title)))
 
-            #Category = response.xpath(self.CategoryXpath).extract()
-            #Category = self.cleanText(self.parseText(Category))
+            Title = response.xpath(self.TitleXpath).extract_first()
             Link = response.url
-            
             Image = response.xpath(self.ImageXpath).extract_first()
+            Price = response.xpath(self.PriceXpath).extract_first()
 
-            Price = response.xpath(self.PriceXpath).extract()
-            Price = self.cleanText(self.parseText(self.listToStr(Price)))
-
-            #Put each element into its item attribute.
             item['Title']          = Title
-            #item['Category']      = Category
             item['Price']          = Price
-            #item['Features']      = Features
             item['Image']          = Image
             item['Link']           = Link
 
             return item
     
-        #Methods to clean and format text to make it easier to work with later
-    def listToStr(self,MyList):
-            dumm = ""
-            MyList = [i.encode('utf-8') for i in MyList]
-            for i in MyList:dumm = "{0}{1}".format(dumm,i)
-            return dumm
-    
-    def parseText(self, str):
-            soup = BeautifulSoup(str, 'html.parser')
-            return re.sub(" +|\n|\r|\t|\0|\x0b|\xa0",' ',soup.get_text()).strip()
-    
-    def cleanText(self,text):
-            soup = BeautifulSoup(text,'html.parser')
-            text = soup.get_text()
-            text = re.sub("( +|\n|\r|\t|\0|\x0b|\xa0|\xbb|\xab)+",' ',text).strip()
-            return text

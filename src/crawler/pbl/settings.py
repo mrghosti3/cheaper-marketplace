@@ -12,6 +12,25 @@ BOT_NAME = 'Shop Spider'
 SPIDER_MODULES = ['pbl.spiders']
 NEWSPIDER_MODULE = 'pbl.spiders'
 
+#SPLASH ADDITIONS 
+
+SPLASH_URL = 'http://localhost:8050'
+
+DOWNLOADER_MIDDLEWARES = {
+    #'scrapy_splash.SplashCookiesMiddleware': 723,
+    #'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
+
+FEED_EXPORT_ENCODING = 'utf-8'
+# SPIDER_MIDDLEWARES = {
+#     #'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+# }
+
+#DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+#HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT='Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
@@ -30,7 +49,7 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED = False
+#COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -74,7 +93,7 @@ COOKIES_ENABLED = False
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
+HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []

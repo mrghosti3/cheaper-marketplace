@@ -10,14 +10,12 @@ class PblItem(scrapy.Spider):
     allowed_domains = ['rimi.lt']
     start_urls = ['https://www.rimi.lt/e-parduotuve/']
 
-
     def __init__(self):
         self.declare_xpath()
 
         #All the XPaths the spider needs to know go here
     def declare_xpath(self):
         self.getAllCategoriesXpath = '/html/body/main/nav[1]/div/ul/li[1]/a[1]/@href'
-        #self.getAllSubCategoriesXpath = ""
         self.getAllItemsXpath = '/html/body/main/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li/div/a/@href'
         self.TitleXpath  = '/html/body/main/section/div[1]/div/div[2]/section/div/div/div[2]/h3/text()'
         self.ImageXpath = '/html/body/main/section/div[1]/div/div[2]/section/div/div/div[1]/img/@src'      
@@ -42,20 +40,11 @@ class PblItem(scrapy.Spider):
     def parse_main_item(self,response):
         item = PblSpider()
  
-        Title = response.xpath(self.TitleXpath).extract()
-        Title = self.cleanText(self.parseText(self.listToStr(Title)))
-
-        #Category = response.xpath(self.CategoryXpath).extract()
-        #Category = self.cleanText(self.parseText(Category))
+        Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
-        
         Image = response.xpath(self.ImageXpath).extract_first()
-
-        Price = response.xpath(self.PriceXpath).extract()
-        Price = self.cleanText(self.parseText(self.listToStr(Price)))
-
-        sub_price = response.xpath(self.SubPriceXpath).extract()
-        sub_price = self.cleanText(self.parseText(self.listToStr(sub_price)))
+        Price = response.xpath(self.PriceXpath).extract_first()
+        sub_price = response.xpath(self.SubPriceXpath).extract_first()
 
         WholePrice = Price + "." + sub_price
 
@@ -69,21 +58,5 @@ class PblItem(scrapy.Spider):
 
         return item
  
-    #Methods to clean and format text to make it easier to work with later
-    def listToStr(self,MyList):
-        dumm = ""
-        MyList = [i.encode('utf-8') for i in MyList]
-        for i in MyList:dumm = "{0}{1}".format(dumm,i)
-        return dumm
- 
-    def parseText(self, str):
-        soup = BeautifulSoup(str, 'html.parser')
-        return re.sub(" +|\n|\r|\t|\0|\x0b|\xa0",' ',soup.get_text()).strip()
- 
-    def cleanText(self,text):
-        soup = BeautifulSoup(text,'html.parser')
-        text = soup.get_text()
-        text = re.sub("( +|\n|\r|\t|\0|\x0b|\xa0|\xbb|\xab)+",' ',text).strip()
-        return text
 
 

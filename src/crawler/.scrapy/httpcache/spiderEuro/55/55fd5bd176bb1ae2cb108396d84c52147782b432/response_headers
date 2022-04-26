@@ -1,0 +1,18 @@
+Date: Mon, 25 Apr 2022 17:38:16 GMT
+Content-Type: text/html; charset=UTF-8
+Cache-Control: max-age=0, must-revalidate, private, s-maxage=604800
+Link: <https://www.eurovaistine.lt/api/docs.jsonld>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+Expires: Mon, 25 Apr 2022 17:38:16 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Vary: Accept-Encoding
+X-Xss-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+X-Cacheable: YES
+Age: 0
+Cf-Cache-Status: DYNAMIC
+Expect-Ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=dZLfsjSSc%2BboZ5cFaYJ6oTtZQonduG7eRFG%2BfnFlarmpg5A2cCKMJQj%2Fxob5oCEwY%2FyaZ6C7MvfmqxHUh4PK2z3ZzSXsIo%2Fhj1YS6sWQtFOi7O9bFyk8HyJNoQGzmrGcQ%2Ff9HEM%3D"}],"group":"cf-nel","max_age":604800}
+Nel: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+Cf-Ray: 7018d9f04aca9101-FRA
+Content-Encoding: gzip
