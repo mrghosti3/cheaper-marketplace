@@ -26,9 +26,10 @@ paths.forEach(path => {
         res.on('data', (chunk) => {
             try {
                 let items = JSON.parse(chunk);
-                items.forEach((el) => console.log(el));
+                console.log(items);
             } catch(e) {
                 console.log("Bad response !!!");
+                console.log(chunk);
             }
             console.log();
         })

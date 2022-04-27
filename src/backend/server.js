@@ -14,7 +14,12 @@ app.listen(PORT,
 app.route('/product').get((req, res) => {
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
-    res.status(200).send(db.getProducts());
+    db.getProducts().then(result => {
+        res.status(200).send(result);
+    }).catch(e => {
+        console.log(e);
+        res.sendStatus(404);
+    });
 });
 // .post((req, res) => {
 //     res.sendStatus(200);

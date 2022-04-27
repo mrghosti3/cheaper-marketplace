@@ -1,0 +1,8 @@
+[
+    "SELECT * FROM product",
+    "SELECT * FROM shop",
+    "SELECT * FROM tag",
+    "SELECT * FROM product_prices",
+    "SELECT sid, name AS shop_name, domain AS url, shop_image_url, price, product_url, last_scan FROM product_prices WHERE pid={0} ORDER BY price;",
+    "SELECT sid, name, domain, shop_image_url, last_scan, price, product_url FROM product_prices WHERE pid={0} AND last_scan=(SELECT MAX(last_scan) FROM product_prices WHERE pid={0}) ORDER BY price LIMIT 1;"
+]

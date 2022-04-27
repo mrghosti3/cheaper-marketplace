@@ -11,13 +11,13 @@ export default class DevDB extends DataInterface {
         'https://maxima.lt/build/website/images/maxima-logo.4153f9e6.svg'
     ];
 
-    getProducts() {
+    async getProducts() {
         const product_urls = [
             this.domains[0] + '/e-parduotuve/lt/produktai/vaisiai-darzoves-ir-geles/vaisiai-ir-uogos/bananai/bananai-1-kg/p/270939',
             this.domains[0] + '/e-parduotuve/lt/produktai/bakaleja/kava-ir-kakava/kavos-kapsules/kavos-kapsules-aroma-gold-oat-flat-white-162g/p/1005450'
         ];
 
-        return [
+        return Promise.resolve([
             {
                 pid: 1,
                 name: "Bananai",
@@ -64,7 +64,7 @@ export default class DevDB extends DataInterface {
                     }
                 ]
             }
-        ];
+        ]);
     }
 
     getShops() {
