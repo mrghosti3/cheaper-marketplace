@@ -1,4 +1,5 @@
 import http from 'http';
+import { writeFileSync } from 'fs';
 
 const paths = [
     '/product',
@@ -27,6 +28,7 @@ paths.forEach(path => {
             try {
                 let items = JSON.parse(chunk);
                 console.log(items);
+                writeFileSync('test' + path + '.json', JSON.stringify(items, null, 2));
             } catch(e) {
                 console.log("Bad response !!!");
                 console.log(chunk);

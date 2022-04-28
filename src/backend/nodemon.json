@@ -1,5 +1,6 @@
 {
     "ignore": [
+        "test/*",
         "test.js",
         "test.json",
         "node_modules/*",
