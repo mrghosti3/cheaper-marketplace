@@ -34,7 +34,7 @@ export default class RemoteDB extends DataInterface {
 
         try {
             const conn = await createConnection(this.#connConfig);
-            const queryProducts = queries[0] + this.#createPaging(limit, page) + ';';
+            const queryProducts = queries[0] + this.#createPaging(limit, page);
             res = (await conn.query(queryProducts)).slice(0);
 
             let productPricesQueries = res.map(
@@ -50,31 +50,53 @@ export default class RemoteDB extends DataInterface {
             throw err;
         }
 
-        res = res.filter(v => v.shops.length > 0);
         // if (less > 0 && greater < less) {
         //     // NOTE: write a query in SQL
         // }
         return res;
     }
 
-    getShops(limit = 0, page = 0) {
-        let sqlQuery = queries[1] + this.#createPaging(limit, page) + ';';
-        return [
-            { query: sqlQuery }
-        ];
+    /**
+     * Retrieve list of shops from remote DB
+     *
+     * @param {Number} limit   Product count in page. 0 -> no limit
+     * @param {Number} page    Page number
+     * @returns array JSON list of products and their prices in shops
+     */
+    async getShops(limit, page) {
+        let shopQuery = queries[1] + this.#createPaging(limit, page);
+        let res = [];
+
+        try {
+            const conn = await createConnection(this.#connConfig);
+            res = (await conn.query(shopQuery)).slice(0);
+            await conn.end();
+        } catch (err) {
+            throw err;
+        }
+
+        return res;
     }
 
-    getTags(limit = 0, page = 0) {
-        let sqlQuery = queries[1] + this.#createPaging(limit, page) + ';';
-        return [
-            { query: sqlQuery }
-        ];
+    async getTags(limit, page) {
+        let tagQuery = queries[2] + this.#createPaging(limit, page);
+        let res = [];
+
+        try {
+            const conn = await createConnection(this.#connConfig);
+            res = (await conn.query(tagQuery)).slice(0);
+            await conn.end();
+        } catch (err) {
+            throw err;
+        }
+
+        return res;
     }
 
     #createPaging(limit, page) {
         if (limit > 0 && page > 0) {
             let limitFrom = limit * page;
-            return ` LIMIT ${limit} OFFSET ${limitFrom}`;
+            return ` LIMIT ${limit} OFFSET ${limitFrom};`;
         }
 
         return '';

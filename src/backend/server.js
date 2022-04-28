@@ -14,8 +14,10 @@ app.listen(PORT,
 app.route('/product').get((req, res) => {
     const limit = 'limit' in req ? req.limit : 0;
     const page = 'page' in req ? req.page : 0;
+
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
+
     db.getProducts(0, 0, limit, page).then(result => {
         res.status(200).send(result);
     }).catch(e => {
@@ -23,26 +25,54 @@ app.route('/product').get((req, res) => {
         res.sendStatus(404);
     });
 });
+// NOTE: discuss how data is added to database!!!
 // .post((req, res) => {
 //     res.sendStatus(200);
 // });
 
 app.route('/product/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getProduct());
+    const { pid } = req.params;
+
+    // NOTE: bad solution. Should look into ExpressJS middleware.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    db.getProduct(pid).then(result => res.status(200).send(result));
 });
 
 app.route('/shop').get((req, res) => {
-    res.status(200).send(db.getShops());
+    const limit = 'limit' in req ? req.limit : 0;
+    const page = 'page' in req ? req.page : 0;
+
+    // NOTE: bad solution. Should look into ExpressJS middleware.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    db.getShops(limit, page).then(result => res.status(200).send(result));
 });
 
 app.route('/shop/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getShop());
+    const { sid } = req.params;
+
+    // NOTE: bad solution. Should look into ExpressJS middleware.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    db.getShop(sid).then(result => res.status(200).send(result));
 });
 
 app.route('/tag').get((req, res) => {
-    res.status(200).send(db.getTags());
+    const limit = 'limit' in req ? req.limit : 0;
+    const page = 'page' in req ? req.page : 0;
+
+    // NOTE: bad solution. Should look into ExpressJS middleware.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    db.getTags(limit, page).then(result => res.status(200).send(result));
 });
 
 app.route('/tag/:id(\d+)').get((req, res) => {
-    res.status(200).send(db.getTag());
+    const { tid } = req.params;
+
+    // NOTE: bad solution. Should look into ExpressJS middleware.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    db.getTag(tid).then(result => res.status(200).send(result));
 });
