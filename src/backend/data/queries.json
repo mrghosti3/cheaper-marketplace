@@ -1,5 +1,5 @@
 [
-    "SELECT * FROM product",
+    "SELECT * FROM product WHERE pid IN (SELECT UNIQUE(pid) FROM pdata)",
     "SELECT * FROM shop",
     "SELECT * FROM tag",
     "SELECT * FROM product_prices",
