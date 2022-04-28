@@ -4,10 +4,13 @@ import { writeFileSync } from 'fs';
 const paths = [
     '/product',
     '/shop',
-    '/tag'
+    '/tag',
+    '/product/1',
+    '/shop/1',
+    '/tag/1'
 ];
 
-paths.forEach(path => {
+for (let path of paths) {
     let options = {
         hostname: 'localhost',
         port: 8080,
@@ -38,4 +41,4 @@ paths.forEach(path => {
     });
 
     req.end();
-});
+}
