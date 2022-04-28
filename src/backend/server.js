@@ -12,9 +12,11 @@ app.listen(PORT,
 );
 
 app.route('/product').get((req, res) => {
+    const limit = 'limit' in req ? req.limit : 0;
+    const page = 'page' in req ? req.page : 0;
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
-    db.getProducts().then(result => {
+    db.getProducts(0, 0, limit, page).then(result => {
         res.status(200).send(result);
     }).catch(e => {
         console.log(e);
