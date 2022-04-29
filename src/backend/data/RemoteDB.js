@@ -3,6 +3,7 @@ import { createConnection } from 'mariadb';
 import DataInterface from './DataInterface.js';
 
 const queries = JSON.parse(readFileSync(process.env.QUERIES, 'utf8'));
+const ERROR_MSG_START = "ERROR RemoteDB ";
 
 export default class RemoteDB extends DataInterface {
     #connConfig;
@@ -47,6 +48,7 @@ export default class RemoteDB extends DataInterface {
 
             await conn.end();
         } catch (err) {
+            err.text = ERROR_MSG_START + "getProducts: " + err.text;
             throw err;
         }
 
@@ -72,6 +74,7 @@ export default class RemoteDB extends DataInterface {
             res = (await conn.query(shopQuery)).slice(0);
             await conn.end();
         } catch (err) {
+            err.text = ERROR_MSG_START + "getShops: " + err.text;
             throw err;
         }
 
@@ -87,6 +90,7 @@ export default class RemoteDB extends DataInterface {
             res = (await conn.query(tagQuery)).slice(0);
             await conn.end();
         } catch (err) {
+            err.text = ERROR_MSG_START + "getTags: " + err.text;
             throw err;
         }
 

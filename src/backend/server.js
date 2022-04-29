@@ -18,12 +18,11 @@ app.route('/product').get((req, res) => {
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
 
-    db.getProducts(0, 0, limit, page).then(result => {
-        res.status(200).send(result);
-    }).catch(e => {
-        console.log(e);
-        res.sendStatus(404);
-    });
+    db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });
 // NOTE: discuss how data is added to database!!!
 // .post((req, res) => {
@@ -46,7 +45,11 @@ app.route('/shop').get((req, res) => {
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
 
-    db.getShops(limit, page).then(result => res.status(200).send(result));
+    db.getShops(limit, page).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });
 
 app.route('/shop/:id(\d+)').get((req, res) => {
@@ -65,7 +68,11 @@ app.route('/tag').get((req, res) => {
     // NOTE: bad solution. Should look into ExpressJS middleware.
     res.setHeader('Access-Control-Allow-Origin', CORS);
 
-    db.getTags(limit, page).then(result => res.status(200).send(result));
+    db.getTags(limit, page).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });
 
 app.route('/tag/:id(\d+)').get((req, res) => {
