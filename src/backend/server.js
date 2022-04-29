@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 
     next();
 });
-
 app.listen(PORT,
     () => console.log(`LIVE: http://localhost:${PORT}/product`)
 );
@@ -30,9 +29,6 @@ app.listen(PORT,
 app.route('/product').get((req, res) => {
     const limit = 'limit' in req ? req.limit : 0;
     const page = 'page' in req ? req.page : 0;
-
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
 
     db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -45,21 +41,19 @@ app.route('/product').get((req, res) => {
 //     res.sendStatus(200);
 // });
 
-app.route('/product/:id(\d+)').get((req, res) => {
+app.route('/product/:pid(\\d+)').get((req, res) => {
     const { pid } = req.params;
 
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
-
-    db.getProduct(pid).then(result => res.status(200).send(result));
+    db.getProduct(pid).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });
 
 app.route('/shop').get((req, res) => {
     const limit = 'limit' in req ? req.limit : 0;
     const page = 'page' in req ? req.page : 0;
-
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
 
     db.getShops(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -68,21 +62,19 @@ app.route('/shop').get((req, res) => {
         });
 });
 
-app.route('/shop/:id(\d+)').get((req, res) => {
+app.route('/shop/:sid(\\d+)').get((req, res) => {
     const { sid } = req.params;
 
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
-
-    db.getShop(sid).then(result => res.status(200).send(result));
+    db.getShop(sid).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });
 
 app.route('/tag').get((req, res) => {
     const limit = 'limit' in req ? req.limit : 0;
     const page = 'page' in req ? req.page : 0;
-
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
 
     db.getTags(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -91,11 +83,12 @@ app.route('/tag').get((req, res) => {
         });
 });
 
-app.route('/tag/:id(\d+)').get((req, res) => {
+app.route('/tag/:tid(\\d+)').get((req, res) => {
     const { tid } = req.params;
 
-    // NOTE: bad solution. Should look into ExpressJS middleware.
-    res.setHeader('Access-Control-Allow-Origin', CORS);
-
-    db.getTag(tid).then(result => res.status(200).send(result));
+    db.getTag(tid).then(result => res.status(200).send(result))
+        .catch(e => {
+            console.error(e.text);
+            res.sendStatus(404);
+        });
 });

@@ -39,7 +39,7 @@ export default class RemoteDB extends DataInterface {
             res = (await conn.query(queryProducts)).slice(0);
 
             let productPricesQueries = res.map(
-                p => conn.query(queries[4].replaceAll('{0}', p.pid))
+                p => conn.query(queries[1].replaceAll('{0}', p.pid))
             );
 
             for (let i in productPricesQueries) {
@@ -66,7 +66,7 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getShops(limit, page) {
-        let shopQuery = queries[1] + this.#createPaging(limit, page);
+        let shopQuery = queries[2] + this.#createPaging(limit, page);
         let res = [];
 
         try {
@@ -81,8 +81,15 @@ export default class RemoteDB extends DataInterface {
         return res;
     }
 
+    /**
+     * Retrieve list of shops from remote DB
+     *
+     * @param {Number} limit   Product count in page. 0 -> no limit
+     * @param {Number} page    Page number
+     * @returns array JSON list of products and their prices in shops
+     */
     async getTags(limit, page) {
-        let tagQuery = queries[2] + this.#createPaging(limit, page);
+        let tagQuery = queries[3] + this.#createPaging(limit, page);
         let res = [];
 
         try {
@@ -91,6 +98,77 @@ export default class RemoteDB extends DataInterface {
             await conn.end();
         } catch (err) {
             err.text = ERROR_MSG_START + "getTags: " + err.text;
+            throw err;
+        }
+
+        return res;
+    }
+
+    /**
+     * Retrieves single product with all it's prices.
+     *
+     * @param {Number} id pid (product ID)
+     * @returns Object JSON formatted product with its prices in shops
+     */
+    async getProduct(id) {
+        let res = null;
+
+        try {
+            const conn = await createConnection(this.#connConfig);
+            const queryProduct = queries[4];
+            res = (await conn.query(queryProduct, id))[0];
+
+            res.shops = await conn.query(queries[1].replaceAll('{0}', id));
+
+            await conn.end();
+        } catch (err) {
+            err.text = ERROR_MSG_START + "getProducts: " + err.text;
+            throw err;
+        }
+
+        return res;
+    }
+
+    /**
+     * Retrieves single shop.
+     *
+     * @param {Number} id sid (shop ID)
+     * @returns Object JSON formatted shop
+     */
+    async getShop(id) {
+        let res = null;
+
+        try {
+            const conn = await createConnection(this.#connConfig);
+            const queryProduct = queries[5];
+            res = (await conn.query(queryProduct, id))[0];
+
+            await conn.end();
+        } catch (err) {
+            err.text = ERROR_MSG_START + "getShop: " + err.text;
+            throw err;
+        }
+
+        return res;
+    }
+
+    /**
+     * Retrieves single tag.
+     *
+     * @param {Number} id sid (shop ID)
+     * @returns Object JSON formatted shop
+     */
+    async getShop(id) {
+        let res = null;
+
+        try {
+            const conn = await createConnection(this.#connConfig);
+            const queryProduct = queries[6];
+            res = (await conn.query(queryProduct, id))[0];
+
+            await conn.end();
+        } catch (err) {
+            err.text = ERROR_MSG_START + "getTag: " + err.text;
             throw err;
         }
 

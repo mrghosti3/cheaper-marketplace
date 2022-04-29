@@ -1,20 +1,20 @@
 export default class DataInterface {
-    getProducts() {
+    async getProducts() {
         throw new Error("Method 'getProducts()' must be implemented.");
     }
-    getProduct() {
+    async getProduct() {
         throw new Error("Method 'getProduct()' must be implemented.");
     }
-    getShops() {
+    async getShops() {
         throw new Error("Method 'getShops()' must be implemented.");
     }
-    getShop() {
+    async getShop() {
         throw new Error("Method 'getShop()' must be implemented.");
     }
-    getTags() {
+    async getTags() {
         throw new Error("Method 'getTags()' must be implemented.");
     }
-    getTag() {
+    async getTag() {
         throw new Error("Method 'getTag()' must be implemented.");
     }
 }
