@@ -7,6 +7,22 @@ const db = dataInstance(ENV, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW);
 
 var app = express();
 app.use(express.json());
+app.use((req, res, next) => {
+    const info = {
+        method: req.method,
+        path: req.path,
+        queries: req.query,
+        timestamp: new Date(Date.now()).toUTCString()
+    };
+
+    console.log(JSON.stringify(info));
+
+    // NOTE: do research for better implementations.
+    res.setHeader('Access-Control-Allow-Origin', CORS);
+
+    next();
+});
+
 app.listen(PORT,
     () => console.log(`LIVE: http://localhost:${PORT}/product`)
 );
