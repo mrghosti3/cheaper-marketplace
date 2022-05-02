@@ -27,8 +27,9 @@ app.listen(PORT,
 );
 
 app.route('/product').get((req, res) => {
-    const limit = 'limit' in req ? req.limit : 0;
-    const page = 'page' in req ? req.page : 0;
+    const query = req.query;
+    const limit = 'limit' in query ? query.limit : 0;
+    const page = 'page' in query ? query.page : 0;
 
     db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -41,7 +42,7 @@ app.route('/product').get((req, res) => {
 //     res.sendStatus(200);
 // });
 
-app.route('/product/:pid(\\d+)').get((req, res) => {
+app.get('/product/:pid(\\d+)', (req, res) => {
     const { pid } = req.params;
 
     db.getProduct(pid).then(result => res.status(200).send(result))
@@ -51,9 +52,10 @@ app.route('/product/:pid(\\d+)').get((req, res) => {
         });
 });
 
-app.route('/shop').get((req, res) => {
-    const limit = 'limit' in req ? req.limit : 0;
-    const page = 'page' in req ? req.page : 0;
+app.get('/shop', (req, res) => {
+    const query = req.query;
+    const limit = 'limit' in query ? query.limit : 0;
+    const page = 'page' in query ? query.page : 0;
 
     db.getShops(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -62,7 +64,7 @@ app.route('/shop').get((req, res) => {
         });
 });
 
-app.route('/shop/:sid(\\d+)').get((req, res) => {
+app.get('/shop/:sid(\\d+)', (req, res) => {
     const { sid } = req.params;
 
     db.getShop(sid).then(result => res.status(200).send(result))
@@ -72,9 +74,10 @@ app.route('/shop/:sid(\\d+)').get((req, res) => {
         });
 });
 
-app.route('/tag').get((req, res) => {
-    const limit = 'limit' in req ? req.limit : 0;
-    const page = 'page' in req ? req.page : 0;
+app.get('/tag', (req, res) => {
+    const query = req.query;
+    const limit = 'limit' in query ? query.limit : 0;
+    const page = 'page' in query ? query.page : 0;
 
     db.getTags(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -83,7 +86,7 @@ app.route('/tag').get((req, res) => {
         });
 });
 
-app.route('/tag/:tid(\\d+)').get((req, res) => {
+app.get('/tag/:tid(\\d+)', (req, res) => {
     const { tid } = req.params;
 
     db.getTag(tid).then(result => res.status(200).send(result))
@@ -91,4 +94,13 @@ app.route('/tag/:tid(\\d+)').get((req, res) => {
             console.error(e.text);
             res.sendStatus(404);
         });
+});
+
+app.get('/search', (req, res) => {
+    const query = req.query;
+    const limit = 'limit' in query ? query.limit : 0;
+    const page = 'page' in query ? query.page : 0;
+    const tags = 'tags' in query ? query.tags : 0;
+
+    db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result));
 });
