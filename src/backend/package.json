@@ -5,6 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "test": "node test.js",
     "dev": "nodemon -x 'node server.js'"
   },
   "author": "Cheaper",

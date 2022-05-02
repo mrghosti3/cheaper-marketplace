@@ -158,7 +158,7 @@ export default class RemoteDB extends DataInterface {
      * @param {Number} id sid (shop ID)
      * @returns Object JSON formatted shop
      */
-    async getShop(id) {
+    async getTag(id) {
         let res = null;
 
         try {
@@ -176,12 +176,16 @@ export default class RemoteDB extends DataInterface {
     }
 
     #createPaging(limit, page) {
-        if (limit > 0 && page > 0) {
+        let lim = ';';
+
+        if (page > 0) {
             let limitFrom = limit * page;
-            return ` LIMIT ${limit} OFFSET ${limitFrom};`;
+            lim = ` OFFSET ${limitFrom};`;
         }
 
-        return '';
+        lim = (limit > 0) ? ` LIMIT ${limit}${lim}` : lim;
+
+        return lim;
     }
 }
 

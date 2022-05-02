@@ -102,15 +102,37 @@ export default class DevDB extends DataInterface {
         }
     ]
 
-    async getProducts() {
-        return Promise.resolve(this.#products);
+    async getProducts(greater, less, limit, page) {
+        let res = this.#products;
+        res = this.#pageSlice(res, limit, page)
+        return Promise.resolve(res);
     }
 
-    async getShops() {
-        return Promise.resolve(this.#shops);
+    async getShops(limit, page) {
+        let res = this.#shops;
+        res = this.#pageSlice(res, limit, page)
+        return Promise.resolve(res);
     }
 
-    async getTags() {
-        return Promise.resolve(this.#tags);
+    async getTags(limit, page) {
+        let res = this.#tags;
+        res = this.#pageSlice(res, limit, page)
+        return Promise.resolve(res);
+    }
+
+    /**
+     * Splits array via paging.
+     *
+     * @param {Array}  arr   list to split
+     * @param {Number} limit Product count in page. 0 -> no limit
+     * @param {Number} page  Page number
+     * @returns {Array} JSON list
+     */
+    #pageSlice(arr, limit, page) {
+        if (limit < 1) return arr;
+
+        const offset = limit * page;
+        const range = offset + limit;
+        return arr.slice(offset, range);
     }
 }
