@@ -39,7 +39,7 @@ export default class RemoteDB extends DataInterface {
             res = (await conn.query(queryProducts)).slice(0);
 
             let productPricesQueries = res.map(
-                p => conn.query(queries[1].replaceAll('{0}', p.pid))
+                p => conn.query(queries[1], p.pid)
             );
 
             for (let i in productPricesQueries) {
@@ -66,11 +66,11 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getShops(limit, page) {
-        let shopQuery = queries[2] + this.#createPaging(limit, page);
         let res = [];
 
         try {
             const conn = await createConnection(this.#connConfig);
+            const shopQuery = queries[2] + this.#createPaging(limit, page);
             res = (await conn.query(shopQuery)).slice(0);
             await conn.end();
         } catch (err) {
@@ -89,11 +89,11 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getTags(limit, page) {
-        let tagQuery = queries[3] + this.#createPaging(limit, page);
         let res = [];
 
         try {
             const conn = await createConnection(this.#connConfig);
+            const tagQuery = queries[3] + this.#createPaging(limit, page);
             res = (await conn.query(tagQuery)).slice(0);
             await conn.end();
         } catch (err) {
@@ -118,7 +118,7 @@ export default class RemoteDB extends DataInterface {
             const queryProduct = queries[4];
             res = (await conn.query(queryProduct, id))[0];
 
-            res.shops = await conn.query(queries[1].replaceAll('{0}', id));
+            res.shops = await conn.query(queries[1], id);
 
             await conn.end();
         } catch (err) {
