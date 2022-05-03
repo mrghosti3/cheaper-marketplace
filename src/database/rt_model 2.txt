@@ -1,3 +1,0 @@
-product(__pid__ , name , image_path )
-shop( __sid__ , name , image_path , domain )
-current_price( __pid__ , __sid__ , price , address , last_scan )
