@@ -1,6 +1,4 @@
 import scrapy
-from bs4 import BeautifulSoup
-import re
 from pbl.items import PblSpider
 
 class SpidergintarineSpider(scrapy.Spider):

@@ -1,3 +1,4 @@
+from shutil import which
 # Scrapy settings for pbl project
 #
 # For simplicity, this file contains only settings considered important or
@@ -6,6 +7,9 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+SELENIUM_DRIVER_NAME = 'firefox'
+SELENIUM_DRIVER_EXECUTABLE_PATH = which('geckodriver')
+SELENIUM_DRIVER_ARGUMENTS=['-headless']  # '--headless' if using chrome instead of firefox
 
 BOT_NAME = 'Shop Spider'
 
@@ -17,9 +21,8 @@ NEWSPIDER_MODULE = 'pbl.spiders'
 SPLASH_URL = 'http://localhost:8050'
 
 DOWNLOADER_MIDDLEWARES = {
-    #'scrapy_splash.SplashCookiesMiddleware': 723,
-    #'scrapy_splash.SplashMiddleware': 725,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'scrapy_selenium.SeleniumMiddleware': 800,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810
 }
 
 FEED_EXPORT_ENCODING = 'utf-8'
