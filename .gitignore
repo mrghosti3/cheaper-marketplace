@@ -1,5 +1,2 @@
 **/*.vim
 **/.DS_Store
-src/crawler/.scrapy/httpcache/spiderTopo_test/00/00832a6ee02f1fdef93f4f53ce7c1ad0aa043301/response_body
-src/crawler/pbl/spiders/__pycache__/spiderPigu.cpython-37.pyc
-src/crawler/pbl/spiders/__pycache__/spiderElektro.cpython-37.pyc
