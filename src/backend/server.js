@@ -6,30 +6,45 @@ const { NODE_ENV, PORT, CORS, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = pr
 const db = dataInstance(NODE_ENV, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW);
 
 var app = express();
+
 app.use(express.json());
-app.use((req, res, next) => {
+
+// Logs WEB query to STDOUT in JSON format.
+app.use((req, _, next) => {
+    req.timestamp = new Date(Date.now()).toUTCString();
     const info = {
         method: req.method,
         path: req.path,
         queries: req.query,
-        timestamp: new Date(Date.now()).toUTCString()
+        timestamp: req.timestamp
     };
 
     console.log(JSON.stringify(info));
+
+    next();
+});
+
+// Processes request queries and add header to response.
+app.use((req, res, next) => {
+    const { query } = req;
+    req.query = {
+        limit: 'limit' in query ? query.limit : 0,
+        page: 'page' in query ? query.page : 0,
+        tags: 't' in query ? query.tags : 0
+    };
 
     // NOTE: do research for better implementations.
     res.setHeader('Access-Control-Allow-Origin', CORS);
 
     next();
 });
+
 app.listen(PORT,
-    () => console.log(`LIVE: http://localhost:${PORT}/product`)
+    () => console.log(`LIVE ${NODE_ENV}: http://localhost:${PORT}/product`)
 );
 
-app.route('/product').get((req, res) => {
-    const query = req.query;
-    const limit = 'limit' in query ? query.limit : 0;
-    const page = 'page' in query ? query.page : 0;
+app.get('/product', (req, res) => {
+    const { limit, page } = req.query;
 
     db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -37,10 +52,6 @@ app.route('/product').get((req, res) => {
             res.sendStatus(404);
         });
 });
-// NOTE: discuss how data is added to database!!!
-// .post((req, res) => {
-//     res.sendStatus(200);
-// });
 
 app.get('/product/:pid(\\d+)', (req, res) => {
     const { pid } = req.params;
@@ -53,13 +64,11 @@ app.get('/product/:pid(\\d+)', (req, res) => {
 });
 
 app.get('/shop', (req, res) => {
-    const query = req.query;
-    const limit = 'limit' in query ? query.limit : 0;
-    const page = 'page' in query ? query.page : 0;
+    const { limit, page } = req.query;
 
     db.getShops(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            console.error("DB error", e);
             res.sendStatus(404);
         });
 });
@@ -75,9 +84,7 @@ app.get('/shop/:sid(\\d+)', (req, res) => {
 });
 
 app.get('/tag', (req, res) => {
-    const query = req.query;
-    const limit = 'limit' in query ? query.limit : 0;
-    const page = 'page' in query ? query.page : 0;
+    const { limit, page } = req.query;
 
     db.getTags(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
@@ -91,16 +98,14 @@ app.get('/tag/:tid(\\d+)', (req, res) => {
 
     db.getTag(tid).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            console.error("Backend", e, '\n', req.timestamp);
             res.sendStatus(404);
         });
 });
 
 app.get('/search', (req, res) => {
-    const query = req.query;
-    const limit = 'limit' in query ? query.limit : 0;
-    const page = 'page' in query ? query.page : 0;
-    const tags = 'tags' in query ? query.tags : 0;
+    // NOTE: Include 'tags' processing (First for remote DB)
+    const { limit, page } = req.query;
 
     db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result));
 });
