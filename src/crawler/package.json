@@ -5,15 +5,12 @@
   "main": "store_data.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "store": "node store_data.js"
   },
   "author": "Team Cheaper",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.1",
     "mariadb": "^3.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.16"
   }
 }
