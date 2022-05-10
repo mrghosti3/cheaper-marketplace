@@ -1,3 +1,6 @@
 .venv
 **/__pycache__
 **/.scrapy
+
+node_modules/
+.env
