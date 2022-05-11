@@ -1,0 +1,12 @@
+[Unit]
+Description=Custom Backend for the Web Server
+After=newtork.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/backend/server.js
+WorkingDirectory=/opt/backend
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=/usr/bin/node /opt/backend/server.js
