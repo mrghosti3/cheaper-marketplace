@@ -3,9 +3,9 @@ from pbl.items import PblSpider
 import re
 
 class SpiderelektroSpider(scrapy.Spider):
-    name = 'spiderElektro'
-    allowed_domains = ['elektromarkt.lt']
-    start_urls = ['http://elektromarkt.lt/']
+    name = 'spiderAvitela'
+    allowed_domains = ['avitela.lt']
+    start_urls = ['http://avitela.lt/']
 
     def __init__(self):
         self.declare_xpath()
@@ -17,7 +17,7 @@ class SpiderelektroSpider(scrapy.Spider):
         self.getAllSubSubCategoriesXpath = '/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/a/@href'
         self.getAllItemsXpath = '/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/a/@href'
         self.TitleXpath  = '/html/body/div[1]/div[2]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[1]/h1/text()'
-        self.ImageXpath = '/html/body/div[1]/div[2]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]/div/a/img/@src'   
+        self.ImageXpath = '/html/body/div[1]/div[1]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[1]/div/div/div[1]/div/div[3]/div/a/img/@src'
         self.PriceXpath = '/html/body/div[1]/div[2]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[2]/div[2]/div[1]/div[2]/span/span/text()'
 
     def parse(self, response):
@@ -68,6 +68,7 @@ class SpiderelektroSpider(scrapy.Spider):
             Price = response.xpath('/html/body/div[1]/div[2]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[2]/div[2]/div[1]/div[1]/span/span/text()').extract_first()
         else:
             Price = response.xpath(self.PriceXpath).extract_first()
+
 
         #Put each element into its item attribute.
         item['Title']          = Title
