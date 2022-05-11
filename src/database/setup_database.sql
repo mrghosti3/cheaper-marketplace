@@ -48,8 +48,10 @@ CREATE TABLE cheaper.shop_tags (
 );
 
 CREATE VIEW cheaper.product_prices AS
-SELECT pid, sid, s.name, domain, s.image_url AS shop_image_url,
-       last_scan, price, Concat(domain, product_path) AS product_url
+SELECT pid, sid, name, domain, s.image_url AS shop_image_url,
+       pd.last_scan AS last_scan, pd.price AS price,
+       concat(s.domain, pd.product_path) AS product_url
+FROM cheaper.pdata AS pd NATURAL JOIN cheaper.shop AS s;
 
 CREATE VIEW cheaper.combined_tags AS SELECT tid, pid, sid FROM cheaper.tag
 LEFT JOIN cheaper.shop_tags USING (tid)
