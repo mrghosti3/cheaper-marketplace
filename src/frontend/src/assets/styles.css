@@ -81,12 +81,12 @@ nav .navbar-toggler-icon {
 }
 
 .card {
-  margin: 1rem, 2rem !important;
+  margin: 0rem, 0rem !important;
   padding-bottom: 1rem;
-  padding-left: 30px;
-  padding-right: 30px;
-  min-width: 250px !important;
-  max-width: 250px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-width: 200px !important;
+  max-width: 200px !important;
   height: auto;
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -96,8 +96,8 @@ nav .navbar-toggler-icon {
 .card .store-img img {
   position: relative;
   width: auto;
-  max-width: 7rem;
-  height: 3rem;
+  max-width: 3rem;
+  height: 2rem;
   padding-top: 10px;
 }
 
@@ -109,14 +109,14 @@ nav .navbar-toggler-icon {
   position: relative;
   margin-top: 1rem;
   width: auto;
-  height: 160px;
+  height: 7rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
 }
 
 .card .prod-name {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   text-align: center;
   font-size: 1rem;
   font-weight: 400;
@@ -124,7 +124,7 @@ nav .navbar-toggler-icon {
 
 .card .prod-price {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   vertical-align: middle;
 }
 
@@ -133,14 +133,14 @@ nav .navbar-toggler-icon {
 }
 
 .card .prod-price .prod-current-price {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 450;
   color: black;
 }
 
 .card .prod-price .prod-old-price {
   color: #707070;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 400;
   padding-right: 10px;
   text-decoration: line-through;
@@ -212,8 +212,8 @@ nav .navbar-toggler-icon {
 #popup-dialog #popup-content #popup-body .best-price .popup-store-img img {
   position: relative;
   width: auto;
-  max-width: 12rem;
-  height: 5rem;
+  max-width: 8rem;
+  height: 4rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -265,11 +265,21 @@ nav .navbar-toggler-icon {
   text-align: center;
 }
 
+#popup-dialog #popup-content #popup-body .other-products .popup-store-img {
+  position: relative;
+  width: 8rem;
+  height: 4rem;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
 #popup-dialog #popup-content #popup-body .other-products .popup-store-img img {
   position: relative;
   width: auto;
-  max-width: 12rem;
-  height: 5rem;
+  height: auto;
+  max-width: 8rem;
+  max-height: 4rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -314,6 +324,20 @@ nav .navbar-toggler-icon {
   text-align: center;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.load-more {
+  -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
+          filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
+  width: 8rem;
+  height: 2rem;
+  background: #09e2fa;
+  border-radius: 20px;
+  border-style: none;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: black;
 }
 
 /* Extra small devices (phones, 600px and down) */

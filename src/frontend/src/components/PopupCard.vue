@@ -9,7 +9,8 @@ import PopupProduct from "./PopupProduct.vue";
       <div id="popup-content" class="modal-content">
         <!-- Header -->
         <div id="popup-header" class="modal-header">
-          <h4 class="modal-title ps-5">{{popProd.name}}</h4>
+          <h4 class="modal-title ps-5" v-show="popProd.name.length > 50">{{ popProd.name.substring(0,50)+"..." }}</h4>
+          <h4 class="modal-title ps-5" v-show="popProd.name.length <= 50">{{ popProd.name }}</h4>
           <button
             type="button"
             class="btn-close"
@@ -30,7 +31,8 @@ import PopupProduct from "./PopupProduct.vue";
                   <img :src=popProd.shops[0].shop_icon_url alt="">
                 </div>
                 <div class="popup-prod-name">
-                  <span>{{popProd.name}}</span>
+                  <span v-show="popProd.name.length > 20">{{ popProd.name.substring(0,20)+"..." }}</span>
+                  <span v-show="popProd.name.length <= 20">{{ popProd.name }}</span>
                 </div>
                 <div class="popup-prod-price"><span>{{popProd.shops[0].price}}€</span></div>
                 <div class="popup-store-btn">
