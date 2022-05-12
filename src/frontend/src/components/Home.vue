@@ -46,7 +46,7 @@ export default {
     ProductCard,
   },
   mounted() {
-    fetch(BACKEND_URL + "/product")
+    fetch(BACKEND_URL + "/product?limit=20")
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));

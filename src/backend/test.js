@@ -7,7 +7,7 @@ const { PORT } = process.env;
 const paths = [
     { path: '/product', file: '/product.json' },
     { path: '/product?limit=1', file: '/product_paged.json' },
-    { path: '/product?limit=1&page=1', file: '/product_paged.json' },
+    { path: '/product?limit=1&page=1', file: '/product_paged2.json' },
     { path: '/shop', file: '/shop.json' },
     { path: '/tag', file: '/tag.json' },
     { path: '/product/1', file: '/product1.json' },
