@@ -1,9 +1,12 @@
-import { readFileSync } from 'fs';
-import { createConnection } from 'mariadb';
+import { Sequelize, DataTypes } from 'sequelize';
 import DataInterface from './DataInterface.js';
 
-const queries = JSON.parse(readFileSync(process.env.QUERIES, 'utf8'));
 const ERROR_MSG_START = "ERROR RemoteDB ";
+
+const modelOpt = {
+    timestamps: false,
+    freezeTableName: true
+};
 
 export default class RemoteDB extends DataInterface {
     #connConfig;
@@ -18,7 +21,13 @@ export default class RemoteDB extends DataInterface {
             password: passw,
             connectionLimit: 10
         };
-        console.log(this.#connConfig);
+
+        try {
+            this._sq.sync();
+        } catch(err) {
+            err.text = ERROR_MSG_START + "constructor: " + err.text;
+            throw err;
+        }
     }
 
     /**
@@ -51,11 +60,6 @@ export default class RemoteDB extends DataInterface {
             err.text = ERROR_MSG_START + "getProducts: " + err.text;
             throw err;
         }
-
-        // if (less > 0 && greater < less) {
-        //     // NOTE: write a query in SQL
-        // }
-        return res;
     }
 
     /**
@@ -66,19 +70,16 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getShops(limit, page) {
-        let res = [];
+        const qOpt = {
+            ...(this.#createPaging(limit, page))
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            const shopQuery = queries[2] + this.#createPaging(limit, page);
-            res = (await conn.query(shopQuery)).slice(0);
-            await conn.end();
+            return await this._models.shops.findAll(qOpt);
         } catch (err) {
             err.text = ERROR_MSG_START + "getShops: " + err.text;
             throw err;
         }
-
-        return res;
     }
 
     /**
@@ -176,34 +177,9 @@ export default class RemoteDB extends DataInterface {
     }
 
     #createPaging(limit, page) {
-        let lim = ';';
-
-        if (page > 0) {
-            let limitFrom = limit * page;
-            lim = ` OFFSET ${limitFrom};`;
-        }
-
-        lim = (limit > 0) ? ` LIMIT ${limit}${lim}` : lim;
-
-        return lim;
+        return limit && {
+            limit: limit,
+            ...(page && { offset: limit * page})
+        };
     }
 }
-
-// async function asyncRead() {
-//     let conn;
-//     try {
-//         conn = await pool.getConnection();
-//         const rows = await conn.query("select * from hello_world");
-//         rows.forEach(row => {
-//             console.log(row);
-//         });
-//         await conn.end();
-//         process.exit(0);
-//     } catch (err) {
-//         throw err;
-//     } finally {
-//         if (conn) return conn.end();
-//     }
-// }
-
-// asyncRead().catch(console.error);
