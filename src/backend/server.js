@@ -28,8 +28,8 @@ app.use((req, _, next) => {
 app.use((req, res, next) => {
     const { query } = req;
     req.query = {
-        limit: 'limit' in query ? query.limit : 0,
-        page: 'page' in query ? query.page : 0,
+        limit: 'limit' in query ? parseInt(query.limit) : 0,
+        page: 'page' in query ? parseInt(query.page) : 0,
         tags: 't' in query ? query.tags : 0
     };
 
