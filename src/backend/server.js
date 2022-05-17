@@ -5,6 +5,13 @@ import dataInstance from './data/index.js';
 const { NODE_ENV, PORT, CORS, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 const db = dataInstance(NODE_ENV, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW);
 
+const logError = (err) => {
+    console.error({
+        timestamp: new Date(Date.now()).toUTCString(),
+        error: err
+    });
+};
+
 var app = express();
 
 app.use(express.json());
@@ -48,7 +55,7 @@ app.get('/product', (req, res) => {
 
     db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            logError(e);
             res.sendStatus(404);
         });
 });
@@ -58,7 +65,7 @@ app.get('/product/:pid(\\d+)', (req, res) => {
 
     db.getProduct(pid).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            logError(e);
             res.sendStatus(404);
         });
 });
@@ -68,7 +75,7 @@ app.get('/shop', (req, res) => {
 
     db.getShops(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error("DB error", e);
+            logError(e);
             res.sendStatus(404);
         });
 });
@@ -78,7 +85,7 @@ app.get('/shop/:sid(\\d+)', (req, res) => {
 
     db.getShop(sid).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            logError(e);
             res.sendStatus(404);
         });
 });
@@ -88,7 +95,7 @@ app.get('/tag', (req, res) => {
 
     db.getTags(limit, page).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error(e.text);
+            logError(e);
             res.sendStatus(404);
         });
 });
@@ -98,7 +105,7 @@ app.get('/tag/:tid(\\d+)', (req, res) => {
 
     db.getTag(tid).then(result => res.status(200).send(result))
         .catch(e => {
-            console.error("Backend", e, '\n', req.timestamp);
+            logError(e);
             res.sendStatus(404);
         });
 });
