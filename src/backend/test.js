@@ -5,7 +5,7 @@ import { writeFileSync } from 'fs';
 const { PORT } = process.env;
 
 const paths = [
-    { path: '/product', file: '/product.json' },
+    { path: '/product?limit=20', file: '/product.json' },
     { path: '/product?limit=1', file: '/product_paged.json' },
     { path: '/product?limit=1&page=1', file: '/product_paged2.json' },
     { path: '/shop', file: '/shop.json' },
