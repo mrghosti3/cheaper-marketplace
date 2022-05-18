@@ -162,16 +162,16 @@ export default class RemoteDB extends DataInterface {
 
     /**
      * Retrieve list of shops from remote DB
+     * TODO: Create tags model (combined_tags table)
      *
      * @param {Number} limit   Product count in page. 0 -> no limit
      * @param {Number} page    Page number
      * @returns array JSON list of products and their prices in shops
      */
     async getTags(limit, page) {
-        let res = [];
+        return [];
 
         try {
-            const conn = await createConnection(this.#connConfig);
             const tagQuery = queries[3] + this.#createPaging(limit, page);
             res = (await conn.query(tagQuery)).slice(0);
             await conn.end();
@@ -189,21 +189,26 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted product with its prices in shops
      */
     async getProduct(id) {
-        let res = null;
+        const { eq } = Sequelize.Op;
+        const qOpt = {
+            where: {
+                pid: { [eq]: id }
+            },
+            include: {
+                model: this._models.productPrices,
+                as: 'shops',
+                attributes: [
+                    'sid', 'name', 'price', 'url',
+                    'shopIconUrl', 'productUrl', 'lastScan'
+                ]
+            }
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            const queryProduct = queries[4];
-            res = (await conn.query(queryProduct, id))[0];
-
-            res.shops = await conn.query(queries[1], id);
-
-            await conn.end();
+            return await this._models.products.findOne(qOpt);
         } catch (err) {
             throw err;
         }
-
-        return res;
     }
 
     /**
@@ -213,19 +218,18 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted shop
      */
     async getShop(id) {
-        let res = null;
+        const { eq } = Sequelize.Op;
+        const qOpt = {
+            where: {
+                sid: { [eq]: id }
+            }
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            const queryProduct = queries[5];
-            res = (await conn.query(queryProduct, id))[0];
-
-            await conn.end();
+            return await this._models.shops.findOne(qOpt);
         } catch (err) {
             throw err;
         }
-
-        return res;
     }
 
     /**
@@ -234,20 +238,20 @@ export default class RemoteDB extends DataInterface {
      * @param {Number} id sid (shop ID)
      * @returns Object JSON formatted shop
      */
-    async getTag(id) {
-        let res = null;
+    async getTagByID(id) {
+        return {};
+        const { eq } = Sequelize.Op;
+        const qOpt = {
+            where: {
+                tid: { [eq]: id }
+            }
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            const queryProduct = queries[6];
-            res = (await conn.query(queryProduct, id))[0];
-
-            await conn.end();
+            return await this._models.tags.findOne(qOpt);
         } catch (err) {
             throw err;
         }
-
-        return res;
     }
 
     #createPaging(limit, page) {
