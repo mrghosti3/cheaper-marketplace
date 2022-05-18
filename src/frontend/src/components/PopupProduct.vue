@@ -2,11 +2,11 @@
   <div>
     <div class="card pb-3">
       <div class="popup-store-img">
-        <img :src="prod.shop_icon_url" alt="" />
+        <img :src="prod.shopIconUrl" alt="" />
       </div>
       <div class="popup-prod-name">
-        <span v-show="name.length > 20">{{ name.substring(0,20)+"..." }}</span>
-        <span v-show="name.length <= 20">{{ name }}</span>
+        <span v-show="name.length > 36">{{ name.substring(0,36)+"..." }}</span>
+        <span v-show="name.length <= 36">{{ name }}</span>
       </div>
       <div class="popup-prod-price">
         <span>{{ prod.price }}€</span>
@@ -14,7 +14,7 @@
       <div class="popup-store-btn">
         <button>
           <a
-            :href="prod.product_url"
+            :href="prod.productUrl"
             target="_blank"
             rel="noopener noreferrer"
             >Go to store</a

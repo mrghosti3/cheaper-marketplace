@@ -28,15 +28,15 @@ import PopupProduct from "./PopupProduct.vue";
             <div class="col-md d-block mb-4">
               <div class="card best-price pb-3">
                 <div class="popup-store-img">
-                  <img :src=popProd.shops[0].shop_icon_url alt="">
+                  <img :src=popProd.shops[0].shopIconUrl alt="">
                 </div>
                 <div class="popup-prod-name">
-                  <span v-show="popProd.name.length > 20">{{ popProd.name.substring(0,20)+"..." }}</span>
-                  <span v-show="popProd.name.length <= 20">{{ popProd.name }}</span>
+                  <span v-show="popProd.name.length > 36">{{ popProd.name.substring(0,36)+"..." }}</span>
+                  <span v-show="popProd.name.length <= 36">{{ popProd.name }}</span>
                 </div>
                 <div class="popup-prod-price"><span>{{popProd.shops[0].price}}€</span></div>
                 <div class="popup-store-btn">
-                  <button><a :href=popProd.shops[0].product_url target="_blank" rel="noopener noreferrer">Go to store</a></button>
+                  <button><a :href=popProd.shops[0].productUrl target="_blank" rel="noopener noreferrer">Go to store</a></button>
                 </div>
               </div>
             </div>
