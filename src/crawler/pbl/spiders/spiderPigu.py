@@ -92,5 +92,5 @@ class SpiderpiguSpider(scrapy.Spider):
 
 
     def closed(self, reason):
-        with open("pigu.json", "w") as final:
+        with open("spiderPigu.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)

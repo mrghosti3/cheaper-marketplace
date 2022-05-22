@@ -91,5 +91,5 @@ class SpiderbarboraSpider(scrapy.Spider):
                     for d in to_clean if d.strip()]
 
     def closed(self, reason):
-        with open("barbora.json", "w") as final:
+        with open("spiderBarbora.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)

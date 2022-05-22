@@ -93,5 +93,5 @@ class SpiderelektroSpider(scrapy.Spider):
         self.item.append(shop['item'])
 
     def closed(self, reason):
-        with open("avitela.json", "w") as final:
+        with open("spiderAvitela.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)
