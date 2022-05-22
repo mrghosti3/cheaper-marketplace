@@ -2,6 +2,10 @@ import scrapy
 from pbl.items import PblSpider
 import re
 
+''' 
+ID OF THE SPIDER = 5 
+'''
+
 class SpidergintarineSpider(scrapy.Spider):
     name = 'spiderEuro'
     allowed_domains = ['www.eurovaistine.lt']

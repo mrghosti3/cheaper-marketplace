@@ -1,11 +1,19 @@
 import scrapy
-from pbl.items import PblSpider
-import re
+from pbl.items import ShopCard
+import json
 
 class SpiderelektroSpider(scrapy.Spider):
     name = 'spiderAvitela'
     allowed_domains = ['avitela.lt']
     start_urls = ['http://avitela.lt/']
+    item = []
+    list = [{
+        'sid': 2,
+        'name': 'Avitela',
+        'domain': 'https://avitela.lt/',
+        'imageurl': 'https://avitela.lt/assets/img/avitela-ukraine.svg',
+        'product': item
+        }]
 
     def __init__(self):
         self.declare_xpath()
@@ -46,43 +54,44 @@ class SpiderelektroSpider(scrapy.Spider):
             url = response.urljoin(href.extract())
             yield scrapy.Request(url,callback=self.parse_main_item)
         
-
         next_page = [response.url + '?page='+str(x)+'' for x in range(1,40)]
         for page in next_page:
             url = page
             yield scrapy.Request(url, callback=self.parse)
 
-    
     def parse_main_item(self,response):
-        item = PblSpider()
- 
+
         Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
 
         if response.xpath(self.ImageXpath).extract_first() is None:
             Image = response.xpath('//*[@id="image"]/@src').extract_first()
+            
         else:
-            Image = response.xpath(self.ImageXpath).extract_first()
+            Image = 'https://avitela.lt/assets/img/avitela-ukraine.svg'
 
         if response.xpath(self.PriceXpath).extract_first() is None:
             Price = response.xpath('/html/body/div[1]/div[2]/div[1]/div[6]/div[2]/div[2]/div/div[1]/div/div/div/div[1]/div/div/div/div[2]/div[2]/div[1]/div[1]/span/span/text()').extract_first()
         else:
             Price = response.xpath(self.PriceXpath).extract_first()
 
+        shop = ShopCard()
 
-        #Put each element into its item attribute.
-        item['Title']          = Title
-        #item['Category']      = Category
-        item['Price']          = Price.split(' ')[0]
-        #item['Features']      = Features
-        item['Image']          = Image
-        item['Link']           = Link
-
-        return item
-
-    def clean(self, to_clean):
-        if isinstance(to_clean, str):
-            return re.sub('\s+', ' ', to_clean).strip()
+        Title = response.xpath(self.TitleXpath).extract_first()
+        Link = response.url
+        Image = response.xpath(self.ImageXpath).extract_first()
+        Price = Price.replace(',', '.')
+        Price = float(Price.split(' ')[0])
         
-        return [re.sub('\s+', ' ', d).strip()
-                    for d in to_clean if d.strip()]
+        shop['item'] = {
+                'title': Title,
+                'link': Link,
+                'image': Image,
+                'price': Price
+            }
+
+        self.item.append(shop['item'])
+
+    def closed(self, reason):
+        with open("avitela.json", "w") as final:
+            json.dump(self.list, final, indent=2, ensure_ascii=False)

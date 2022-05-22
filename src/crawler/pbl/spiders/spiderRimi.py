@@ -1,5 +1,10 @@
 import scrapy
-from pbl.items import PblSpider
+from pbl.items import ShopCard
+import json
+
+''' 
+ID OF THE SPIDER = 10
+'''
 
 base_url = 'https://www.rimi.lt'
 
@@ -7,6 +12,14 @@ class PblItem(scrapy.Spider):
     name = 'spiderRimi'
     allowed_domains = ['rimi.lt']
     start_urls = ['https://www.rimi.lt/e-parduotuve/']
+    item = []
+    list = [{
+        'sid': 10,
+        'name': 'Rimi',
+        'domain': 'hhttps://www.rimi.lt/',
+        'imageurl': 'https://upload.wikimedia.org/wikipedia/lt/3/33/RIMI.png',
+        'product': item
+        }]
 
     def __init__(self):
         self.declare_xpath()
@@ -35,26 +48,27 @@ class PblItem(scrapy.Spider):
             url = response.urljoin(next_page)
             yield scrapy.Request(url, callback=self.parse_category, dont_filter=True)
     
-    def parse_main_item(self,response):
-        item = PblSpider()
- 
+    def parse_main_item(self,response): 
+        shop = ShopCard()
         Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
         Image = response.xpath(self.ImageXpath).extract_first()
         Price = response.xpath(self.PriceXpath).extract_first()
         sub_price = response.xpath(self.SubPriceXpath).extract_first()
 
-        WholePrice = Price + "." + sub_price
+        WholePrice = float(Price + "." + sub_price)
 
-        #Put each element into its item attribute.
-        item['Title']          = Title
-        #item['Category']      = Category
-        item['Price']          = WholePrice
-        #item['Features']      = Features
-        item['Image']          = Image
-        item['Link']           = Link
+        shop['item'] = {
+                'title': Title,
+                'link': Link,
+                'image': Image,
+                'price': WholePrice
+            }
 
-        return item
+        self.item.append(shop['item'])
  
+    def closed(self, reason):
+        with open("rimi.json", "w") as final:
+            json.dump(self.list, final, indent=2, ensure_ascii=False)
 
 

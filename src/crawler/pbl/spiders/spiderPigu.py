@@ -1,10 +1,23 @@
 import scrapy
-from pbl.items import PblSpider
+from pbl.items import ShopCard
+import json
+
+''' 
+ID OF THE SPIDER = 9
+'''
 
 class SpiderpiguSpider(scrapy.Spider):
     name = 'spiderPigu'
     allowed_domains = ['pigu.lt']
-    start_urls = ['https://pigu.lt/lt/']
+    start_urls = ['https://pigu.lt/']
+    item = []
+    list = [{
+        'sid': 8,
+        'name': 'MotoMoto',
+        'domain': 'hhttps://www.motomoto.lt/',
+        'imageurl': 'https://www.motomoto.lt/index_files/images/motomoto-logo.png',
+        'product': item
+        }]
 
     def __init__(self):
         self.declare_xpath()
@@ -60,19 +73,24 @@ class SpiderpiguSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_items, dont_filter=True)
     
     def parse_main_item(self,response):
-        item = PblSpider()
- 
+        shop = ShopCard()
         Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
         Image = response.xpath(self.ImageXpath).extract_first()
         Price = response.xpath(self.PriceXpath).extract_first()
 
-        #Put each element into its item attribute.
-        item['Title']          = Title
-        #item['Category']      = Category
-        item['Price']          = Price
-        #item['Features']      = Features
-        item['Image']          = Image
-        item['Link']           = Link
+        shop = ShopCard()
 
-        return item
+        shop['item'] = {
+                'title': Title,
+                'link': Link,
+                'image': Image,
+                'price': Price
+            }
+
+        self.item.append(shop['item'])
+
+
+    def closed(self, reason):
+        with open("pigu.json", "w") as final:
+            json.dump(self.list, final, indent=2, ensure_ascii=False)
