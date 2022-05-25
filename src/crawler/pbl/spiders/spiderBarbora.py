@@ -1,7 +1,8 @@
 import re
 import scrapy
-from scrapy.shell import inspect_response
-from pbl.items import PblSpider
+from pbl.items import ShopCard
+import json
+
 
 class SpiderbarboraSpider(scrapy.Spider):
     name = 'spiderBarbora'
@@ -17,7 +18,14 @@ class SpiderbarboraSpider(scrapy.Spider):
                  'https://barbora.lt/kosmetika-ir-higiena',
                  'https://barbora.lt/svaros-ir-gyvunu-prekes',
                 'https://barbora.lt/namai-ir-laisvalaikis']
-
+    item = []
+    list = [{
+        'sid': 3,
+        'name': 'Barbora',
+        'domain': 'https://barbora.lt/',
+        'imageurl': 'https://upload.wikimedia.org/wikipedia/lt/c/c1/Barbora_logo.jpg',
+        'product': item
+        }]
     def __init__(self):
         self.declare_xpath()
 
@@ -49,8 +57,7 @@ class SpiderbarboraSpider(scrapy.Spider):
         #     yield scrapy.Request(url, callback=self.parse)
 
     def parse_main_item(self,response):
-        item = PblSpider()
- 
+
         Title = response.xpath('/html/body/div[1]/div/div[3]/div/div[3]/div/div[1]/div[1]/div[2]/div[2]/h1/text()').extract_first()
         Link = response.url
         Image = response.xpath('/html/body/div/div/div/div/div[3]/div/div[1]/div[1]/div[2]/div[1]/div/div/div[2]/div/img/@src').extract_first()
@@ -58,13 +65,23 @@ class SpiderbarboraSpider(scrapy.Spider):
         Price = response.xpath('/html/body/div/div/div[3]/div/div[3]/div/div[1]/div[1]/div[2]/div[2]/div/div[1]/div[1]/span/text()').extract_first()
         Price = self.clean(Price)
                                 
-        #Put each element into its item attribute.
-        item['Title']          = Title
-        item['Price']          = Price
-        item['Image']          = Image
-        item['Link']           = Link
+        shop = ShopCard()
 
-        return item
+        Title = response.xpath('/html/body/div[1]/div/div[3]/div/div[3]/div/div[1]/div[1]/div[2]/div[2]/h1/text()').extract_first()
+        Link = response.url
+        Image = response.xpath('/html/body/div[1]/div/div[3]/div/div[3]/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/img/@src').extract_first()
+        Price = Price.replace(',', '.')
+        Price = Price[1:]
+        Price = float(Price)
+        
+        shop['item'] = {
+                'title': Title,
+                'link': Link,
+                'image': Image,
+                'price': Price
+            }
+
+        self.item.append(shop['item'])
     
     def clean(self, to_clean):
         if isinstance(to_clean, str):
@@ -72,3 +89,7 @@ class SpiderbarboraSpider(scrapy.Spider):
         
         return [re.sub('\s+', ' ', d).strip()
                     for d in to_clean if d.strip()]
+
+    def closed(self, reason):
+        with open("spiderBarbora.json", "w") as final:
+            json.dump(self.list, final, indent=2, ensure_ascii=False)

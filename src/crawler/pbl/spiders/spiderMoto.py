@@ -1,11 +1,24 @@
 import scrapy
-from pbl.items import PblSpider
+from pbl.items import ShopCard
+import json
+
+''' 
+ID OF THE SPIDER = 8
+'''
 
 class SpidermotoSpider(scrapy.Spider):
     name = 'spiderMoto'
     allowed_domains = ['www.motomoto.lt']
     start_urls = ['http://www.motomoto.lt/']
     base_url = 'http://www.motomoto.lt'
+    item = []
+    list = [{
+        'sid': 8,
+        'name': 'MotoMoto',
+        'domain': 'hhttps://www.motomoto.lt/',
+        'imageurl': 'https://www.motomoto.lt/index_files/images/motomoto-logo.png',
+        'product': item
+        }]
 
     def __init__(self):
         self.declare_xpath()
@@ -39,17 +52,24 @@ class SpidermotoSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_category, dont_filter=True)
             
     def parse_main_item(self,response):
-            item = PblSpider()
+        Title = response.xpath(self.TitleXpath).extract_first()
+        Link = response.url
+        Image = self.base_url + response.xpath(self.ImageXpath).extract_first()
+        Price = response.xpath(self.PriceXpath).extract_first()
+        Price = Price.replace(',', '.')
+        Price = float(Price.split(' ')[1])
+        shop = ShopCard()
 
-            Title = response.xpath(self.TitleXpath).extract_first()
-            Link = response.url
-            Image = response.xpath(self.ImageXpath).extract_first()
-            Price = response.xpath(self.PriceXpath).extract_first()
+        shop['item'] = {
+                'title': Title,
+                'link': Link,
+                'image': Image,
+                'price': Price
+            }
 
-            item['Title']          = Title
-            item['Price']          = Price
-            item['Image']          = self.base_url + Image
-            item['Link']           = Link
+        self.item.append(shop['item'])
 
-            return item
+    def closed(self, reason):
+        with open("spiderMoto.json", "w") as final:
+            json.dump(self.list, final, indent=2, ensure_ascii=False)
     

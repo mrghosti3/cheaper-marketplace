@@ -6,6 +6,5 @@
         "node_modules/*",
         ".env.local"
     ],
-    "verbose": true,
     "ext": "js,json"
 }

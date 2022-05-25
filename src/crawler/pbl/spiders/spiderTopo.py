@@ -4,6 +4,10 @@ from pbl.items import PblSpider
 from scrapy.loader import ItemLoader
 from math import ceil 
 
+''' 
+ID OF THE SPIDER = 11
+'''
+
 base_url = 'https://www.topocentras.lt'
 
 headers = {

@@ -103,7 +103,7 @@ app.get('/tag', (req, res) => {
 app.get('/tag/:tid(\\d+)', (req, res) => {
     const { tid } = req.params;
 
-    db.getTag(tid).then(result => res.status(200).send(result))
+    db.getTagByID(tid).then(result => res.status(200).send(result))
         .catch(e => {
             logError(e);
             res.sendStatus(404);
