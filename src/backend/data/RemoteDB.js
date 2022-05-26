@@ -1,5 +1,8 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import DataInterface from './DataInterface.js';
+import ProductModel from './ProductModel.js';
+import ProductPricesModel from './ProductPricesModel.js';
+import ShopModel from './ShopModel.js';
 
 const modelOpt = {
     timestamps: false,
@@ -14,83 +17,18 @@ export default class RemoteDB extends DataInterface {
             `mariadb://${user}:${passw}@${host}:${port}/${name}`
         );
         this._models = {}
-        this._models.products = this._sq.define('product', {
+        this._models.products = this._sq.define('product', ProductModel, modelOpt);
+        this._models.shops = this._sq.define('shop', ShopModel, modelOpt);
+        this._models.productPrices = this._sq.define('product_prices', ProductPricesModel, modelOpt);
+        this._models.combinedTags = this._sq.define('combined_tags', {
+            tid: {
+                type: DataTypes.INTEGER
+            },
             pid: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-            },
-            name: {
-                type: DataTypes.STRING(100),
-                allowNull: true
-            },
-            productIconUrl: {
-                type: DataTypes.STRING(1024),
-                allowNull: false,
-                defaultValue: 'http://www.domain.lt/product_image_path',
-                field: 'image_url'
-            }
-        }, modelOpt);
-        this._models.shops = this._sq.define('shop', {
-            sid: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-            },
-            name: {
-                type: DataTypes.STRING(50),
-                allowNull: true
-            },
-            url: {
-                type: DataTypes.STRING(1024),
-                allowNull: false,
-                defaultValue: 'http://www.domain.lt/product_image_path',
-                field: 'domain'
-            },
-            shopIconUrl: {
-                type: DataTypes.STRING(1024),
-                allowNull: false,
-                defaultValue: 'http://www.domain.lt/product_image_path',
-                field: 'image_url'
-            }
-        }, modelOpt);
-        this._models.productPrices = this._sq.define('product_prices', {
-            pid: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
+                type: DataTypes.INTEGER
             },
             sid: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-            name: {
-                type: DataTypes.STRING(50),
-                allowNull: true
-            },
-            url: {
-                type: DataTypes.STRING(1024),
-                allowNull: false,
-                defaultValue: 'http://www.domain.lt/product_image_path',
-                field: 'domain'
-            },
-            shopIconUrl: {
-                type: DataTypes.STRING(1024),
-                allowNull: false,
-                defaultValue: 'http://www.domain.lt/product_image_path',
-                field: 'shop_image_url'
-            },
-            productUrl: {
-                type: DataTypes.TEXT,
-                allowNull: true,
-                field: 'product_url'
-            },
-            lastScan: {
-                type: DataTypes.TIME,
-                primaryKey: true,
-                field: 'last_scan'
-            },
-            price: {
-                type: DataTypes.DECIMAL
+                type: DataTypes.INTEGER
             }
         }, modelOpt);
 
@@ -169,17 +107,15 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getTags(limit, page) {
-        return [];
+        const qOpt = {
+            ...(this.#createPaging(limit, page))
+        };
 
         try {
-            const tagQuery = queries[3] + this.#createPaging(limit, page);
-            res = (await conn.query(tagQuery)).slice(0);
-            await conn.end();
+            return await this._models.combinedTags.findAll(qOpt);
         } catch (err) {
             throw err;
         }
-
-        return res;
     }
 
     /**
