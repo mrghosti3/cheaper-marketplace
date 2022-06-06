@@ -1,3 +1,4 @@
+import { Console } from 'console';
 import 'dotenv/config';
 import { readFileSync } from 'fs';
 import { Sequelize, DataTypes } from 'sequelize';
@@ -13,7 +14,10 @@ const dataList = [
     // 'spiderTopo.json'
 ];
 
-const sq = new Sequelize(`mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
+const sq = new Sequelize(`mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+    //Disables action logging to console
+    logging: false
+});
 
 const modelOpt = {
     timestamps: false,
@@ -130,7 +134,6 @@ async function processOutput(relFile, t) {
 
     entries.pdata = [];
     entries.tags = [];
-    entries.toTag = [];
 
     for (const i in entries.products) {
         const p = entries.products[i];
@@ -140,7 +143,8 @@ async function processOutput(relFile, t) {
             pid: pid,
             sid: entries.shop.sid,
             price: price, //.replace(',', '.')
-            product_path: p.Link
+            product_path: p.Link,
+            last_scan: '2022-06-6'
         });
         entries.products[i] = {
             pid: pid,
@@ -153,46 +157,63 @@ async function processOutput(relFile, t) {
         // Kai ivyksta insert fail, gauni to tago id ir pagal tai atnaujini product tag lentele (priskiri pid prie tid)
         let tag_list = p.Title.split(" ");
         for (const j in tag_list) {
-            if (entries.tags.includes(tag_list[j]));
-            else entries.tags.push(tag_list[j]);
+            tag_list[j] = tag_list[j].replace(/[^a-zA-Z ]/g, "");
         }
+        entries.tags.push(tag_list);
     }
-    console.log(entries.tags)
 
 
-    // try {
-    //     // let product_list = await products.findAll();
-    //     // console.log(product_list);
+    try {
+        console.log('Inserting shop');
+        let s = entries.shop
+        const shop = shops.build({ sid: s.sid, name: s.name, domain: s.domain, image_url: s.image_url })
+        await shop.save()
 
-    //     console.log('Inserting shop');
-    //     let shop_list = await shops.findAll();
-    //     if (shop_list.includes(entries.shop));
-    //     else {
-    //         let s = entries.shop
-    //         const shop = shops.build({ sid: s.sid, name: s.name, domain: s.domain, image_url: s.image_url })
-    //         await shop.save()
-    //     }
+        console.log('Inserting pdata');
+        for (const i in entries.pdata) {
+            const p = entries.pdata[i];
+            const pdata_save = pdata.build({ pid: p.pid, sid: p.sid, last_scan: p.last_scan, price: p.price, product_path: p.product_path })
+            await pdata_save.save();
+        }
 
-    //     console.log('Inserting pdata');
-    //     for (const i in entries.pdata[i]) {
-    //         const p = entries.pdata[i];
-    //         const pdata_save = pdata.build({ pid: p.pid, sid: p.sid, last_scan: p.last_scan, price: p.price, product_path: p.product_path })
-    //         await pdata_save.save();
-    //     }
+        console.log('Inserting products');
+        for (const i in entries.products) {
+            const p = entries.products[i];
+            const product = products.build({ pid: p.pid, name: p.name, image_url: p.image_url })
+            await product.save()
+        }
 
-    //     console.log('Inserting products');
-    //     for (const i in entries.products) {
-    //         const p = entries.products[i];
-    //         const product = products.build({ pid: p.pid, name: p.name, image_url: p.image_url })
-    //         await product.save()
-    //     }
+        console.log('Inserting tags');
+        for (const i in entries.tags) {
+            const p = entries.tags[i];
+            for (const j in p) {
+                const product = tags.build({ term: p[j] })
+                try {
+                    await product.save()
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }
+        }
 
-    // } catch (err) {
-    //     console.error(err);
-    //     process.exit(-2);
-    // }
-
-
+        console.log('Assigning tid to pid and sid');
+        for (const i in entries.products) {
+            const p = entries.products[i];
+            const tag = entries.tags[i];
+            for (const j in tag) {
+                const tag_ = await tags.findOne({ where: { term: tag[j] } });
+                const p_tag = product_tags.build({ pid: p.pid, tid: tag_.tid })
+                const shop_sid = entries.pdata[i].sid;
+                const s_tag = shop_tags.build({ sid: shop_sid, tid: tag_.tid })
+                await p_tag.save()
+                await s_tag.save()
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        process.exit(-2);
+    }
 }
 
 try {
