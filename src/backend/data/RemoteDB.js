@@ -1,4 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import CombinedTagsModel from './CombinedTagsModel.js';
 import DataInterface from './DataInterface.js';
 import ProductModel from './ProductModel.js';
 import ProductPricesModel from './ProductPricesModel.js';
@@ -16,26 +17,37 @@ export default class RemoteDB extends DataInterface {
         this._sq = new Sequelize(
             `mariadb://${user}:${passw}@${host}:${port}/${name}`
         );
-        this._models = {}
-        this._models.products = this._sq.define('product', ProductModel, modelOpt);
-        this._models.shops = this._sq.define('shop', ShopModel, modelOpt);
-        this._models.productPrices = this._sq.define('product_prices', ProductPricesModel, modelOpt);
-        this._models.combinedTags = this._sq.define('combined_tags', {
+        this._sq.define('product', ProductModel, modelOpt);
+        this._sq.define('shop', ShopModel, modelOpt);
+        this._sq.define('product_prices', ProductPricesModel, modelOpt);
+
+        this._sq.define('combined_tags', CombinedTagsModel, modelOpt);
+        this._sq.define('tag', {
             tid: {
-                type: DataTypes.INTEGER
+                type: DataTypes.INTEGER,
+                primaryKey: true
             },
-            pid: {
-                type: DataTypes.INTEGER
-            },
-            sid: {
-                type: DataTypes.INTEGER
+            term: {
+                type: DataTypes.STRING(50)
             }
         }, modelOpt);
 
-        this._models.products.hasMany(this._models.productPrices, {
+        this._models = this._sq.models;
+
+        // product x product_prices
+        this._models.product.hasMany(this._models.product_prices, {
             as: 'shops',
             foreignKey: {
                 name: 'pid',
+                allowNull: false
+            }
+        });
+
+        // combined_tags x tag
+        this._models.combined_tags.belongsTo(this._models.tag, {
+            as: 'tag',
+            foreignKey: {
+                name: 'tid',
                 allowNull: false
             }
         });
@@ -60,7 +72,7 @@ export default class RemoteDB extends DataInterface {
     async getProducts(greater, less, limit, page) {
         const qOpt = {
             include: {
-                model: this._models.productPrices,
+                model: this._models.product_prices,
                 as: 'shops',
                 required: true,
                 attributes: [
@@ -72,7 +84,7 @@ export default class RemoteDB extends DataInterface {
         };
 
         try {
-            let res = await this._models.products.findAll(qOpt);
+            let res = await this._models.product.findAll(qOpt);
             return res;
         } catch (err) {
             throw err;
@@ -92,7 +104,7 @@ export default class RemoteDB extends DataInterface {
         };
 
         try {
-            return await this._models.shops.findAll(qOpt);
+            return await this._models.shop.findAll(qOpt);
         } catch (err) {
             throw err;
         }
@@ -100,7 +112,6 @@ export default class RemoteDB extends DataInterface {
 
     /**
      * Retrieve list of shops from remote DB
-     * TODO: Create tags model (combined_tags table)
      *
      * @param {Number} limit   Product count in page. 0 -> no limit
      * @param {Number} page    Page number
@@ -108,11 +119,16 @@ export default class RemoteDB extends DataInterface {
      */
     async getTags(limit, page) {
         const qOpt = {
+            include: {
+                model: this._models.tag,
+                as: 'tag',
+                // required: true
+            },
             ...(this.#createPaging(limit, page))
         };
 
         try {
-            return await this._models.combinedTags.findAll(qOpt);
+            return await this._models.combined_tags.findAll(qOpt);
         } catch (err) {
             throw err;
         }
@@ -131,7 +147,7 @@ export default class RemoteDB extends DataInterface {
                 pid: { [eq]: id }
             },
             include: {
-                model: this._models.productPrices,
+                model: this._models.product_prices,
                 as: 'shops',
                 attributes: [
                     'sid', 'name', 'price', 'url',
@@ -141,7 +157,7 @@ export default class RemoteDB extends DataInterface {
         };
 
         try {
-            return await this._models.products.findOne(qOpt);
+            return await this._models.product.findOne(qOpt);
         } catch (err) {
             throw err;
         }
@@ -162,7 +178,7 @@ export default class RemoteDB extends DataInterface {
         };
 
         try {
-            return await this._models.shops.findOne(qOpt);
+            return await this._models.shop.findOne(qOpt);
         } catch (err) {
             throw err;
         }
