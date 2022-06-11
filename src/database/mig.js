@@ -13,13 +13,18 @@ import initModels from './models/index.js';
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 
 const sequelize = new Sequelize(
-    `mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
+    `mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+    { logging: false }
 );
 
 initModels(sequelize);
 
+const migContext = {
+    queryInterface: sequelize.getQueryInterface(),
+    sequelize, DataTypes
+}
+
 const storage = new SequelizeStorage({ sequelize });
-const queryInterface = sequelize.getQueryInterface();
 
 const umzug = new Umzug({
     migrations: {
@@ -34,7 +39,7 @@ const umzug = new Umzug({
             };
         }
     },
-    context: { queryInterface, sequelize, DataTypes },
+    context: migContext,
     storage: storage,
     logger: console
 });
