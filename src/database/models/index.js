@@ -1,17 +1,13 @@
-import { tname as sname, tmodel as smodel } from "./shop.js";
-import { tname as pname, tmodel as pmodel } from "./product.js";
-import { tname as pdname, tmodel as pdmodel } from "./productData.js";
+import { screate } from "./shop.js";
+import { pcreate } from "./product.js";
+import { pdcreate } from "./productData.js";
 
-const models = [
-    { name: pname, model: pmodel },
-    { name: sname, model: smodel },
-    { name: pdname, model: pdmodel }
-];
+const modelFuncs = [ screate, pcreate, pdcreate ];
+export const modelOpt = {
+    timestamps: false,
+    freezeTableName: true
+};
 
-export default function(seq) {
-    const modelOpt = {
-        timestamps: false,
-        freezeTableName: true
-    };
-    return models.map((item) => seq.define(item.name, item.model, modelOpt));
-}
+export const initModels = (seq, DataTypes, modelOpt) => {
+    return modelFuncs.map((create) => create(seq, DataTypes, modelOpt));
+};

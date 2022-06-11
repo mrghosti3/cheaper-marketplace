@@ -8,7 +8,7 @@ import 'dotenv/config';
 import { Sequelize, DataTypes } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
 import path from 'path';
-import initModels from './models/index.js';
+import { modelOpt, initModels } from './models/index.js';
 
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 
@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
     { logging: false }
 );
 
-initModels(sequelize);
+initModels(sequelize, DataTypes, modelOpt);
 
 const migContext = {
     queryInterface: sequelize.getQueryInterface(),
