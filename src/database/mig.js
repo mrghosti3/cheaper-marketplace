@@ -8,7 +8,6 @@ import 'dotenv/config';
 import { Sequelize, DataTypes } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
 import path from 'path';
-import { modelOpt, initModels } from './models/index.js';
 
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 
