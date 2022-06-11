@@ -1,4 +1,4 @@
-import { ppname } from "../models/productPrices";
+import { ppname } from "../models/productPrices.js";
 
 const productPricesView = {
     name: ppname,
