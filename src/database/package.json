@@ -5,8 +5,8 @@
   "main": "mig.js",
   "type": "module",
   "scripts": {
-      "migration": "node mig.js up",
-      "revert": "node mig.js down"
+      "mig": "node mig.js up",
+      "rev": "node mig.js down"
   },
   "author": "Cheaper",
   "license": "UNLICENSED",
