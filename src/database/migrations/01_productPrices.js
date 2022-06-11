@@ -1,5 +1,7 @@
+import { ppname } from "../models/productPrices";
+
 const productPricesView = {
-    name: 'product_prices',
+    name: ppname,
     sql: [
         "SELECT pid, sid, name, domain, s.image_url AS shop_image_url,",
                "pd.last_scan AS last_scan, pd.price AS price,",

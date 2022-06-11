@@ -17,8 +17,6 @@ const sequelize = new Sequelize(
     { logging: false }
 );
 
-initModels(sequelize, DataTypes, modelOpt);
-
 const migContext = {
     queryInterface: sequelize.getQueryInterface(),
     sequelize, DataTypes
