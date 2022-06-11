@@ -1,4 +1,4 @@
-import { tname, tmodel } from '../models/pdata.js';
+import { tname, tmodel } from '../models/productData.js';
 
 /**
  * This migrations purpose is to create table for pdata if it doesn't exist.
