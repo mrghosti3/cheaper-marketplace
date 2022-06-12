@@ -27,6 +27,19 @@ export const ptcreate = (sequelize, DataTypes, modelOpt) => {
     const ptinst = sequelize.isDefined(ptname) ? sequelize.model(ptname)
         : sequelize.define(ptname, ptmodel, { ...modelOpt });
 
+    sequelize.model(tname).belongsToMany(sequelize.model(pname), {
+        through: ptinst,
+        as: 'products',
+        foreignKey: {
+            name: 'tid',
+            allowNull: false
+        },
+        otherKey: {
+            name: 'pid',
+            allowNull: false
+        }
+    });
+
     return { ptname, ptmodel, ptinst };
 };
 
@@ -54,6 +67,19 @@ export const stcreate = (sequelize, DataTypes, modelOpt) => {
 
     const stinst = sequelize.isDefined(stname) ? sequelize.model(stname)
         : sequelize.define(stname, stmodel, { ...modelOpt });
+
+    sequelize.model(tname).belongsToMany(sequelize.model(sname), {
+        through: stinst,
+        as: 'shops',
+        foreignKey: {
+            name: 'tid',
+            allowNull: false
+        },
+        otherKey: {
+            name: 'sid',
+            allowNull: false
+        }
+    });
 
     return { stname, stmodel, stinst };
 };

@@ -53,5 +53,13 @@ export const ppcreate = (sequelize, DataTypes, modelOpt) => {
     const ppinst = sequelize.isDefined(ppname) ? sequelize.model(ppname)
         : sequelize.define(ppname, ppmodel, { ...modelOpt });
 
+    sequelize.model(pname).hasMany(ppinst, {
+        as: 'shops',
+        foreignKey: {
+            name: 'pid',
+            allowNull: false
+        }
+    });
+
     return { ppname, ppmodel, ppinst };
 }

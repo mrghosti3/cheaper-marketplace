@@ -1,14 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import CombinedTagsModel from './CombinedTagsModel.js';
 import DataInterface from './DataInterface.js';
-import ProductModel from './ProductModel.js';
-import ProductPricesModel from './ProductPricesModel.js';
-import ShopModel from './ShopModel.js';
-
-const modelOpt = {
-    timestamps: false,
-    freezeTableName: true
-};
+import { modelOpt, initModels } from 'database';
 
 export default class RemoteDB extends DataInterface {
 
@@ -17,46 +9,39 @@ export default class RemoteDB extends DataInterface {
         this._sq = new Sequelize(
             `mariadb://${user}:${passw}@${host}:${port}/${name}`
         );
-        this._sq.define('product', ProductModel, modelOpt);
-        this._sq.define('shop', ShopModel, modelOpt);
-        this._sq.define('product_prices', ProductPricesModel, modelOpt);
-
-        this._sq.define('combined_tags', CombinedTagsModel, modelOpt);
-        this._sq.define('tag', {
-            tid: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-            term: {
-                type: DataTypes.STRING(50)
-            }
-        }, modelOpt);
-
+        initModels(this._sq, DataTypes, modelOpt);
         this._models = this._sq.models;
-
-        // product x product_prices
-        this._models.product.hasMany(this._models.product_prices, {
-            as: 'shops',
-            foreignKey: {
-                name: 'pid',
-                allowNull: false
-            }
-        });
-
-        // combined_tags x tag
-        this._models.combined_tags.belongsTo(this._models.tag, {
-            as: 'tag',
-            foreignKey: {
-                name: 'tid',
-                allowNull: false
-            }
-        });
 
         try {
             this._sq.sync();
         } catch(err) {
             throw err;
         }
+    }
+
+    get prodInclude() {
+        return {
+            model: this._models.product_prices,
+            as: 'shops',
+            required: true,
+            attributes: [
+                'sid', 'name', 'price', 'shopUrl',
+                'shopIconUrl', 'productUrl', 'lastScan'
+            ]
+        };
+    }
+
+    get tagInclude(){
+        return [
+            {
+                model: this._models.product,
+                as: 'products'
+            },
+            {
+                model: this._models.shop,
+                as: 'shops'
+            }
+        ];
     }
 
     /**
@@ -71,15 +56,7 @@ export default class RemoteDB extends DataInterface {
      */
     async getProducts(greater, less, limit, page) {
         const qOpt = {
-            include: {
-                model: this._models.product_prices,
-                as: 'shops',
-                required: true,
-                attributes: [
-                    'sid', 'name', 'price', 'url',
-                    'shopIconUrl', 'productUrl', 'lastScan'
-                ]
-            },
+            include: this.prodInclude,
             ...(this.#createPaging(limit, page))
         };
 
@@ -119,16 +96,12 @@ export default class RemoteDB extends DataInterface {
      */
     async getTags(limit, page) {
         const qOpt = {
-            include: {
-                model: this._models.tag,
-                as: 'tag',
-                // required: true
-            },
+            include: this.tagInclude,
             ...(this.#createPaging(limit, page))
         };
 
         try {
-            return await this._models.combined_tags.findAll(qOpt);
+            return await this._models.tag.findAll(qOpt);
         } catch (err) {
             throw err;
         }
@@ -146,14 +119,7 @@ export default class RemoteDB extends DataInterface {
             where: {
                 pid: { [eq]: id }
             },
-            include: {
-                model: this._models.product_prices,
-                as: 'shops',
-                attributes: [
-                    'sid', 'name', 'price', 'url',
-                    'shopIconUrl', 'productUrl', 'lastScan'
-                ]
-            }
+            include: this.prodInclude
         };
 
         try {
@@ -191,16 +157,16 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted shop
      */
     async getTagByID(id) {
-        return {};
         const { eq } = Sequelize.Op;
         const qOpt = {
+            include: this.tagInclude,
             where: {
                 tid: { [eq]: id }
             }
         };
 
         try {
-            return await this._models.tags.findOne(qOpt);
+            return await this._models.tag.findOne(qOpt);
         } catch (err) {
             throw err;
         }
