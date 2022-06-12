@@ -4,10 +4,11 @@ import { modelOpt, initModels } from 'database';
 
 export default class RemoteDB extends DataInterface {
 
-    constructor(host, port, name, user, passw) {
+    constructor(host, port, name, user, passw, logging) {
         super();
         this._sq = new Sequelize(
-            `mariadb://${user}:${passw}@${host}:${port}/${name}`
+            `mariadb://${user}:${passw}@${host}:${port}/${name}`,
+            { logging: logging === 'true' }
         );
         initModels(this._sq, DataTypes, modelOpt);
         this._models = this._sq.models;
