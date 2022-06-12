@@ -118,5 +118,5 @@ app.get('/search', (req, res) => {
     // NOTE: Include 'tags' processing (First for remote DB)
     const { limit, page } = req.query;
 
-    db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result));
+    db.getProducts(0, 0, 5, page).then(result => res.status(200).send(result));
 });
