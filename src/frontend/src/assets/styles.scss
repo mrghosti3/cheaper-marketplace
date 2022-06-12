@@ -190,61 +190,7 @@ nav {
         #popup-body {
             .best-price {
                 box-shadow: 0px 0px 2px 3px #FFD700;
-                .popup-store-img {
-                    margin-top: 1rem;
-                    text-align: center;
-                    height: 40px;
-                }
-    
-                .popup-store-img img {
-                    position: relative;
-                    width: auto;
-                    height: auto;
-                    max-width: 8rem;
-                    max-height: 4rem;
-                    align-self: center;
-                }
-    
-                .popup-prod-name {
-                    margin-top: 1rem;
-                    text-align: center;
-                    font-size: 1rem;
-                    font-weight: 400;
-                }
-    
-                .popup-prod-price {
-                    margin-top: 2rem;
-                    text-align: center;
-                    font-size: 1.5rem;
-                    font-weight: 450;
-                    color: black;
-                }
-    
-                .popup-store-btn {
-                    margin-top: 1rem;
-                    align-self: center;
-    
-                    button {
-                        width: 140px;
-                        height: 30px;
-                        background: #40E647;
-                        border-radius: 20px;
-                        border-style: none;
-                        text-align: center;
-                        font-size: 0.75rem;
-                        font-weight: 500;
-                    }
-    
-                    a {
-                        color: black;
-                        text-decoration: none;
-                        text-align: center;
-                        font-size: 0.75rem;
-                        font-weight: 500;
-                    }
-                }
-            }
-            .other-products{
+
                 .popup-store-img {
                     margin-top: 1rem;
                     text-align: center;
@@ -259,14 +205,14 @@ nav {
                     max-height: 4rem;
                     align-self: center;
                 }
-    
+
                 .popup-prod-name {
                     margin-top: 1rem;
                     text-align: center;
                     font-size: 1rem;
                     font-weight: 400;
                 }
-    
+
                 .popup-prod-price {
                     margin-top: 2rem;
                     text-align: center;
@@ -274,11 +220,11 @@ nav {
                     font-weight: 450;
                     color: black;
                 }
-    
+
                 .popup-store-btn {
                     margin-top: 1rem;
                     align-self: center;
-    
+
                     button {
                         width: 140px;
                         height: 30px;
@@ -289,7 +235,7 @@ nav {
                         font-size: 0.75rem;
                         font-weight: 500;
                     }
-    
+
                     a {
                         color: black;
                         text-decoration: none;
@@ -299,6 +245,63 @@ nav {
                     }
                 }
             }
+
+            .other-products {
+                .popup-store-img {
+                    margin-top: 1rem;
+                    text-align: center;
+                    height: 40px;
+                }
+
+                .popup-store-img img {
+                    position: relative;
+                    width: auto;
+                    height: auto;
+                    max-width: 8rem;
+                    max-height: 4rem;
+                    align-self: center;
+                }
+
+                .popup-prod-name {
+                    margin-top: 1rem;
+                    text-align: center;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+
+                .popup-prod-price {
+                    margin-top: 2rem;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    font-weight: 450;
+                    color: black;
+                }
+
+                .popup-store-btn {
+                    margin-top: 1rem;
+                    align-self: center;
+
+                    button {
+                        width: 140px;
+                        height: 30px;
+                        background: #40E647;
+                        border-radius: 20px;
+                        border-style: none;
+                        text-align: center;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                    }
+
+                    a {
+                        color: black;
+                        text-decoration: none;
+                        text-align: center;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                    }
+                }
+            }
+
             // .chart-container {
             //     width: 60vw;
             //     height: auto;
@@ -308,7 +311,22 @@ nav {
     }
 }
 
-.load-more{
+.report-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    border-radius: 50px;
+    height: 3rem;
+    width: 3rem;
+    background-color: #ff1e00;
+}
+
+.modal-backdrop {
+    display: none !important;
+}
+
+
+.load-more {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
     width: 8rem;
     height: 2rem;

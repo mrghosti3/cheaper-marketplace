@@ -4,7 +4,7 @@ import PopupProduct from "./PopupProduct.vue";
 
 <template>
   <!-- Product price comparison popup -->
-  <div :id="`popup${popProd.pid}`" class="modal justify-content-center">
+  <div :id="`popup${popProd.pid}`" class="modal fade justify-content-center" data-backdrop="static" data-keyboard="false">
     <div id="popup-dialog" class="modal-dialog d-block">
       <div id="popup-content" class="modal-content">
         <!-- Header -->
