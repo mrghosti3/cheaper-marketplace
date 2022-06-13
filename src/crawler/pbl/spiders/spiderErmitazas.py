@@ -2,19 +2,19 @@ import scrapy
 import json
 from pbl.items import ShopCard
 
-class SpidereuroSpider(scrapy.Spider):
-    name = 'spiderEuro'
+class SpiderermitazasSpider(scrapy.Spider):
+    name = 'spiderErmitazas'
     allowed_domains = ['www.trobos.lt']
     start_urls = []
-    for page in range(1,82):
-        url=f'https://trobos.lt/prekes?vendor=eurovaistine&page={page}'
+    for page in range(1,400):
+        url=f'https://trobos.lt/prekes?vendor=ermitazas&page={page}'
         start_urls.append(url)
     item = []
     list = [{
-        'sid': 15,
-        'name': 'Samsung',
-        'domain': 'https://www.eurovaistine.lt/',
-        'imageurl': 'https://www.eurovaistine.lt/build/themes/ev/eurovaistine-theme/images/app/logo.png',
+        'sid': 13,
+        'name': 'Ermitazas',
+        'domain': 'https://www.ermitazas.lt/',
+        'imageurl': 'https://upload.wikimedia.org/wikipedia/lt/9/9d/Ermitazas-logo.pngg',
         'product': item
         }]
 
@@ -35,7 +35,7 @@ class SpidereuroSpider(scrapy.Spider):
         shop = ShopCard()
         Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
-        Image = 'https://cdns.iconmonstr.com/wp-content/releases/preview/2019/240/iconmonstr-product-3.png'
+        Image = 'https://upload.wikimedia.org/wikipedia/lt/9/9d/Ermitazas-logo.png'
         Price = response.xpath(self.PriceXpath).extract_first()
         Price = Price.replace(',', '.')
         Price = float(Price.split(' ')[0])
@@ -50,5 +50,5 @@ class SpidereuroSpider(scrapy.Spider):
         self.item.append(shop['item'])
  
     def closed(self, reason):
-        with open("spiderEuro.json", "w") as final:
+        with open("spiderErmitazas.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)

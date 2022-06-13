@@ -6,8 +6,6 @@ import json
 ID OF THE SPIDER = 10
 '''
 
-base_url = 'https://www.rimi.lt'
-
 class PblItem(scrapy.Spider):
     name = 'spiderRimi'
     allowed_domains = ['rimi.lt']

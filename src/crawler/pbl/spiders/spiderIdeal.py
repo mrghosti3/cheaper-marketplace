@@ -2,19 +2,19 @@ import scrapy
 import json
 from pbl.items import ShopCard
 
-class SpidereuroSpider(scrapy.Spider):
-    name = 'spiderEuro'
+class SpideridealSpider(scrapy.Spider):
+    name = 'spiderIdeal'
     allowed_domains = ['www.trobos.lt']
     start_urls = []
-    for page in range(1,82):
-        url=f'https://trobos.lt/prekes?vendor=eurovaistine&page={page}'
+    for page in range(1,17):
+        url=f'https://trobos.lt/prekes?vendor=ideal&page={page}'
         start_urls.append(url)
     item = []
     list = [{
         'sid': 15,
         'name': 'Samsung',
-        'domain': 'https://www.eurovaistine.lt/',
-        'imageurl': 'https://www.eurovaistine.lt/build/themes/ev/eurovaistine-theme/images/app/logo.png',
+        'domain': 'https://www.ideal.lt/',
+        'imageurl': 'https://content.trobos.lt/uploads/cache/odiseo_sylius_vendor_plugin_logo/6076a901d52a1120636483.png.webp',
         'product': item
         }]
 
@@ -50,5 +50,5 @@ class SpidereuroSpider(scrapy.Spider):
         self.item.append(shop['item'])
  
     def closed(self, reason):
-        with open("spiderEuro.json", "w") as final:
+        with open("spiderIdeal.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)

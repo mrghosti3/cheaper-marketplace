@@ -2,19 +2,19 @@ import scrapy
 import json
 from pbl.items import ShopCard
 
-class SpidereuroSpider(scrapy.Spider):
-    name = 'spiderEuro'
+class SpidersamsungSpider(scrapy.Spider):
+    name = 'spiderSamsung'
     allowed_domains = ['www.trobos.lt']
     start_urls = []
-    for page in range(1,82):
-        url=f'https://trobos.lt/prekes?vendor=eurovaistine&page={page}'
+    for page in range(1,5):
+        url=f'https://trobos.lt/prekes?vendor=samsung&page={page}'
         start_urls.append(url)
     item = []
     list = [{
-        'sid': 15,
+        'sid': 13,
         'name': 'Samsung',
-        'domain': 'https://www.eurovaistine.lt/',
-        'imageurl': 'https://www.eurovaistine.lt/build/themes/ev/eurovaistine-theme/images/app/logo.png',
+        'domain': 'https://www.samsung.com/lt/',
+        'imageurl': 'https://content.trobos.lt/uploads/cache/odiseo_sylius_vendor_plugin_logo/6110b99ea3bdb837831242.png.webp',
         'product': item
         }]
 
@@ -35,7 +35,7 @@ class SpidereuroSpider(scrapy.Spider):
         shop = ShopCard()
         Title = response.xpath(self.TitleXpath).extract_first()
         Link = response.url
-        Image = 'https://cdns.iconmonstr.com/wp-content/releases/preview/2019/240/iconmonstr-product-3.png'
+        Image = 'https://content.trobos.lt/uploads/cache/odiseo_sylius_vendor_plugin_logo/6110b99ea3bdb837831242.png.webp'
         Price = response.xpath(self.PriceXpath).extract_first()
         Price = Price.replace(',', '.')
         Price = float(Price.split(' ')[0])
@@ -50,5 +50,5 @@ class SpidereuroSpider(scrapy.Spider):
         self.item.append(shop['item'])
  
     def closed(self, reason):
-        with open("spiderEuro.json", "w") as final:
+        with open("spiderSamsung.json", "w") as final:
             json.dump(self.list, final, indent=2, ensure_ascii=False)
