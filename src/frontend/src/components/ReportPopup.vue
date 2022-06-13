@@ -3,15 +3,18 @@
     <div
       class="modal fade"
       id="report"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="reportLabel"
       aria-hidden="true"
-      role="dialog"
     >
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title justify-content-center" id="exampleModalLabel">Report a problem</h5>
+            <h5 class="modal-title justify-content-center" id="reportLabel">
+              Report a problem
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -20,12 +23,25 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form class="g-3 mt-3" action="/" method="POST">
+            <form class="g-3 mt-3" @submit.prevent="onSubmit">
               <div class="col-12">
-                <label for="report_email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="report_email" placeholder="name@example.com">
-                <label for="report_details" class="form-label mt-2">Details</label>
-                <textarea class="form-control" id="report_details" rows="3"></textarea>
+                <label for="report_email" class="form-label"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="report_email"
+                  placeholder="name@example.com"
+                />
+                <label for="report_details" class="form-label mt-2"
+                  >Details</label
+                >
+                <textarea
+                  class="form-control"
+                  id="report_details"
+                  rows="3"
+                ></textarea>
               </div>
               <div class="row mt-5">
                 <div class="col-12">
@@ -36,6 +52,7 @@
                       type="submit"
                       class="btn btn-success"
                       data-bs-dismiss="modal"
+                      @click.prevent="onSubmit"
                     >
                       Submit changes
                     </button>

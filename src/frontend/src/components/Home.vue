@@ -6,7 +6,7 @@
       </div>
       <div id="filters" class="col-md d-block dropdown justify-content-center">
         <button
-          class="btn btn-secondary dropdown-toggle"
+          class="btn btn-primary dropdown-toggle"
           type="button"
           id="dropdownMenuButton1"
           data-bs-toggle="dropdown"
@@ -38,9 +38,11 @@
     </div>
     <div>
       <button
+        type="button"
         class="report-btn"
         data-bs-toggle="modal"
         :data-bs-target="'#report'"
+        data-keyboard="false"
         data-backdrop="static"
       >
         <ReportPopup />
