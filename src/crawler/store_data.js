@@ -6,12 +6,21 @@ import { Sequelize, DataTypes } from 'sequelize';
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 const dataDir = 'data/';
 const dataList = [
-    'output_Barbora.json',
-    // 'output_Elektro.json',
-    // 'output_Moto.json',
-    // 'output_Pigu.json',
-    // 'output_Rimi.json',
-    // 'spiderTopo.json'
+    'spiderAsorti.json',
+    'spiderAvitela.json',
+    'spiderBarbora.json',
+    'spiderElektro.json',
+    'spiderErmitazas.json',
+    'spiderEuro.json',
+    'spiderGintarine.json',
+    'spiderIdeal.json',
+    'spiderMaxima.json',
+    'spiderMile.json',
+    'spiderMoto.json',
+    'spiderPigu.json',
+    'spiderRimi.json',
+    'spiderSamsung.json',
+    'spiderTopo.json'
 ];
 
 const sq = new Sequelize(`mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
