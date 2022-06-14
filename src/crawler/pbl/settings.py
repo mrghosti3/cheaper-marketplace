@@ -14,7 +14,6 @@ SPIDER_MODULES = ['pbl.spiders']
 NEWSPIDER_MODULE = 'pbl.spiders'
 
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy_selenium.SeleniumMiddleware': 800,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810
 }
 
