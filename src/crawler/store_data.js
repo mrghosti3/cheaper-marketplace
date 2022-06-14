@@ -1,7 +1,7 @@
-import { Console } from 'console';
 import 'dotenv/config';
 import { readFileSync } from 'fs';
 import { Sequelize, DataTypes } from 'sequelize';
+import { modelOpt, initModels } from 'database';
 
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 const dataDir = 'data/';
@@ -23,115 +23,15 @@ const dataList = [
     'spiderTopo.json'
 ];
 
-const sq = new Sequelize(`mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
-    //Disables action logging to console
-    logging: false
-});
+const sq = new Sequelize(
+    `mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+    { logging: false }
+);
 
-const modelOpt = {
-    timestamps: false,
-    freezeTableName: true
-}
-
-const products = sq.define('product', {
-    pid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    image_url: {
-        type: DataTypes.STRING(1024),
-        allowNull: false,
-        defaultValue: 'http://www.domain.lt/product_image_path'
-    }
-}, modelOpt);
-
-const pdata = sq.define('pdata', {
-    pid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    sid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    last_scan: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    price: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    product_path: {
-        type: DataTypes.STRING(1024),
-        allowNull: false,
-        defaultValue: 'http://www.domain.lt/product_path'
-    }
-}, modelOpt);
-
-const shops = sq.define('shop', {
-    sid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: {
-        type: DataTypes.STRING(50),
-        allowNull: false
-    },
-    domain: {
-        type: DataTypes.STRING(1024),
-        allowNull: false,
-        defaultValue: 'http://www.domain.lt/product_image_path'
-    },
-    image_url: {
-        type: DataTypes.STRING(1024),
-        allowNull: false,
-        defaultValue: 'http://www.domain.lt/product_image_path'
-    }
-}, modelOpt);
-
-const tags = sq.define('tag', {
-    tid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    term: {
-        type: DataTypes.STRING(50),
-        allowNull: false
-    },
-}, modelOpt);
-
-const shop_tags = sq.define('shop_tags', {
-    tid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    sid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-}, modelOpt);
-
-const product_tags = sq.define('product_tags', {
-    tid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    pid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-}, modelOpt);
+initModels(sq, DataTypes, modelOpt);
 
 try {
-    await sq.sync();
+    await sq.authenticate();
 } catch (error) {
     console.error('Unable to connect to the database:', error);
     process.exit(-1);
