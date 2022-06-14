@@ -41,7 +41,9 @@ app.use((req, res, next) => {
     req.query = {
         limit: 'limit' in query ? parseInt(query.limit) : 0,
         page: 'page' in query ? parseInt(query.page) : 0,
-        tags: 't' in query ? query.tags : 0
+        tags: 't' in query ? query.tags : 0,
+        greater: 'greater' in query ? parseInt(query.greater) : 0,
+        lesser: 'lesser' in query ? parseInt(query.lesser): 0
     };
 
     // NOTE: do research for better implementations.
@@ -116,7 +118,7 @@ app.get('/tag/:tid(\\d+)', (req, res) => {
 
 app.get('/search', (req, res) => {
     // NOTE: Include 'tags' processing (First for remote DB)
-    const { limit, page } = req.query;
+    const { tags, limit, page } = req.query;
 
-    db.getProducts(0, 0, 5, page).then(result => res.status(200).send(result));
+    db.search(tags, 0, 0, page).then(result => res.status(200).send(result));
 });

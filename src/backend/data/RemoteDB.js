@@ -53,6 +53,33 @@ export default class RemoteDB extends DataInterface {
 
     /**
      * Retrieve list of products with their prices from remote DB
+     *
+     * @param {Number} greater Lowest price in selected price range
+     * @param {Number} less    Highest price in selected price range
+     * @param {Number} page    Page number
+     * @returns array JSON list of products and their prices in shops
+     */
+    async search(tags, greater, less, page) {
+        const { like } = Sequelize.Op;
+        const qOpt = {
+            where: {
+                "$product.name$": {
+                    [like]: `%${tags}%`
+                }
+            },
+            include: this.prodInclude,
+            ...(this.#createPaging(20, page))
+        };
+
+        try {
+            return await this._models.product.findAll(qOpt);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Retrieve list of products with their prices from remote DB
      * TODO: Implement product sorting based on newest lowest price
      *
      * @param {Number} greater Lowest price in selected price range
