@@ -30,6 +30,8 @@ const sq = new Sequelize(
 
 initModels(sq, DataTypes, modelOpt);
 
+const {shop, product, pdata, tag, product_tags, shop_tags} = sq.models;
+
 try {
     await sq.authenticate();
 } catch (error) {
