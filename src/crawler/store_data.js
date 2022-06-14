@@ -75,8 +75,8 @@ async function processOutput(relFile, t) {
     try {
         console.log('Inserting shop');
         let s = entries.shop
-        const shop = shops.build({ sid: s.sid, name: s.name, domain: s.domain, image_url: s.image_url })
-        await shop.save()
+        const shop_save = shop.build({ sid: s.sid, name: s.name, domain: s.domain, image_url: s.image_url })
+        await shop_save.save()
 
         console.log('Inserting pdata');
         for (const i in entries.pdata) {
@@ -88,17 +88,17 @@ async function processOutput(relFile, t) {
         console.log('Inserting products');
         for (const i in entries.products) {
             const p = entries.products[i];
-            const product = products.build({ pid: p.pid, name: p.name, image_url: p.image_url })
-            await product.save()
+            const product_save = product.build({ pid: p.pid, name: p.name, image_url: p.image_url })
+            await product_save.save()
         }
 
         console.log('Inserting tags');
         for (const i in entries.tags) {
             const p = entries.tags[i];
             for (const j in p) {
-                const product = tags.build({ term: p[j] })
+                const tag_save = tag.build({ term: p[j] })
                 try {
-                    await product.save()
+                    await tag_save.save()
                 }
                 catch (err) {
                     console.error(err);
