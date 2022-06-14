@@ -33,7 +33,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md d-block mb-5 mt-5">
-        <button class="load-more">Load more</button>
+        <button class="load-more" v-on:click="loadNext">Load more</button>
       </div>
     </div>
     <div>
@@ -43,8 +43,7 @@
         data-bs-toggle="modal"
         :data-bs-target="'#report'"
         data-keyboard="false"
-        data-backdrop="static"
-      >
+        data-backdrop="static">
         <ReportPopup />
         <i class="fa fa-bug"></i>
       </button>
@@ -64,17 +63,31 @@ export default {
   data() {
     return {
       products: [],
+      page: 0
     };
   },
   components: {
     ProductCard,
     ReportPopup,
   },
+  methods: {
+    loadNext() {
+      this.page += 1;
+      const url = BACKEND_URL + "/product?limit=20&page=" + this.page;
+      console.log(url);
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => this.products.push(...data))
+        .catch((err) => console.log(err.message));
+      console.log(this.products.length);
+    }
+  },
   mounted() {
     fetch(BACKEND_URL + "/product?limit=20")
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));
+    console.log(this.products.length);
   },
 };
 </script>
