@@ -40,6 +40,19 @@ export const ptcreate = (sequelize, DataTypes, modelOpt) => {
         }
     });
 
+    sequelize.model(pname).belongsToMany(sequelize.model(tname), {
+        through: ptinst,
+        as: 'tags',
+        foreignKey: {
+            name: 'pid',
+            allowNull: false
+        },
+        otherKey: {
+            name: 'tid',
+            allowNull: false
+        }
+    });
+
     return { ptname, ptmodel, ptinst };
 };
 
@@ -77,6 +90,19 @@ export const stcreate = (sequelize, DataTypes, modelOpt) => {
         },
         otherKey: {
             name: 'sid',
+            allowNull: false
+        }
+    });
+
+    sequelize.model(sname).belongsToMany(sequelize.model(tname), {
+        through: stinst,
+        as: 'shops',
+        foreignKey: {
+            name: 'sid',
+            allowNull: false
+        },
+        otherKey: {
+            name: 'tid',
             allowNull: false
         }
     });

@@ -14,22 +14,28 @@ export default class RemoteDB extends DataInterface {
         this._models = this._sq.models;
 
         try {
-            this._sq.sync();
+            this._sq.authenticate();
         } catch(err) {
             throw err;
         }
     }
 
     get prodInclude() {
-        return {
-            model: this._models.product_prices,
-            as: 'shops',
-            required: true,
-            attributes: [
-                'sid', 'name', 'price', 'shopUrl',
-                'shopIconUrl', 'productUrl', 'lastScan'
-            ]
-        };
+        return [
+            {
+                model: this._models.product_prices,
+                as: 'shops',
+                required: true,
+                attributes: [
+                    'sid', 'name', 'price', 'shopUrl',
+                    'shopIconUrl', 'productUrl', 'lastScan'
+                ]
+            },
+            {
+                model: this._models.tag,
+                as: 'tags'
+            }
+        ];
     }
 
     get tagInclude(){
@@ -115,16 +121,12 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted product with its prices in shops
      */
     async getProduct(id) {
-        const { eq } = Sequelize.Op;
         const qOpt = {
-            where: {
-                pid: { [eq]: id }
-            },
             include: this.prodInclude
         };
 
         try {
-            return await this._models.product.findOne(qOpt);
+            return await this._models.product.findByPk(id, qOpt);
         } catch (err) {
             throw err;
         }
@@ -137,15 +139,8 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted shop
      */
     async getShop(id) {
-        const { eq } = Sequelize.Op;
-        const qOpt = {
-            where: {
-                sid: { [eq]: id }
-            }
-        };
-
         try {
-            return await this._models.shop.findOne(qOpt);
+            return await this._models.shop.findByPk(id);
         } catch (err) {
             throw err;
         }
@@ -158,16 +153,12 @@ export default class RemoteDB extends DataInterface {
      * @returns Object JSON formatted shop
      */
     async getTagByID(id) {
-        const { eq } = Sequelize.Op;
         const qOpt = {
             include: this.tagInclude,
-            where: {
-                tid: { [eq]: id }
-            }
         };
 
         try {
-            return await this._models.tag.findOne(qOpt);
+            return await this._models.tag.findByPk(id, qOpt);
         } catch (err) {
             throw err;
         }
