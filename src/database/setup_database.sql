@@ -14,7 +14,6 @@ CREATE TABLE cheaper.product (
     sid             INT UNSIGNED,
     name            VARCHAR(50) NOT NULL,
     prod_url        VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/product_path',
-    price           DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 1,
     image_url       VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/product_image_path',
     FOREIGN KEY(sid) REFERENCES cheaper.shop(sid)
 );
@@ -22,6 +21,6 @@ CREATE TABLE cheaper.product (
 CREATE TABLE cheaper.scans (
     pid         INT UNSIGNED,
     last_scan   DATE NOT NULL DEFAULT CURRENT_DATE,
-    price       DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 1,
+    price       DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 0,
     FOREIGN KEY(pid) REFERENCES cheaper.product(pid)
 );

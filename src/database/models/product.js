@@ -7,9 +7,22 @@ export const pcreate = (sequelize, DataTypes, modelOpt) => {
             primaryKey: true,
             autoIncrement: true
         },
+        sid: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            references: {
+                model: sname,
+                key: 'sid',
+            }
+        },
         name: {
             type: DataTypes.STRING(100),
             allowNull: true
+        },
+        productPath: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            field: 'prod_url'
         },
         productIconUrl: {
             type: DataTypes.STRING(1024),
