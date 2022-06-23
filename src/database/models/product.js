@@ -1,4 +1,5 @@
 export const pname = 'product';
+import { sname } from "./shop.js";
 
 export const pcreate = (sequelize, DataTypes, modelOpt) => {
     const pmodel = {
@@ -19,12 +20,12 @@ export const pcreate = (sequelize, DataTypes, modelOpt) => {
             type: DataTypes.STRING(100),
             allowNull: true
         },
-        productPath: {
+        prodUrl: {
             type: DataTypes.TEXT,
             allowNull: true,
             field: 'prod_url'
         },
-        productIconUrl: {
+        imageUrl: {
             type: DataTypes.STRING(1024),
             allowNull: false,
             defaultValue: 'http://www.domain.lt/product_image_path',

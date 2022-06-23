@@ -1,6 +1,6 @@
 import { pname } from "./product.js";
 
-export const ppname = 'scans';
+export const ppname = 'scan';
 
 export const ppcreate = (sequelize, DataTypes, modelOpt) => {
     const ppmodel = {

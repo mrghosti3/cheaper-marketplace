@@ -11,16 +11,16 @@ export const screate = (sequelize, DataTypes, modelOpt) => {
             type: DataTypes.STRING(50),
             allowNull: true
         },
-        url: {
+        domain: {
             type: DataTypes.STRING(1024),
             allowNull: false,
-            defaultValue: 'http://www.domain.lt/product_image_path',
+            defaultValue: 'http://www.domain.lt',
             field: 'domain'
         },
-        shopIconUrl: {
+        imageUrl: {
             type: DataTypes.STRING(1024),
             allowNull: false,
-            defaultValue: 'http://www.domain.lt/product_image_path',
+            defaultValue: 'http://www.domain.lt/icon_image_path',
             field: 'image_url'
         }
     };
