@@ -41,16 +41,17 @@ try {
 
 async function save_shop(d, t) {
     console.log(d.domain);
-    const shop_save = shop.build({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url })
+    const shop_save = shop.build({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url });
     await shop_save.save();
 }
 async function save_product(d, sid, t) {
-    const product_save = product.build({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url })
+    const product_save = product.build({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url });
     await product_save.save();
 }
 async function save_scan(d, t) {
-    const scan_save = scan.build({ pid: d.pid, price: d.price })
-    scan_save.save();
+    const scan_save = scan.build({ pid: d.pid, price: d.price });
+    console.log(d);
+    await scan_save.save();
 }
 
 
@@ -77,24 +78,28 @@ try {
                 });
                 entries.scans.push({
                     pid: pid,
-                    price: p.price
+                    price: parseFloat(p.Price.replace(',', '.'))
                 });
             }
 
             try {
                 console.log('Inserting shop');
                 let s = entries.shop;
+                console.log('Shop: ' + s.name);
                 await save_shop(s, t);
 
                 console.log('Inserting products');
                 for (const i in entries.pdata) {
                     const p = entries.pdata[i];
+                    console.log(i + '/' + entries.pdata.length);
                     await save_product(p, s.sid, t);
                 }
 
                 console.log('Inserting scans');
                 for (const i in entries.scans) {
                     const sc = entries.scans[i];
+                    console.log(i + '/' + entries.scans.length);
+                    console.log(sc.price);
                     await save_scan(sc, t);
                 }
             } catch (err) {
@@ -104,10 +109,10 @@ try {
         }
     });
 
-console.log(res);
-console.log("End");
-await sq.close();
-process.exit(0);
+    console.log(res);
+    console.log("End");
+    await sq.close();
+    process.exit(0);
 } catch (err) {
     console.error('Unable to execute queries: ' + err);
     process.exit(-2);

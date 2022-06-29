@@ -10,7 +10,6 @@ export const pcreate = (sequelize, DataTypes, modelOpt) => {
         },
         sid: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             references: {
                 model: sname,
                 key: 'sid',

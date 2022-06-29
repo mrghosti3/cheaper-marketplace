@@ -18,7 +18,7 @@ CREATE TABLE cheaper.product (
     FOREIGN KEY(sid) REFERENCES cheaper.shop(sid)
 );
 
-CREATE TABLE cheaper.scans (
+CREATE TABLE cheaper.scan (
     pid         INT UNSIGNED,
     last_scan   DATE NOT NULL DEFAULT CURRENT_DATE,
     price       DECIMAL(6, 2) UNSIGNED NOT NULL DEFAULT 0,
