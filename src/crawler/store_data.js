@@ -50,7 +50,6 @@ async function save_product(d, sid, t) {
 }
 async function save_scan(d, t) {
     const scan_save = scan.build({ pid: d.pid, price: d.price });
-    console.log(d);
     await scan_save.save();
 }
 
@@ -99,7 +98,6 @@ try {
                 for (const i in entries.scans) {
                     const sc = entries.scans[i];
                     console.log(i + '/' + entries.scans.length);
-                    console.log(sc.price);
                     await save_scan(sc, t);
                 }
             } catch (err) {
