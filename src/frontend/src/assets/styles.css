@@ -4,24 +4,23 @@
 }
 
 body {
-  background: #E5E5E5 !important;
+  background: #f4f4f4 !important;
 }
 
 .searchbar {
   margin-bottom: auto;
   margin-top: auto;
   height: 30px;
-  background-color: white;
+  background-color: #fff;
   border-radius: 30px;
   padding: 0 10px;
-  border: 1px solid black;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 40vw;
 }
 
 .search_input {
-  color: black;
+  color: #101010;
   border: 0;
   outline: 0;
   background: none;
@@ -30,7 +29,7 @@ body {
   line-height: 10px;
   padding: 0 6px;
   width: 96%;
-  caret-color: #505050;
+  caret-color: #101010;
   margin-bottom: 5px;
   margin-top: 6px;
   font-size: 80%;
@@ -52,22 +51,22 @@ body {
       -ms-flex-align: center;
           align-items: center;
   border-radius: 50%;
-  color: #505050;
+  color: #101010;
   text-decoration: none;
 }
 
 nav {
-  background: white;
+  background: #2F79C6;
 }
 
 nav .navbar-brand {
-  color: black;
+  color: #fff;
   margin-left: 30px;
   font-weight: bold;
 }
 
 nav .navbar-toggler-icon {
-  color: black;
+  color: #fff;
 }
 
 .col-md {
@@ -136,11 +135,11 @@ nav .navbar-toggler-icon {
 .card .prod-price .prod-current-price {
   font-size: 1rem;
   font-weight: 450;
-  color: black;
+  color: #101010;
 }
 
 .card .prod-price .prod-old-price {
-  color: #707070;
+  color: #505050;
   font-size: 0.75rem;
   font-weight: 400;
   padding-right: 10px;
@@ -163,13 +162,13 @@ nav .navbar-toggler-icon {
   margin-top: 1rem;
   width: 45%;
   height: 30px;
-  background: #40E647;
+  background: #40E547;
   border-radius: 20px;
   border-style: none;
 }
 
 .card .prod-btn .to-store a {
-  color: black;
+  color: #101010;
   text-decoration: none;
   text-align: center;
   font-size: 0.75rem;
@@ -234,7 +233,7 @@ nav .navbar-toggler-icon {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 450;
-  color: black;
+  color: #101010;
 }
 
 #popup-dialog #popup-content #popup-body .best-price .popup-store-btn {
@@ -247,7 +246,7 @@ nav .navbar-toggler-icon {
 #popup-dialog #popup-content #popup-body .best-price .popup-store-btn button {
   width: 140px;
   height: 30px;
-  background: #40E647;
+  background: #40E547;
   border-radius: 20px;
   border-style: none;
   text-align: center;
@@ -256,7 +255,7 @@ nav .navbar-toggler-icon {
 }
 
 #popup-dialog #popup-content #popup-body .best-price .popup-store-btn a {
-  color: black;
+  color: #101010;
   text-decoration: none;
   text-align: center;
   font-size: 0.75rem;
@@ -292,7 +291,7 @@ nav .navbar-toggler-icon {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 450;
-  color: black;
+  color: #101010;
 }
 
 #popup-dialog #popup-content #popup-body .other-products .popup-store-btn {
@@ -305,7 +304,7 @@ nav .navbar-toggler-icon {
 #popup-dialog #popup-content #popup-body .other-products .popup-store-btn button {
   width: 140px;
   height: 30px;
-  background: #40E647;
+  background: #40E547;
   border-radius: 20px;
   border-style: none;
   text-align: center;
@@ -314,7 +313,7 @@ nav .navbar-toggler-icon {
 }
 
 #popup-dialog #popup-content #popup-body .other-products .popup-store-btn a {
-  color: black;
+  color: #101010;
   text-decoration: none;
   text-align: center;
   font-size: 0.75rem;
@@ -328,11 +327,7 @@ nav .navbar-toggler-icon {
   border-radius: 50px;
   height: 3rem;
   width: 3rem;
-  background-color: #ff1e00;
-}
-
-.modal-backdrop {
-  display: none !important;
+  background-color: #FF1515;
 }
 
 .load-more {
@@ -340,24 +335,27 @@ nav .navbar-toggler-icon {
           filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
   width: 8rem;
   height: 2rem;
-  background: #09e2fa;
+  background: #59AAFF;
   border-radius: 20px;
   border-style: none;
   text-align: center;
   font-size: 0.75rem;
   font-weight: 500;
-  color: black;
+  color: #101010;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  #popup-dialog {
-    max-width: 100% !important;
-  }
   .searchbar {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  #wrapper {
+    width: 100vw !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 
@@ -371,12 +369,24 @@ nav .navbar-toggler-icon {
     margin-top: 10px;
     margin-bottom: 10px;
   }
+  #wrapper {
+    width: 100vw !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   #popup-dialog {
     max-width: 90% !important;
+  }
+  #wrapper {
+    width: 100vw !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
   .searchbar {
     width: 80%;
@@ -390,6 +400,12 @@ nav .navbar-toggler-icon {
   #popup-dialog {
     max-width: 90% !important;
   }
+  #wrapper {
+    width: 80vw !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
   .searchbar {
     width: 60%;
     margin-top: 0px;
@@ -401,6 +417,12 @@ nav .navbar-toggler-icon {
 @media only screen and (min-width: 1200px) {
   #popup-dialog {
     max-width: 70% !important;
+  }
+  #wrapper {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 80vw !important;
   }
 }
 /*# sourceMappingURL=styles.css.map */

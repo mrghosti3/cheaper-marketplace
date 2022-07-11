@@ -2,7 +2,9 @@
   <div id="app">
     <NavBar />
     <div class="container-fluid">
-      <router-view />
+      <div id="wrapper">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -15,7 +17,7 @@
 import NavBar from "./components/NavBar.vue";
 export default {
   components: {
-    NavBar
-  }
+    NavBar,
+  },
 };
 </script>

@@ -1,27 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+$blue-dark: #2F79C6;
+$blue: #59AAFF;
+$white: #fff;
+$gray: #f4f4f4;
+$gold: #FFD700;
+$green: #40E547;
+$red: #FF1515;
+$black: #101010;
+$gray-dark: #505050;
+
 * {
     font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background: #E5E5E5 !important;
+    background: $gray !important;
 }
 
 .searchbar {
     margin-bottom: auto;
     margin-top: auto;
     height: 30px;
-    background-color: white;
+    background-color: $white;
     border-radius: 30px;
     padding: 0 10px;
-    border: 1px solid black;
+    // border: 1px solid $black;
     box-sizing: border-box;
     width: 40vw;
 }
 
 .search_input {
-    color: black;
+    color: $black;
     border: 0;
     outline: 0;
     background: none;
@@ -30,7 +40,7 @@ body {
     line-height: 10px;
     padding: 0 6px;
     width: 96%;
-    caret-color: #505050;
+    caret-color: $black;
     margin-bottom: 5px;
     margin-top: 6px;
     font-size: 80%;
@@ -46,21 +56,21 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color: #505050;
+    color: $black;
     text-decoration: none;
 }
 
 nav {
-    background: white;
+    background: $blue-dark;
 
     .navbar-brand {
-        color: black;
+        color: $white;
         margin-left: 30px;
         font-weight: bold;
     }
 
     .navbar-toggler-icon {
-        color: black;
+        color: $white;
     }
 }
 
@@ -123,11 +133,11 @@ nav {
         .prod-current-price {
             font-size: 1rem;
             font-weight: 450;
-            color: black;
+            color: $black;
         }
 
         .prod-old-price {
-            color: #707070;
+            color: $gray-dark;
             font-size: 0.75rem;
             font-weight: 400;
             padding-right: 10px;
@@ -150,12 +160,12 @@ nav {
             margin-top: 1rem;
             width: 45%;
             height: 30px;
-            background: #40E647;
+            background: $green;
             border-radius: 20px;
             border-style: none;
 
             a {
-                color: black;
+                color: $black;
                 text-decoration: none;
                 text-align: center;
                 font-size: 0.75rem;
@@ -169,7 +179,7 @@ nav {
             margin-top: 1rem;
             width: 50%;
             height: 30px;
-            background: #FFD700;
+            background: $gold;
             border-radius: 20px;
             border-style: none;
             text-align: center;
@@ -189,7 +199,7 @@ nav {
 
         #popup-body {
             .best-price {
-                box-shadow: 0px 0px 2px 3px #FFD700;
+                box-shadow: 0px 0px 2px 3px $gold;
 
                 .popup-store-img {
                     margin-top: 1rem;
@@ -218,7 +228,7 @@ nav {
                     text-align: center;
                     font-size: 1.5rem;
                     font-weight: 450;
-                    color: black;
+                    color: $black;
                 }
 
                 .popup-store-btn {
@@ -228,7 +238,7 @@ nav {
                     button {
                         width: 140px;
                         height: 30px;
-                        background: #40E647;
+                        background: $green;
                         border-radius: 20px;
                         border-style: none;
                         text-align: center;
@@ -237,7 +247,7 @@ nav {
                     }
 
                     a {
-                        color: black;
+                        color: $black;
                         text-decoration: none;
                         text-align: center;
                         font-size: 0.75rem;
@@ -274,7 +284,7 @@ nav {
                     text-align: center;
                     font-size: 1.5rem;
                     font-weight: 450;
-                    color: black;
+                    color: $black;
                 }
 
                 .popup-store-btn {
@@ -284,7 +294,7 @@ nav {
                     button {
                         width: 140px;
                         height: 30px;
-                        background: #40E647;
+                        background: $green;
                         border-radius: 20px;
                         border-style: none;
                         text-align: center;
@@ -293,7 +303,7 @@ nav {
                     }
 
                     a {
-                        color: black;
+                        color: $black;
                         text-decoration: none;
                         text-align: center;
                         font-size: 0.75rem;
@@ -318,25 +328,20 @@ nav {
     border-radius: 50px;
     height: 3rem;
     width: 3rem;
-    background-color: #ff1e00;
+    background-color: $red;
 }
-
-.modal-backdrop {
-    display: none !important;
-}
-
 
 .load-more {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
     width: 8rem;
     height: 2rem;
-    background: #09e2fa;
+    background: $blue;
     border-radius: 20px;
     border-style: none;
     text-align: center;
     font-size: 0.75rem;
     font-weight: 500;
-    color: black
+    color: $black;
 }
 
 // #filters button{
@@ -353,14 +358,16 @@ nav {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    #popup-dialog {
-        max-width: 100% !important;
-    }
 
     .searchbar {
         width: 100%;
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    #wrapper {
+        width: 100vw !important;
+        justify-content: center;
     }
 }
 
@@ -375,12 +382,22 @@ nav {
         margin-top: 10px;
         margin-bottom: 10px;
     }
+
+    #wrapper {
+        width: 100vw !important;
+        justify-content: center;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
     #popup-dialog {
         max-width: 90% !important;
+    }
+
+    #wrapper {
+        width: 100vw !important;
+        justify-content: center;
     }
 
     .searchbar {
@@ -396,6 +413,11 @@ nav {
         max-width: 90% !important;
     }
 
+    #wrapper {
+        width: 80vw !important;
+        justify-content: center;
+    }
+
     .searchbar {
         width: 60%;
         margin-top: 0px;
@@ -407,5 +429,10 @@ nav {
 @media only screen and (min-width: 1200px) {
     #popup-dialog {
         max-width: 70% !important;
+    }
+
+    #wrapper {
+        justify-content: center;
+        width: 80vw !important;
     }
 }
