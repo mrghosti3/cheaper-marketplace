@@ -38,7 +38,7 @@
           role="tabpanel"
           aria-labelledby="prices-tab"
         >
-          Prices
+          <CardList />
         </div>
         <div
           class="tab-pane fade"
@@ -58,7 +58,8 @@
 </style>
 
 <script>
+import CardList from './CardList.vue';
 export default {
-  // props: ["popProd"],
+    components: { CardList }
 };
 </script>

@@ -59,20 +59,38 @@ export default class DevDB extends DataInterface {
                     productUrl: productUrls[0],
                     shopIconUrl: shopIconUrls[1],
                     lastScan: '2022-04-07'
+                },
+                {
+                    sid: 3,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 2.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 4,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 4.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
                 }
             ]
         },
         {
-            pid: 2,
-            name: "Kava",
-            productIconUrl: productIconUrls[1],
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
             shops: [
                 {
                     sid: 1,
                     name: 'Rimi',
                     url: domains[0],
                     price: 1.00,
-                    productUrl: productUrls[1],
+                    productUrl: productUrls[0],
                     shopIconUrl: shopIconUrls[0],
                     lastScan: '2022-04-07'
                 },
@@ -80,8 +98,608 @@ export default class DevDB extends DataInterface {
                     sid: 2,
                     name: 'Maxima',
                     url: domains[1],
-                    price: 2.00,
-                    productUrl: productUrls[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[1],
+                    lastScan: '2022-04-07'
+                }
+            ]
+        },
+        {
+            pid: 1,
+            name: "Bananai",
+            productIconUrl: productIconUrls[0],
+            shops: [
+                {
+                    sid: 1,
+                    name: 'Rimi',
+                    url: domains[0],
+                    price: 1.00,
+                    productUrl: productUrls[0],
+                    shopIconUrl: shopIconUrls[0],
+                    lastScan: '2022-04-07'
+                },
+                {
+                    sid: 2,
+                    name: 'Maxima',
+                    url: domains[1],
+                    price: 1.00,
+                    productUrl: productUrls[0],
                     shopIconUrl: shopIconUrls[1],
                     lastScan: '2022-04-07'
                 }

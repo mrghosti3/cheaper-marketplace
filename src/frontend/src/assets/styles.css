@@ -5,6 +5,8 @@
 
 body {
   background: #f4f4f4 !important;
+  width: 100%;
+  margin: 0;
 }
 
 .searchbar {

@@ -1,26 +1,27 @@
 <template>
   <main>
-    <div class="row justify-content-start prodview-main">
+    <div class="row justify-content-start prodview-main"  style="margin: 3rem;">
       <div class="col-lg-4">
         <div class="row">
           <img
             src="https://www.maxima.lt/uploads/sale/2022/sales_page/07/04//malta-kava-lavazza-9768.png"
             alt=""
+            style="max-height: 250px; max-width: 250px;"
           />
         </div>
       </div>
       <div class="col-lg-8">
-        <div class="row"><h3>Title</h3></div>
-        <div class="row"><h4>Price</h4></div>
+        <div class="row"><h3>Pavadinimas</h3></div>
+        <div class="row"><h4>Kaina</h4></div>
         <div class="row">
-          <i>icon</i>
-          <p>Add to favorites</p>
+          <p>Įtraukti į mėgstamiausių sarašą</p>
         </div>
       </div>
     </div>
-    <div>
-      <ProductViewCards />
+    <div style="float: left; width: 100%;">
+    <ProductViewCards />
     </div>
+      
   </main>
 </template>
 
@@ -29,8 +30,12 @@
 </style>
 
 <script>
-import ProductViewCards from "../components/ProductViewCards.vue";
+import ProductViewCards from "@/components/ProductViewCards.vue";
 export default {
+  components: {
+    ProductViewCards
+  }
   // props: ["popProd"],
 };
+
 </script>
