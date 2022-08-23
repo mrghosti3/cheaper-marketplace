@@ -12,10 +12,9 @@ export default class RemoteDB extends DataInterface {
         );
         initModels(this._sq, DataTypes, modelOpt);
         this._models = this._sq.models;
-
         try {
             this._sq.authenticate();
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
     }
@@ -23,30 +22,28 @@ export default class RemoteDB extends DataInterface {
     get prodInclude() {
         return [
             {
-                model: this._models.product_prices,
-                as: 'shops',
+                model: this._models.product,
+                as: 'products',
                 required: true,
                 attributes: [
-                    'sid', 'name', 'price', 'shopUrl',
-                    'shopIconUrl', 'productUrl', 'lastScan'
+                    'pid', 'sid', 'name', 'prodUrl', 'imageUrl'
                 ]
             },
             {
-                model: this._models.tag,
-                as: 'tags'
-            }
-        ];
-    }
-
-    get tagInclude(){
-        return [
-            {
-                model: this._models.product,
-                as: 'products'
+                model: this._models.shop,
+                as: 'shops',
+                required: true,
+                attributes: [
+                    'sid', 'name', 'domain', 'imageUrl'
+                ]
             },
             {
-                model: this._models.shop,
-                as: 'shops'
+                model: this._models.scan,
+                as: 'scans',
+                required: true,
+                attributes: [
+                    'pid', 'lastScan', 'price'
+                ]
             }
         ];
     }
@@ -59,12 +56,12 @@ export default class RemoteDB extends DataInterface {
      * @param {Number} page    Page number
      * @returns array JSON list of products and their prices in shops
      */
-    async search(tags, greater, less, page) {
+    async search(query, greater, less, page) {
         const { like } = Sequelize.Op;
         const qOpt = {
             where: {
                 "$product.name$": {
-                    [like]: `%${tags}%`
+                    [like]: `%${query}%`
                 }
             },
             include: this.prodInclude,
@@ -89,112 +86,53 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getProducts(greater, less, limit, page) {
+        let entries = [];
+        entries.shop = [];
+        entries.scans = [];
         const qOpt = {
-            include: this.prodInclude,
-            ...(this.#createPaging(limit, page))
+            ...(this.#createPaging(20, page))
         };
-
         try {
-            let res = await this._models.product.findAll(qOpt);
-            return res;
+            let products = await this._models.product.findAll(qOpt);
+            let shops = await this._models.shop.findAll(qOpt);
+            let scans = await this._models.scan.findAll(qOpt);
+
+            for (const i in products) {
+                entries.push({
+                    pid: products[i].pid,
+                    name: products[i].name,
+                    productIconUrl: products[i].imageUrl,
+                    productUrl: products[i].prodUrl,
+                });
+            }
+            for (const i in shops) {
+                entries.shop.push({
+                    sid: shops[i].sid,
+                    name: shops[i].name,
+                    url: shops[i].domain,
+                    shopIconUrl: shops[i].imageUrl
+                });
+            }
+            for (const i in scans) {
+                entries.scans.push({
+                    price: scans[i].price,
+                    lastScan: scans[i].lastScan,
+                    priceHistory: scans[i].price,
+                    scanHistory: scans[i].lastScan
+                });
+            }
+            
         } catch (err) {
             throw err;
         }
+        return entries;
     }
 
-    /**
-     * Retrieve list of shops from remote DB
-     *
-     * @param {Number} limit   Product count in page. 0 -> no limit
-     * @param {Number} page    Page number
-     * @returns array JSON list of products and their prices in shops
-     */
-    async getShops(limit, page) {
-        const qOpt = {
-            ...(this.#createPaging(limit, page))
-        };
-
-        try {
-            return await this._models.shop.findAll(qOpt);
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Retrieve list of shops from remote DB
-     *
-     * @param {Number} limit   Product count in page. 0 -> no limit
-     * @param {Number} page    Page number
-     * @returns array JSON list of products and their prices in shops
-     */
-    async getTags(limit, page) {
-        const qOpt = {
-            include: this.tagInclude,
-            ...(this.#createPaging(limit, page))
-        };
-
-        try {
-            return await this._models.tag.findAll(qOpt);
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Retrieves single product with all it's prices.
-     *
-     * @param {Number} id pid (product ID)
-     * @returns Object JSON formatted product with its prices in shops
-     */
-    async getProduct(id) {
-        const qOpt = {
-            include: this.prodInclude
-        };
-
-        try {
-            return await this._models.product.findByPk(id, qOpt);
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Retrieves single shop.
-     *
-     * @param {Number} id sid (shop ID)
-     * @returns Object JSON formatted shop
-     */
-    async getShop(id) {
-        try {
-            return await this._models.shop.findByPk(id);
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Retrieves single tag.
-     *
-     * @param {Number} id sid (shop ID)
-     * @returns Object JSON formatted shop
-     */
-    async getTagByID(id) {
-        const qOpt = {
-            include: this.tagInclude,
-        };
-
-        try {
-            return await this._models.tag.findByPk(id, qOpt);
-        } catch (err) {
-            throw err;
-        }
-    }
 
     #createPaging(limit, page) {
         return limit && {
             limit: limit,
-            ...(page && { offset: limit * page})
+            ...(page && { offset: limit * page })
         };
     }
 }

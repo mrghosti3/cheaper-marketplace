@@ -2,31 +2,22 @@ import 'dotenv/config';
 import { readFileSync } from 'fs';
 import { Sequelize, DataTypes } from 'sequelize';
 import { modelOpt, initModels } from 'database';
+import * as fs from 'fs';
 
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PSSW } = process.env;
 const dataDir = 'data/';
-const dataList = [
-    // 'spiderAsorti.json',
-    // 'spiderAvitela.json',
-    'spiderBarbora.json'
-    // 'spiderElektro.json',
-    // 'spiderErmitazas.json',
-    // 'spiderEuro.json',
-    // 'spiderGintarine.json',
-    // 'spiderIdeal.json',
-    // 'spiderMaxima.json',
-    // 'spiderMile.json',
-    // 'spiderMoto.json',
-    // 'spiderPigu.json',
-    // 'spiderRimi.json',
-    // 'spiderSamsung.json',
-    // 'spiderTopo.json'
-];
+let dataList = [];
+fs.readdir(dataDir, (err, files) => {
+    files.forEach(file => {
+      dataList.push(file);
+    });
+  });
 
 const sq = new Sequelize(
     `mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
     { logging: false }
 );
+
 
 initModels(sq, DataTypes, modelOpt);
 
@@ -40,7 +31,6 @@ try {
 }
 
 async function save_shop(d, t) {
-    console.log(d.domain);
     const shop_save = shop.build({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url });
     await shop_save.save();
 }
@@ -55,35 +45,44 @@ async function save_scan(d, t) {
 
 
 try {
+    let lastPID = 1;
     let res = await sq.transaction(async (t) => {
         for (let file of dataList) {
             let relFile = dataDir + file;
 
             let entries = JSON.parse(readFileSync(relFile, 'utf8'));
-            let lastPID = 1;
+            
+            entries = entries[0];
+
             entries.pdata = [];
             entries.scans = [];
 
-            for (const i in entries.products) {
-                const p = entries.products[i];
-                const pid = lastPID++;
-
-                entries.pdata.push({
-                    pid: pid,
-                    sid: entries.shop.sid,
-                    name: p.Title,
-                    prod_url: p.Link,
-                    image_url: p.Image
-                });
-                entries.scans.push({
-                    pid: pid,
-                    price: parseFloat(p.Price.replace(',', '.'))
-                });
+            for (const i in entries.product) {
+                const p = entries.product[i];
+                if (p.image != null && p.title != null && p.link != null && p.price != null) {
+                    entries.pdata.push({
+                        pid: lastPID,
+                        sid: entries.sid,
+                        name: p.title,
+                        prod_url: p.link,
+                        image_url: p.image
+                    });
+                    entries.scans.push({
+                        pid: lastPID,
+                        price: p.price
+                    });
+                    lastPID++;
+                }
             }
 
             try {
                 console.log('Inserting shop');
-                let s = entries.shop;
+                let s = {
+                    sid: entries.sid,
+                    name: entries.name,
+                    domain: entries.domain,
+                    image_url: entries.imageurl
+                };
                 console.log('Shop: ' + s.name);
                 await save_shop(s, t);
 
@@ -107,7 +106,7 @@ try {
         }
     });
 
-    console.log(res);
+    // console.log(res);
     console.log("End");
     await sq.close();
     process.exit(0);

@@ -59,7 +59,10 @@ app.listen(PORT,
 app.get('/product', (req, res) => {
     const { limit, page } = req.query;
 
-    db.getProducts(0, 0, limit, page).then(result => res.status(200).send(result))
+    db.getProducts(0, 0, limit, page).then(result => {
+        res.status(200).send(result)
+        console.log(result)
+    })
         .catch(e => {
             logError(e);
             res.sendStatus(404);
@@ -76,49 +79,9 @@ app.get('/product/:pid(\\d+)', (req, res) => {
         });
 });
 
-app.get('/shop', (req, res) => {
-    const { limit, page } = req.query;
-
-    db.getShops(limit, page).then(result => res.status(200).send(result))
-        .catch(e => {
-            logError(e);
-            res.sendStatus(404);
-        });
-});
-
-app.get('/shop/:sid(\\d+)', (req, res) => {
-    const { sid } = req.params;
-
-    db.getShop(sid).then(result => res.status(200).send(result))
-        .catch(e => {
-            logError(e);
-            res.sendStatus(404);
-        });
-});
-
-app.get('/tag', (req, res) => {
-    const { limit, page } = req.query;
-
-    db.getTags(limit, page).then(result => res.status(200).send(result))
-        .catch(e => {
-            logError(e);
-            res.sendStatus(404);
-        });
-});
-
-app.get('/tag/:tid(\\d+)', (req, res) => {
-    const { tid } = req.params;
-
-    db.getTagByID(tid).then(result => res.status(200).send(result))
-        .catch(e => {
-            logError(e);
-            res.sendStatus(404);
-        });
-});
-
 app.get('/search', (req, res) => {
     // NOTE: Include 'tags' processing (First for remote DB)
-    const { tags, limit, page } = req.query;
+    const { query, limit, page } = req.query;
 
-    db.search(tags, 0, 0, page).then(result => res.status(200).send(result));
+    db.search(query, 0, 0, page).then(result => res.status(200).send(result));
 });
