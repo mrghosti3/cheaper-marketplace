@@ -44,7 +44,6 @@ export default class DevDB extends DataInterface {
             shops: [
                 {
                     sid: 1,
-                    name: 'Rimi',
                     url: domains[0],
                     productUrl: productUrls[0],
                     shopIconUrl: shopIconUrls[0],
@@ -53,7 +52,6 @@ export default class DevDB extends DataInterface {
                 },
                 {
                     sid: 2,
-                    name: 'Maxima',
                     url: domains[1],
                     productUrl: productUrls[0],
                     shopIconUrl: shopIconUrls[1],

@@ -4,6 +4,7 @@
       <div class="col-md-12 d-flex justify-content-center mt-5 mb-4">
         <h3>Recently updated prices</h3>
       </div>
+      <span>{{products}}</span>
       <div id="filters" class="col-md d-block dropdown justify-content-center">
         <button
           class="btn btn-primary dropdown-toggle"

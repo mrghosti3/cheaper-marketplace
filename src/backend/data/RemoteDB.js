@@ -22,27 +22,11 @@ export default class RemoteDB extends DataInterface {
     get prodInclude() {
         return [
             {
-                model: this._models.product,
+                model: this._models.combined_prod,
                 as: 'products',
                 required: true,
                 attributes: [
-                    'pid', 'sid', 'name', 'prodUrl', 'imageUrl'
-                ]
-            },
-            {
-                model: this._models.shop,
-                as: 'shops',
-                required: true,
-                attributes: [
-                    'sid', 'name', 'domain', 'imageUrl'
-                ]
-            },
-            {
-                model: this._models.scan,
-                as: 'scans',
-                required: true,
-                attributes: [
-                    'pid', 'lastScan', 'price'
+                    'pid', 'sid', 'name', 'productIconUrl', 'sid', 'productUrl', 'shopUrl', 'shopIconUrl', 'scanHistory', 'priceHistory'
                 ]
             }
         ];
@@ -87,38 +71,26 @@ export default class RemoteDB extends DataInterface {
      */
     async getProducts(greater, less, limit, page) {
         let entries = [];
-        entries.shop = [];
-        entries.scans = [];
+        entries.shops = [];
         const qOpt = {
             ...(this.#createPaging(20, page))
         };
         try {
-            let products = await this._models.product.findAll(qOpt);
-            let shops = await this._models.shop.findAll(qOpt);
-            let scans = await this._models.scan.findAll(qOpt);
+            let products = await this._models.combined_prod.findAll(qOpt);
 
             for (const i in products) {
                 entries.push({
                     pid: products[i].pid,
                     name: products[i].name,
-                    productIconUrl: products[i].imageUrl,
+                    productIconUrl: products[i].productIconUrl
+                });
+                entries.shops.push({
+                    sid: products[i].sid,
                     productUrl: products[i].prodUrl,
-                });
-            }
-            for (const i in shops) {
-                entries.shop.push({
-                    sid: shops[i].sid,
-                    name: shops[i].name,
-                    url: shops[i].domain,
-                    shopIconUrl: shops[i].imageUrl
-                });
-            }
-            for (const i in scans) {
-                entries.scans.push({
-                    price: scans[i].price,
-                    lastScan: scans[i].lastScan,
-                    priceHistory: scans[i].price,
-                    scanHistory: scans[i].lastScan
+                    url: products[i].shopUrl,
+                    shopIconUrl: products[i].shopIconUrl,
+                    priceHistory: products[i].priceHistory,
+                    scanHistory: products[i].scanHistory
                 });
             }
             
