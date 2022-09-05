@@ -25,7 +25,7 @@ const storage = new SequelizeStorage({ sequelize });
 
 const umzug = new Umzug({
     migrations: {
-        glob: ['migrations/*.js', { cwd: path.dirname(import.meta.url.replace('file://', '')) }],
+        glob: ['migrations/*.js'],
         resolve: params => {
             const getModule = () => import(`file:///${params.path.replace(/\\/g, '/')}`)
             return {

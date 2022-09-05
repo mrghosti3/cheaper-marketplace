@@ -61,7 +61,7 @@ app.get('/product', (req, res) => {
 
     db.getProducts(0, 0, limit, page).then(result => {
         res.status(200).send(result)
-        console.log(result)
+        // console.log(result)
     })
         .catch(e => {
             logError(e);

@@ -1,4 +1,4 @@
-import { cpname } from "../models/productPrices.js";
+import { cpname } from "../models/combined_prod.js";
 
 const productPricesView = {
     name: cpname,
@@ -7,7 +7,6 @@ const productPricesView = {
 
 export async function up({ context }) {
     const { sequelize } = context;
-    console.log(productPricesView.sql);
     await sequelize.query(`CREATE VIEW ${productPricesView.name} AS ${productPricesView.sql}`, { raw: true, type: sequelize.QueryTypes.RAW });
 }
 

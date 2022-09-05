@@ -68,8 +68,6 @@ export default class DevDB extends DataInterface {
             shops: [
                 {
                     sid: 1,
-                    name: 'Rimi',
-                    url: domains[0],
                     productUrl: productUrls[1],
                     shopIconUrl: shopIconUrls[0],
                     priceHistory: [3.99, 2.88, 2.47],
@@ -77,14 +75,11 @@ export default class DevDB extends DataInterface {
                 },
                 {
                     sid: 2,
-                    name: 'Maxima',
-                    url: domains[1],
                     productUrl: productUrls[1],
                     shopIconUrl: shopIconUrls[1],
                     priceHistory: [3.99, 2.88, 2.47],
                     scanHistory: ["2022-04-07", "2022-04-06", "2022-04-01"]
                 },
-                
             ]
         }
     ];

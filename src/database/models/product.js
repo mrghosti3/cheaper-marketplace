@@ -12,7 +12,7 @@ export const pcreate = (sequelize, DataTypes, modelOpt) => {
             type: DataTypes.INTEGER,
             references: {
                 model: sname,
-                key: 'sid',
+                key: 'sid'
             }
         },
         name: {
@@ -21,7 +21,7 @@ export const pcreate = (sequelize, DataTypes, modelOpt) => {
         },
         prodUrl: {
             type: DataTypes.TEXT,
-            allowNull: true,
+            allowNull: false,
             field: 'prod_url'
         },
         imageUrl: {

@@ -19,18 +19,18 @@ export default class RemoteDB extends DataInterface {
         }
     }
 
-    get prodInclude() {
-        return [
-            {
-                model: this._models.combined_prod,
-                as: 'products',
-                required: true,
-                attributes: [
-                    'pid', 'sid', 'name', 'productIconUrl', 'sid', 'productUrl', 'shopUrl', 'shopIconUrl', 'scanHistory', 'priceHistory'
-                ]
-            }
-        ];
-    }
+    // get prodInclude() {
+    //     return [
+    //         {
+    //             model: this._models.combined_prod,
+    //             as: 'product_prices',
+    //             required: true,
+    //             attributes: [
+    //                 'pid', 'name', 'productIconUrl', 'sid', 'productUrl', 'shopIconUrl', 'scanHistory', 'priceHistory'
+    //             ]
+    //         }
+    //     ];
+    // }
 
     /**
      * Retrieve list of products with their prices from remote DB
@@ -73,25 +73,24 @@ export default class RemoteDB extends DataInterface {
         let entries = [];
         entries.shops = [];
         const qOpt = {
+            
             ...(this.#createPaging(20, page))
         };
         try {
             let products = await this._models.combined_prod.findAll(qOpt);
-
             for (const i in products) {
+                entries.shops.push({
+                    productUrl: products[i].productUrl,
+                    shopIconUrl: products[i].shopIconUrl,
+                    priceHistory: products[i].priceHistory,
+                    scanHistory: products[i].scanHistory
+                });
                 entries.push({
                     pid: products[i].pid,
                     name: products[i].name,
                     productIconUrl: products[i].productIconUrl
                 });
-                entries.shops.push({
-                    sid: products[i].sid,
-                    productUrl: products[i].prodUrl,
-                    url: products[i].shopUrl,
-                    shopIconUrl: products[i].shopIconUrl,
-                    priceHistory: products[i].priceHistory,
-                    scanHistory: products[i].scanHistory
-                });
+                
             }
             
         } catch (err) {

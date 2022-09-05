@@ -1,8 +1,9 @@
 import { screate } from "./shop.js";
 import { pcreate } from "./product.js";
 import { sccreate } from "./scan.js";
+import { prcreate } from "./product_relations.js";
 
-const modelFuncs = [screate, pcreate, sccreate];
+const modelFuncs = [screate, pcreate, sccreate, prcreate];
 export const modelOpt = {
     timestamps: false,
     freezeTableName: true
