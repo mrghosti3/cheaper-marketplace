@@ -14,14 +14,6 @@ const sq = new Sequelize(
 );
 
 initModels(sq, DataTypes, modelOpt);
-// const models = sq.models;
-// try {
-//     sq.authenticate();
-// } catch (err) {
-//     throw err;
-// }
-
-
 
 try {
     await sq.authenticate();
@@ -41,73 +33,16 @@ try {
     let products = await combined_prod.findAll();
     const cp = combine_products(products)
     console.log(cp)
-    // for(let item of products)
-    // {
-    //     console.log(item)
-    // }
+
 } catch (err) {
     throw err;
 }
-// return entries;
-
 
 
 try {
-    // let lastPID = 1
-    // let total_entries = []
-    // for (let file of dataList) {
-    //     let relFile = dataDir + file;
-    //     let entries = JSON.parse(readFileSync(relFile, 'utf8'));
-    //     for (const i in entries.product) {
-    //         const p = entries.product[i];
-    //         if (p.image != null && p.title != null && p.link != null && p.price != null) {
-    //             total_entries.push(
-    //                 {
-    //                     pid: lastPID,
-    //                     name: p.title,
-    //                     productIconUrl: p.image,
-    //                     productUrl: p.link,
-    //                     shopIconUrl: entries.imageurl,
-    //                     scanHistory: 
-    //                 }
-    //             )
-    //         }
-    //     }
-    //     total_entries.push(entries[0]);
-    // }
-
-    // let related_products = combine_products(total_entries)
-
-
     let res = await sq.transaction(async (t) => {
-        // entries.pr = [];
-
-        // for (const i in entries.product) {
-        //     const p = entries.product[i];
-        //     if (p.image != null && p.title != null && p.link != null && p.price != null) {
-        //         /*
-
-        //         // before save
-        //         var mypics = ["pic1.jpg","pic2.jpg"]; profile.pictures = JSON.stringify( mypics ); profile.save()
-
-        //         // after load before use
-        //         var profile = Profile.get(1) pictures = JSON.parse(profile.pictures);
-
-        //         
-
-        /*try {
-            console.log('Inserting related products');
-            console.log('Shop: ' + s.name);
-            await save_related_products(s, t);
-
-        } catch (err) {
-            console.error(err);
-            process.exit(-2);
-        }
-        //}*/
+       //callina funkcija kuri issavina kombinuotus produktus
     });
-
-    // console.log(res);
     console.log("End");
     await sq.close();
     process.exit(0);
@@ -157,4 +92,9 @@ function combine_products(data) {
     //      tai po visko 1, 2, 4 produktai yra pašalinami iš listo ir listas sukamas iš naujo kol lieka tik vienas arba 0 produktų
     
     return entries
+}
+
+function parseProduct(product, data){
+    for(let item in product)
+        data.filter(prod => prod.name != item.name)
 }

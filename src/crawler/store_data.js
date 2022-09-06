@@ -9,9 +9,9 @@ const dataDir = 'data/';
 let dataList = [];
 fs.readdir(dataDir, (err, files) => {
     files.forEach(file => {
-      dataList.push(file);
+        dataList.push(file);
     });
-  });
+});
 
 const sq = new Sequelize(
     `mariadb://${DB_USER}:${DB_PSSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -29,18 +29,47 @@ try {
     console.error('Unable to connect to the database:', error);
     process.exit(-1);
 }
-
 async function save_shop(d, t) {
-    const shop_save = shop.build({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url });
-    await shop_save.save();
+    try {
+        const shop_save = shop.build({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url });
+        await shop_save.save();
+    } catch {
+        try {
+            const shop_update = shop.upsert({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url })
+            await shop_update.save()
+        } catch (error) {
+            console.error('Error updating `Shop` table:', error);
+            process.exit(-1);
+        }
+    }
 }
 async function save_product(d, sid, t) {
-    const product_save = product.build({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url });
-    await product_save.save();
+    try {
+        const product_save = product.build({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url });
+        await product_save.save();
+    } catch {
+        try {
+            const product_update = product.upsert({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url })
+            await product_update.save()
+        } catch (error) {
+            console.error('Error updating `Product` table:', error);
+            process.exit(-1);
+        }
+    }
 }
 async function save_scan(d, t) {
-    const scan_save = scan.build({ pid: d.pid, price: d.price });
-    await scan_save.save();
+    try {
+        const scan_save = scan.build({ pid: d.pid, price: d.price });
+        await scan_save.save();
+    } catch {
+        try {
+            const scan_update = scan.upsert({ pid: d.pid, price: d.price })
+            await scan_update.save()
+        } catch (error) {
+            console.error('Error updating `Scan` table:', error);
+            process.exit(-1);
+        }
+    }
 }
 
 
@@ -51,7 +80,7 @@ try {
             let relFile = dataDir + file;
 
             let entries = JSON.parse(readFileSync(relFile, 'utf8'));
-            
+
             entries = entries[0];
 
             entries.pdata = [];
@@ -106,7 +135,6 @@ try {
         }
     });
 
-    // console.log(res);
     console.log("End");
     await sq.close();
     process.exit(0);
