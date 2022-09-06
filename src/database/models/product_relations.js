@@ -1,8 +1,3 @@
-import { sname } from "./shop.js";
-import { pname } from "./product.js";
-import { scname } from "./scan.js";
-import { cpname } from "./combined_prod.js";
-
 export const prname = 'product_relations';
 
 export const prcreate = (sequelize, DataTypes, modelOpt) => {
@@ -27,7 +22,7 @@ export const prcreate = (sequelize, DataTypes, modelOpt) => {
             field: 'shops'
         }
     };
-const prinst = sequelize.isDefined(prname) ? sequelize.model(cprname)
+const prinst = sequelize.isDefined(prname) ? sequelize.model(prname)
     : sequelize.define(prname, prmodel, { ...modelOpt });
 
 return { prname, prmodel, prinst };

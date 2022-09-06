@@ -21,7 +21,7 @@ initModels(sq, DataTypes, modelOpt);
 //     throw err;
 // }
 
-const { product_relations, combined_prod } = sq.models;
+
 
 try {
     await sq.authenticate();
@@ -30,6 +30,8 @@ try {
     process.exit(-1);
 }
 
+const { product_relations, combined_prod } = sq.models;
+
 async function save_related_products(d, t) {
     const pr_save = product_relations.build({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops });
     await pr_save.save();
@@ -37,8 +39,12 @@ async function save_related_products(d, t) {
 
 try {
     let products = await combined_prod.findAll();
-    console.log(products)
-
+    const cp = combine_products(products)
+    console.log(cp)
+    // for(let item of products)
+    // {
+    //     console.log(item)
+    // }
 } catch (err) {
     throw err;
 }
@@ -112,28 +118,43 @@ try {
 
 function combine_products(data) {
     let entries = []
+    let shops = []
     const options = {
-        // isCaseSensitive: false,
-        // includeScore: false,
-        // shouldSort: true,
-        // includeMatches: false,
-        // findAllMatches: false,
-        // minMatchCharLength: 1,
-        // location: 0,
-        // threshold: 0.6,
-        // distance: 100,
-        // useExtendedSearch: false,
-        // ignoreLocation: false,
-        // ignoreFieldNorm: false,
-        // fieldNormWeight: 1,
+        includeScore: true,
+        findAllMatches: false,
+        location: 1,
+        threshold: 0.1,
+        distance: 100,
         keys: [
-            "title"
+            "name"
         ]
     };
-    const fuse = new Fuse(data, options);
-    for (const i in data.product) {
-        const p = data.product[i];
-        console.log(fuse.search(p.title))
+    const dataToJson = JSON.stringify(data);
+    const dataToParse = JSON.parse(dataToJson)
+    const fuse = new Fuse(dataToParse, options);
+    for(let i in dataToParse){
+        const dtp = dataToParse
+        let result = fuse.search(dtp[i].name)
+        for(let res of result){
+            shops.push({
+                name: res.item.name,
+                productUrl: res.item.productUrl,
+                shopIconUrl: res.item.shopIconUrl,
+                priceHistory: res.item.priceHistory,
+                scanHistory: res.item.scanHistory
+            })
+        }
+        entries.push({
+            pid: dtp[i].pid,		
+            name: dtp[i].name,
+            productUrl: dtp[i].productUrl,
+            productIconUrl: dtp[i].productIconUrl,
+            shops: shops
+        })
     }
+
+    //TODO: Paieška turi būt rekursyvi. Jei iš 10 produktų pirmam matchai yra 2 ir 4,
+    //      tai po visko 1, 2, 4 produktai yra pašalinami iš listo ir listas sukamas iš naujo kol lieka tik vienas arba 0 produktų
+    
     return entries
 }
