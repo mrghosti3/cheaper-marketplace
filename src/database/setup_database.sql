@@ -25,7 +25,7 @@ CREATE TABLE cheaper.scan (
     FOREIGN KEY(pid) REFERENCES cheaper.product(pid)
 );
 
-CREATE TABLE cheaper.combined_products (
+CREATE TABLE cheaper.product_relations (
     pid             INT UNSIGNED,
     name            VARCHAR(100) NOT NULL,
     image_url       VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/product_image_path',

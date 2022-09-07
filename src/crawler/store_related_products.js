@@ -22,17 +22,45 @@ try {
     process.exit(-1);
 }
 
-const { product_relations, combined_prod } = sq.models;
+const { product_relations, combined_prod, scan } = sq.models;
 
 async function save_related_products(d, t) {
-    const pr_save = product_relations.build({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops });
-    await pr_save.save();
+    try{
+        const pr_save = product_relations.build({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops });
+        await pr_save.save();
+    } catch {
+        try {
+            await product_relations.upsert({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops })
+        } catch (error) {
+            console.error('Error updating `product_relations` table:', error);
+            process.exit(-1);
+        }
+    }
 }
 
 try {
     let products = await combined_prod.findAll();
-    const cp = combine_products(products)
-    console.log(cp)
+    let scans = await scan.findAll()
+
+    // Convert to js array
+    products = JSON.stringify(products);
+    products = JSON.parse(products)
+    scans = JSON.stringify(scans);
+    scans = JSON.parse(scans)
+
+    for(const p in products){
+        console.log('Combining scans with products: ' + p + '/' + products.length)
+        let scanHistory = []
+        let priceHistory = []
+        for(let item of scans){
+            if(item.pid == products[p].pid){
+                scanHistory.push(item.lastScan)
+                priceHistory.push(item.price)
+            }
+        }
+        products[p].scanHistory = scanHistory
+        products[p].priceHistory = priceHistory
+    }
 
 } catch (err) {
     throw err;
@@ -42,6 +70,9 @@ try {
 try {
     let res = await sq.transaction(async (t) => {
        //callina funkcija kuri issavina kombinuotus produktus
+       for(const i in products){
+        save_related_products(combine_products(products, products[i]), t)
+       }
     });
     console.log("End");
     await sq.close();
@@ -51,7 +82,7 @@ try {
     process.exit(-2);
 }
 
-function combine_products(data) {
+function combine_products(data, product) {
     let entries = []
     let shops = []
     const options = {
@@ -64,12 +95,11 @@ function combine_products(data) {
             "name"
         ]
     };
-    const dataToJson = JSON.stringify(data);
-    const dataToParse = JSON.parse(dataToJson)
-    const fuse = new Fuse(dataToParse, options);
-    for(let i in dataToParse){
-        const dtp = dataToParse
-        let result = fuse.search(dtp[i].name)
+    const fuse = new Fuse(data, options);
+
+    for(let i in data){
+        console.log('Combining products: ' + i + '/' + data.length)
+        let result = fuse.search(product.name)
         for(let res of result){
             shops.push({
                 name: res.item.name,
@@ -80,21 +110,21 @@ function combine_products(data) {
             })
         }
         entries.push({
-            pid: dtp[i].pid,		
-            name: dtp[i].name,
-            productUrl: dtp[i].productUrl,
-            productIconUrl: dtp[i].productIconUrl,
-            shops: shops
+            pid: product.pid,		
+            name: product.name,
+            productUrl: product.productUrl,
+            productIconUrl: product.productIconUrl,
+            shops: JSON.stringify(shops)
         })
+        return entries
     }
 
     //TODO: Paieška turi būt rekursyvi. Jei iš 10 produktų pirmam matchai yra 2 ir 4,
     //      tai po visko 1, 2, 4 produktai yra pašalinami iš listo ir listas sukamas iš naujo kol lieka tik vienas arba 0 produktų
     
-    return entries
 }
 
-function parseProduct(product, data){
-    for(let item in product)
-        data.filter(prod => prod.name != item.name)
-}
+// function parseProduct(product, data){ // panaikina duplikatus pagal pavadinimą
+//     for(let item in product)
+//         data.filter(prod => prod.name != item.name)
+// }

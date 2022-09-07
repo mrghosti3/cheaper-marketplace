@@ -35,8 +35,7 @@ async function save_shop(d, t) {
         await shop_save.save();
     } catch {
         try {
-            const shop_update = shop.upsert({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url })
-            await shop_update.save()
+            await shop.upsert({ sid: d.sid, name: d.name, domain: d.domain, imageUrl: d.image_url })
         } catch (error) {
             console.error('Error updating `Shop` table:', error);
             process.exit(-1);
@@ -49,8 +48,7 @@ async function save_product(d, sid, t) {
         await product_save.save();
     } catch {
         try {
-            const product_update = product.upsert({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url })
-            await product_update.save()
+            await product.upsert({ pid: d.pid, sid: sid, name: d.name, prodUrl: d.prod_url, imageUrl: d.image_url })
         } catch (error) {
             console.error('Error updating `Product` table:', error);
             process.exit(-1);
@@ -62,13 +60,8 @@ async function save_scan(d, t) {
         const scan_save = scan.build({ pid: d.pid, price: d.price });
         await scan_save.save();
     } catch {
-        try {
-            const scan_update = scan.upsert({ pid: d.pid, price: d.price })
-            await scan_update.save()
-        } catch (error) {
-            console.error('Error updating `Scan` table:', error);
-            process.exit(-1);
-        }
+        console.error('Error updating `Scan` table:', error);
+        process.exit(-1);
     }
 }
 

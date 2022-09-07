@@ -46,21 +46,7 @@ export const cpcreate = (sequelize, DataTypes, modelOpt) => {
                 model: sname,
                 key: 'image_url',
             }
-        },
-        scanHistory: {
-            type: DataTypes.TIME,
-            references: {
-                model: scname,
-                key: 'lastScan',
-            }
-        },
-        priceHistory: {
-            type: DataTypes.DECIMAL,
-            references: {
-                model: scname,
-                key: 'price',
-            }
-        },
+        }
 
     };
     const cpinst = sequelize.isDefined(cpname) ? sequelize.model(cpname)
