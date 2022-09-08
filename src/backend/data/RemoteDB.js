@@ -19,18 +19,18 @@ export default class RemoteDB extends DataInterface {
         }
     }
 
-    // get prodInclude() {
-    //     return [
-    //         {
-    //             model: this._models.combined_prod,
-    //             as: 'product_prices',
-    //             required: true,
-    //             attributes: [
-    //                 'pid', 'name', 'productIconUrl', 'sid', 'productUrl', 'shopIconUrl', 'scanHistory', 'priceHistory'
-    //             ]
-    //         }
-    //     ];
-    // }
+    get prodInclude() {
+        return [
+            {
+                model: this._models.product_relations,
+                as: 'product_prices',
+                required: true,
+                attributes: [
+                    'pid', 'name', 'productIconUrl', 'shops'
+                ]
+            }
+        ];
+    }
 
     /**
      * Retrieve list of products with their prices from remote DB
@@ -44,7 +44,7 @@ export default class RemoteDB extends DataInterface {
         const { like } = Sequelize.Op;
         const qOpt = {
             where: {
-                "$product.name$": {
+                "$name$": {
                     [like]: `%${query}%`
                 }
             },
@@ -53,7 +53,11 @@ export default class RemoteDB extends DataInterface {
         };
 
         try {
-            return await this._models.product.findAll(qOpt);
+            let products = await this._models.product_relations.findAll(qOpt);
+            for (const i in products) 
+                products[i].shops = JSON.parse(products[i].shops)
+            
+            return products;
         } catch (err) {
             throw err;
         }
@@ -70,33 +74,33 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getProducts(greater, less, limit, page) {
-        let entries = [];
-        entries.shops = [];
         const qOpt = {
             
             ...(this.#createPaging(20, page))
         };
         try {
-            let products = await this._models.combined_prod.findAll(qOpt);
-            for (const i in products) {
-                entries.shops.push({
-                    productUrl: products[i].productUrl,
-                    shopIconUrl: products[i].shopIconUrl,
-                    priceHistory: products[i].priceHistory,
-                    scanHistory: products[i].scanHistory
-                });
-                entries.push({
-                    pid: products[i].pid,
-                    name: products[i].name,
-                    productIconUrl: products[i].productIconUrl
-                });
-                
-            }
+            let products = await this._models.product_relations.findAll(qOpt);
+            for (const i in products) 
+                products[i].shops = JSON.parse(products[i].shops) 
+            
+            return products;
             
         } catch (err) {
             throw err;
         }
-        return entries;
+    }
+
+    async getProduct(pid) {
+        try {
+            let products = await this._models.product_relations.findByPk(pid);
+            for (const i in products) 
+                products[i].shops = JSON.parse(products[i].shops) 
+
+            return products;
+            
+        } catch (err) {
+            throw err;
+        }
     }
 
 

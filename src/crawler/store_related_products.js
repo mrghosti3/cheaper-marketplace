@@ -26,11 +26,11 @@ const { product_relations, combined_prod, scan } = sq.models;
 
 async function save_related_products(d, t) {
     try{
-        const pr_save = product_relations.build({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops });
+        const pr_save = product_relations.build({ pid: d.pid, name: d.name, productIconUrl: d.productIconUrl, shops: d.shops });
         await pr_save.save();
     } catch {
         try {
-            await product_relations.upsert({ pid: d.pid, name: d.title, prod_url: d.prod_url, image_url: d.image_url, shops: d.shops })
+            await product_relations.upsert({ pid: d.pid, name: d.name, productIconUrl: d.productIconUrl, shops: d.shops })
         } catch (error) {
             console.error('Error updating `product_relations` table:', error);
             process.exit(-1);
@@ -62,16 +62,12 @@ try {
         products[p].priceHistory = priceHistory
     }
 
-} catch (err) {
-    throw err;
-}
-
-
-try {
+    //callina funkcija kuri issavina kombinuotus produktus
     let res = await sq.transaction(async (t) => {
-       //callina funkcija kuri issavina kombinuotus produktus
+       
        for(const i in products){
-        save_related_products(combine_products(products, products[i]), t)
+        console.log('Combining products: ' + i + '/' + products.length)
+        await save_related_products(combine_products(products, products[i]), t)
        }
     });
     console.log("End");
@@ -97,31 +93,31 @@ function combine_products(data, product) {
     };
     const fuse = new Fuse(data, options);
 
-    for(let i in data){
-        console.log('Combining products: ' + i + '/' + data.length)
-        let result = fuse.search(product.name)
-        for(let res of result){
-            shops.push({
-                name: res.item.name,
-                productUrl: res.item.productUrl,
-                shopIconUrl: res.item.shopIconUrl,
-                priceHistory: res.item.priceHistory,
-                scanHistory: res.item.scanHistory
-            })
-        }
-        entries.push({
-            pid: product.pid,		
-            name: product.name,
-            productUrl: product.productUrl,
-            productIconUrl: product.productIconUrl,
-            shops: JSON.stringify(shops)
+    let result = fuse.search(product.name)
+    for(let res of result){
+        shops.push({
+            name: res.item.name,
+            productUrl: res.item.productUrl,
+            shopIconUrl: res.item.shopIconUrl,
+            priceHistory: res.item.priceHistory,
+            scanHistory: res.item.scanHistory
         })
-        return entries
     }
+    entries.push({
+        pid: product.pid,		
+        name: product.name,
+        productIconUrl: product.productIconUrl,
+        shops: JSON.stringify(shops)
+    })
+    console.log(entries[0])
+    return entries[0]
+    
 
     //TODO: Paieška turi būt rekursyvi. Jei iš 10 produktų pirmam matchai yra 2 ir 4,
     //      tai po visko 1, 2, 4 produktai yra pašalinami iš listo ir listas sukamas iš naujo kol lieka tik vienas arba 0 produktų
     
+
+    // NOTE: Nukerpa pavadinimus
 }
 
 // function parseProduct(product, data){ // panaikina duplikatus pagal pavadinimą
