@@ -23,7 +23,6 @@ export default class RemoteDB extends DataInterface {
         return [
             {
                 model: this._models.product_relations,
-                as: 'product_prices',
                 required: true,
                 attributes: [
                     'pid', 'name', 'productIconUrl', 'shops'
@@ -41,19 +40,21 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async search(query, greater, less, page) {
+        
         const { like } = Sequelize.Op;
         const qOpt = {
             where: {
-                "$name$": {
+                "name": {
                     [like]: `%${query}%`
                 }
             },
-            include: this.prodInclude,
             ...(this.#createPaging(20, page))
         };
 
         try {
             let products = await this._models.product_relations.findAll(qOpt);
+            console.log(products)
+            console.log(query + ' | type: ' + typeof(query))
             for (const i in products) 
                 products[i].shops = JSON.parse(products[i].shops)
             
@@ -92,9 +93,13 @@ export default class RemoteDB extends DataInterface {
 
     async getProduct(pid) {
         try {
-            let products = await this._models.product_relations.findByPk(pid);
-            for (const i in products) 
-                products[i].shops = JSON.parse(products[i].shops) 
+            const qOpt = {
+                where: {
+                    "pid": `${pid}`
+                },
+            };
+            let products = await this._models.product_relations.findAll(qOpt);
+            products[0].shops = JSON.parse(products[0].shops) 
 
             return products;
             

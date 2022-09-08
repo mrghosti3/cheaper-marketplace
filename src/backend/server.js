@@ -56,7 +56,7 @@ app.listen(PORT,
     () => console.log(`LIVE ${NODE_ENV}: http://localhost:${PORT}/product`)
 );
 
-app.get('/product', (req, res) => {
+app.get('/products', (req, res) => {
     const { limit, page } = req.query;
 
     db.getProducts(0, 0, limit, page).then(result => {
@@ -70,8 +70,8 @@ app.get('/product', (req, res) => {
 });
 
 app.get('/product/:pid(\\d+)', (req, res) => {
-    const { pid } = req.params;
-
+    const { pid, limit, page } = req.params;
+    console.log(pid)
     db.getProduct(pid).then(result => res.status(200).send(result))
         .catch(e => {
             logError(e);
@@ -81,7 +81,9 @@ app.get('/product/:pid(\\d+)', (req, res) => {
 
 app.get('/search', (req, res) => {
     // NOTE: Include 'tags' processing (First for remote DB)
-    const { query, limit, page } = req.query;
+    let { query, limit, page } = req.query;
+    console.log('search: '+query)
+    // query = 'bandel'
 
     db.search(query, 0, 0, page).then(result => res.status(200).send(result));
 });
