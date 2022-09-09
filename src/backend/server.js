@@ -41,7 +41,7 @@ app.use((req, res, next) => {
     req.query = {
         limit: 'limit' in query ? parseInt(query.limit) : 0,
         page: 'page' in query ? parseInt(query.page) : 0,
-        tags: 't' in query ? query.tags : 0,
+        tags: 't' in query ? query.t : "",
         greater: 'greater' in query ? parseInt(query.greater) : 0,
         lesser: 'lesser' in query ? parseInt(query.lesser): 0
     };
@@ -61,7 +61,6 @@ app.get('/products', (req, res) => {
 
     db.getProducts(0, 0, limit, page).then(result => {
         res.status(200).send(result)
-        // console.log(result)
     })
         .catch(e => {
             logError(e);
@@ -71,7 +70,6 @@ app.get('/products', (req, res) => {
 
 app.get('/product/:pid(\\d+)', (req, res) => {
     const { pid, limit, page } = req.params;
-    console.log(pid)
     db.getProduct(pid).then(result => res.status(200).send(result))
         .catch(e => {
             logError(e);
@@ -81,9 +79,6 @@ app.get('/product/:pid(\\d+)', (req, res) => {
 
 app.get('/search', (req, res) => {
     // NOTE: Include 'tags' processing (First for remote DB)
-    let { query, limit, page } = req.query;
-    console.log('search: '+query)
-    // query = 'bandel'
-
-    db.search(query, 0, 0, page).then(result => res.status(200).send(result));
+    const { tags, limit, page } = req.query;
+    db.search(tags, 0, 0, page).then(result => res.status(200).send(result));
 });
