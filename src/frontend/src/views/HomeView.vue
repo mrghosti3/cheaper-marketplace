@@ -21,18 +21,6 @@
         <button class="load-more" v-on:click="loadNext">Load more</button>
       </div>
     </div>
-    <!-- <div>
-      <button
-        type="button"
-        class="report-btn"
-        data-bs-toggle="modal"
-        :data-bs-target="'#report'"
-        data-keyboard="false"
-        data-backdrop="static">
-        <ReportPopup />
-        <i class="fa fa-bug"></i>
-      </button>
-    </div> -->
   </main>
 </template>
 
@@ -43,7 +31,6 @@
 <script>
 import { BACKEND_URL } from "../constants";
 import ProductCard from "../components/ProductCard.vue";
-import ReportPopup from "../components/ReportPopup.vue";
 export default {
   data() {
     return {
@@ -53,7 +40,6 @@ export default {
   },
   components: {
     ProductCard,
-    ReportPopup,
   },
   methods: {
     loadNext() {

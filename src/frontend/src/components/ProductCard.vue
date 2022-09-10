@@ -19,7 +19,6 @@
       <span>{{ prod.shops[0].scanHistory[0].substring(0,10) }}</span>
     </div>
   </div>
-  <ProductView :item="prod"/>
 </template>
 
 <script>

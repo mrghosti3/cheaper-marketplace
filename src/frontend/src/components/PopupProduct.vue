@@ -8,6 +8,8 @@
         <span v-show="name.length > 36">{{ name.substring(0,36)+"..." }}</span>
         <span v-show="name.length <= 36">{{ name }}</span>
       </div>
+      <!-- <span v-show="item.name.length > 36">{{ item.name.substring(0,36)+"..." }}</span>
+                      <span v-show="item.name.length <= 36">{{ item.name }}</span> -->
       <div class="popup-prod-price">
         <span>{{ prod.price }}€</span>
       </div>
