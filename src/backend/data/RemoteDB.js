@@ -48,7 +48,6 @@ export default class RemoteDB extends DataInterface {
                     [like]: `%${query}%`
                 }
             },
-            ...(this.#createPaging(20, page))
         };
 
         try {
