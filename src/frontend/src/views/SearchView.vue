@@ -7,16 +7,18 @@
     </div>
     <div class="row justify-content-center">
       <div
-        class="col-md d-block mb-5 mt-5"
+        class="col-md d-block mb-4 mt-5"
         v-for="item in products"
         :key="item.pid"
-      >
+        s>
+        <router-link :to="{ name: 'product', params: { id: item.pid }}">
         <ProductCard :prod="item" />
+        </router-link>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-md d-block mb-5 mt-5">
-        <button class="load-more">Load more</button>
+        <button class="load-more" v-on:click="loadNext">Load more</button>
       </div>
     </div>
   </main>
@@ -34,12 +36,25 @@ export default {
   data() {
     return {
       products: [],
+      page: 0
     };
   },
   components: {
     ProductCard,
   },
-  mounted() {
+  methods: {
+    loadNext() {
+      this.page += 1;
+      const url = BACKEND_URL + "/products?limit=20&page=" + this.page;
+      console.log(url);
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => this.products.push(...data))
+        .catch((err) => console.log(err.message));
+      console.log(this.products.length);
+    }
+  },
+  beforeCreate() {
     fetch(BACKEND_URL + "/search?t=" + this.query)
       .then((res) => res.json())
       .then((data) => (this.products = data))
