@@ -5,7 +5,7 @@
       <div class="col-lg-4">
         <div class="row">
           <img
-            src="https://www.maxima.lt/uploads/sale/2022/sales_page/07/04//malta-kava-lavazza-9768.png"
+            :src="products.productIconUrl"
             alt=""
             style="max-height: 250px; max-width: 250px;"
           />
@@ -15,14 +15,13 @@
         class="col-lg-8">
         <div class="row"><h2 style="color: black;">{{ products.name }}</h2></div> 
         <div class="row">
-          <p>Įtraukti į mėgstamiausių sarašą</p>
+          <h3>Kainos nuo  <span style="color: #2F79C6">{{ products.shops[0].priceHistory[0] }}€</span></h3>
         </div>
       </div>
     </div>
     <div  style="float: left; width: 100%;">
     <ProductViewCards :prod="item"/>
     </div>
-      
   </main>
 </template>
 
@@ -43,12 +42,11 @@ export default {
   components: {
     ProductViewCards
   },
-  mounted() {
+  created() {
     fetch(BACKEND_URL + "/product/" + this.$route.params.id)
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));
-    console.log(this.$route.params.id);
   },
 };
 
