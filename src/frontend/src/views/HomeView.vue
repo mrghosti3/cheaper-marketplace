@@ -28,8 +28,10 @@
         class="col-md d-block mb-4 mt-5"
         v-for="item in products"
         :key="item.pid"
-      >
+        s>
+        <router-link :to="{ name: 'product', params: { id: item.pid }}">
         <ProductCard :prod="item" />
+        </router-link>
       </div>
     </div>
     <div class="row justify-content-center">

@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="col-lg-8">
-        <div class="row"><h3>Pavadinimas</h3></div>
+        <div class="row"><h3>{{ products }}</h3></div>
         <div class="row"><h4>Kaina</h4></div>
         <div class="row">
           <p>Įtraukti į mėgstamiausių sarašą</p>
@@ -31,11 +31,22 @@
 
 <script>
 import ProductViewCards from "@/components/ProductViewCards.vue";
+import { BACKEND_URL } from "../constants";
+
 export default {
+  props: {
+    products: []
+  },
   components: {
     ProductViewCards
-  }
-  // props: ["popProd"],
+  },
+  mounted() {
+    fetch(BACKEND_URL + "/product/" + this.$route.params.id)
+      .then((res) => res.json())
+      .then((data) => (this.products = data))
+      .catch((err) => console.log(err.message));
+    console.log(this.$route.params.id);
+  },
 };
 
 </script>

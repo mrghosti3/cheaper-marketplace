@@ -5,8 +5,6 @@
 
 body {
   background: #f4f4f4 !important;
-  width: 100%;
-  margin: 0;
 }
 
 .searchbar {
@@ -189,6 +187,145 @@ nav .navbar-toggler-icon {
   text-align: center;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.shop-logo {
+  max-height: 100px;
+  max-width: 100px;
+  border-radius: 2px;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.carder {
+  width: 600px;
+  height: 70px;
+  background-color: #fff;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  margin: 0.75rem;
+}
+
+.carder h2, h5 {
+  text-align: center;
+  color:#f4f4f4;
+  margin-top: 0.25rem;
+}
+
+.carder .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(#2F79C6, #2F79C6);
+  transition: 0.6s;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.carder:hover .additional {
+  width: 100%;
+  border-radius: 0 5px 5px 0;
+}
+
+.carder .additional .user-card {
+  width: 150px;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+
+.carder .additional .user-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10%;
+  right: -2px;
+  height: 80%;
+  border-left: 2px solid rgba(0,0,0,0.025);
+}
+
+.carder .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+}
+
+.carder .additional .more-info h1 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+
+.carder .additional .coords {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
+
+.carder .additional .coords span + span {
+  float: right;
+}
+
+.carder .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+.carder .additional .stats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.carder .additional .stats i {
+  display: block;
+}
+
+.carder .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.carder .additional .stats div.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.carder .additional .stats div.value.infinity {
+  font-size: 2.5rem;
+}
+
+
+.carder .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
 }
 
 #popup-dialog {

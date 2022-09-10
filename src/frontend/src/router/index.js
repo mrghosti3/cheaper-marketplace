@@ -21,6 +21,7 @@ export default createRouter({
       name: 'product',
       path: '/product/:id',
       component: ProductView,
+      props: true
     },
   ],
 });
