@@ -17,8 +17,36 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="prices" role="tabpanel" aria-labelledby="prices-tab">
-          <div style="margin-top: 1rem;">
-            <CardList />
+          <div style="margin-top: 1rem;"   v-for="item in products.shops"
+        :key="item.sid">
+            <!-- <CardList :prod="item"/> -->
+            <a href="https://www.rimi.lt/">
+    <div class="center-screen">
+        <div class="carder">
+            <div class="additional">
+                <div class="user-card">
+                    <svg width="100" height="100" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" role="img"
+                        aria-labelledby="title desc" class="center">
+                    </svg>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Rimi_logo.png" alt=""
+                        class="center shop-logo">
+                </div>
+                <img src="../assets/img/click.png" alt=""
+                    style="max-width: 50px; max-height:50px; float: right; margin-top: 0.75rem; margin-right: 1rem;">
+                <h5 class="" style="margin-top: 1.25rem;">Į parduotuvę</h5>
+            </div>
+            
+            <div class="general">
+                <div class="center" style="margin-left: 5rem; margin-bottom: 1rem;">
+                    <h5 style="color: black; margin-top: 1rem;">{{ item.name }}</h5>
+                    <h6 style="margin-top: -0.5rem">{{ item.priceHistory[0] }}€</h6>
+                    <p style="font-size: 12px;">Kaina atnaujinta: {{ item.scanHistory[0] }}</p>
+                </div>
+                </div>
+        </div>
+        
+    </div>
+</a>
           </div>
         </div>
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
@@ -35,11 +63,23 @@
 
 <script>
 import CardList from './CardList.vue';
+import { BACKEND_URL } from "../constants";
 
 export default {
-    components: {
+  data() {
+    return {
+      products: []
+    };
+  },
+  components: {
     CardList
-
-}
+  },
+  mounted() {
+    fetch(BACKEND_URL + "/product/" + this.$route.params.id)
+      .then((res) => res.json())
+      .then((data) => (this.products = data))
+      .catch((err) => console.log(err.message));
+    console.log(this.$route.params.id);
+  },
 };
 </script>

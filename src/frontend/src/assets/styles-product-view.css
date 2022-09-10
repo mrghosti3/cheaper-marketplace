@@ -1,0 +1,84 @@
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .searchbar {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    #wrapper {
+      width: 100vw !important;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    #popup-dialog {
+      max-width: 90% !important;
+    }
+    .searchbar {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    #wrapper {
+      width: 100vw !important;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    #popup-dialog {
+      max-width: 90% !important;
+    }
+    #wrapper {
+      width: 100vw !important;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+    .searchbar {
+      width: 80%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    #popup-dialog {
+      max-width: 90% !important;
+    }
+    #wrapper {
+      width: 80vw !important;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+    .searchbar {
+      width: 60%;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+  
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    #popup-dialog {
+      max-width: 70% !important;
+    }
+    #wrapper {
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      width: 80vw !important;
+    }
+  }
+  /*# sourceMappingURL=styles.css.map */

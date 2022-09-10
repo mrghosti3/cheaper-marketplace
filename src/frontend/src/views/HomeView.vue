@@ -76,7 +76,7 @@ export default {
   methods: {
     loadNext() {
       this.page += 1;
-      const url = BACKEND_URL + "/product?limit=20&page=" + this.page;
+      const url = BACKEND_URL + "/products?limit=20&page=" + this.page;
       console.log(url);
       fetch(url)
         .then((res) => res.json())
@@ -86,7 +86,7 @@ export default {
     }
   },
   mounted() {
-    fetch(BACKEND_URL + "/product?limit=20")
+    fetch(BACKEND_URL + "/products?limit=20")
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));

@@ -1,5 +1,6 @@
 <template>
   <main>
+    <span>{{ products }}</span>
     <div class="row justify-content-start prodview-main"  style="margin: 3rem;">
       <div class="col-lg-4">
         <div class="row">
@@ -10,16 +11,16 @@
           />
         </div>
       </div>
-      <div class="col-lg-8">
-        <div class="row"><h3>{{ products }}</h3></div>
-        <div class="row"><h4>Kaina</h4></div>
+      <div
+        class="col-lg-8">
+        <div class="row"><h2 style="color: black;">{{ products.name }}</h2></div> 
         <div class="row">
           <p>Įtraukti į mėgstamiausių sarašą</p>
         </div>
       </div>
     </div>
-    <div style="float: left; width: 100%;">
-    <ProductViewCards />
+    <div  style="float: left; width: 100%;">
+    <ProductViewCards :prod="item"/>
     </div>
       
   </main>
@@ -34,8 +35,10 @@ import ProductViewCards from "@/components/ProductViewCards.vue";
 import { BACKEND_URL } from "../constants";
 
 export default {
-  props: {
-    products: []
+  data() {
+    return {
+      products: []
+    };
   },
   components: {
     ProductViewCards
