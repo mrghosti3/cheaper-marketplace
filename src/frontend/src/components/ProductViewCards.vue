@@ -71,19 +71,18 @@
                     />
                     <h5 class="" style="margin-top: 1.25rem">Į parduotuvę</h5>
                   </div>
-                  <div class="general">
+                  <div>
                     <div
-                      class="center"
-                      style="margin-left: 5rem; margin-bottom: 1rem"
+                      style="margin-left: 10rem; margin-bottom: 1rem;"
                     >
-                      <h5 style="color: black; margin-top: 1rem">
+                      <h6>
                         {{ item.name }}
-                      </h5>
+                      </h6>
 
-                      <h6 style="margin-top: -0.5rem">
+                      <h6>
                         {{ item.priceHistory[0] }}€
                       </h6>
-                      <p style="font-size: 12px">
+                      <p>
                         Kaina atnaujinta: {{ item.scanHistory[0] }}
                       </p>
                     </div>

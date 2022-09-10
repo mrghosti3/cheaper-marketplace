@@ -86,6 +86,7 @@ nav .navbar-toggler-icon {
   padding-right: 10px;
   min-width: 200px !important;
   max-width: 200px !important;
+  min-height: 300px;
   height: auto;
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -224,7 +225,6 @@ nav .navbar-toggler-icon {
 .carder h2, h5 {
   text-align: center;
   color:#f4f4f4;
-  margin-top: 0.25rem;
 }
 
 .carder .additional {
@@ -269,7 +269,6 @@ nav .navbar-toggler-icon {
 
 .carder .additional .more-info h1 {
   color: #fff;
-  margin-bottom: 0;
 }
 
 
@@ -304,28 +303,8 @@ nav .navbar-toggler-icon {
   display: block;
 }
 
-.carder .additional .stats div.title {
-  font-size: 0.75rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.carder .additional .stats div.value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1.5rem;
-}
-
-.carder .additional .stats div.value.infinity {
-  font-size: 2.5rem;
-}
-
-
 .carder .general .more {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  font-size: 0.9em;
 }
 
 #popup-dialog {
@@ -490,12 +469,15 @@ nav .navbar-toggler-icon {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  #wrapper {
-    width: 100vw !important;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+
+  p {
+    font-size: 6px;
   }
+
+  h6 {
+    font-size: 9px;  
+  }
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -508,12 +490,7 @@ nav .navbar-toggler-icon {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  #wrapper {
-    width: 100vw !important;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -521,12 +498,7 @@ nav .navbar-toggler-icon {
   #popup-dialog {
     max-width: 90% !important;
   }
-  #wrapper {
-    width: 100vw !important;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
+
   .searchbar {
     width: 80%;
     margin-top: 10px;
@@ -539,12 +511,7 @@ nav .navbar-toggler-icon {
   #popup-dialog {
     max-width: 90% !important;
   }
-  #wrapper {
-    width: 80vw !important;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
+
   .searchbar {
     width: 60%;
     margin-top: 0px;
@@ -557,11 +524,6 @@ nav .navbar-toggler-icon {
   #popup-dialog {
     max-width: 70% !important;
   }
-  #wrapper {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    width: 80vw !important;
-  }
+
 }
 /*# sourceMappingURL=styles.css.map */

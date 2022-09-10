@@ -365,10 +365,6 @@ nav {
         margin-bottom: 10px;
     }
 
-    #wrapper {
-        width: 100vw !important;
-        justify-content: center;
-    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -383,21 +379,12 @@ nav {
         margin-bottom: 10px;
     }
 
-    #wrapper {
-        width: 100vw !important;
-        justify-content: center;
-    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
     #popup-dialog {
         max-width: 90% !important;
-    }
-
-    #wrapper {
-        width: 100vw !important;
-        justify-content: center;
     }
 
     .searchbar {
@@ -413,11 +400,6 @@ nav {
         max-width: 90% !important;
     }
 
-    #wrapper {
-        width: 80vw !important;
-        justify-content: center;
-    }
-
     .searchbar {
         width: 60%;
         margin-top: 0px;
@@ -431,8 +413,4 @@ nav {
         max-width: 70% !important;
     }
 
-    #wrapper {
-        justify-content: center;
-        width: 80vw !important;
-    }
 }

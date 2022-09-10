@@ -2,11 +2,11 @@
   <main>
     <div class="row justify-content-start prodview-main" style="margin: 3rem">
       <div class="col-lg-4">
-        <div class="row">
+        <div class="row" >
           <img
             :src="products[0].productIconUrl"
             alt=""
-            style="max-height: 250px; max-width: 250px"
+            style="max-height: 250px; max-width: 250px;"
           />
         </div>
       </div>
@@ -15,14 +15,14 @@
           <h2 style="color: black">{{ products[0].name }}</h2>
         </div>
         <div class="row">
-          <h3>
+          <h4>
             Kainos nuo
             <span style="color: #2f79c6">{{ products[0].shops[0].priceHistory[0] }}€</span>
-          </h3>
+          </h4>
         </div>
       </div>
     </div>
-    <div style="float: left; width: 100%">
+    <div>
       <ProductViewCards :prod="products[0]" />
     </div>
   </main>

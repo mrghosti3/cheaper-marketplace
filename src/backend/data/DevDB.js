@@ -61,11 +61,11 @@ export default class DevDB extends DataInterface {
         },
         {
             pid: 2,
-            name: "Kava Lavazza 1kg",
+            name: "Ekologiškas kefyras, 2.5% rieb., 900 g",
             productIconUrl: productIconUrls[1],
             shops: [
                 {
-                    name: "Kava Lavazza 500g",
+                    name: "Ekologiškas kefyras, 2.5% rieb., 900 g",
                     productUrl: productUrls[1],
                     shopIconUrl: shopIconUrls[0],
                     priceHistory: [2.99, 1.88, 1.47],
