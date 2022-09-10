@@ -53,8 +53,6 @@ export default class RemoteDB extends DataInterface {
 
         try {
             let products = await this._models.product_relations.findAll(qOpt);
-            console.log(products)
-            console.log(query + ' | type: ' + typeof(query))
             for (const i in products) 
                 products[i].shops = JSON.parse(products[i].shops)
             
