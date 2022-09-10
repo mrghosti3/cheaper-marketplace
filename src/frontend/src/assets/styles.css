@@ -412,6 +412,11 @@ nav .navbar-toggler-icon {
   color: #101010;
 }
 
+.strong-span {
+  font-weight: 600 !important; 
+  font-size: 1rem;
+}
+
 #popup-dialog #popup-content #popup-body .other-products .popup-store-btn {
   margin-top: 1rem;
   -ms-flex-item-align: center;
@@ -474,8 +479,9 @@ nav .navbar-toggler-icon {
     font-size: 6px;
   }
 
-  h6 {
-    font-size: 9px;  
+  .strong-span {
+    font-weight: 600;
+    font-size: 0.75rem;  
   }
 
 }

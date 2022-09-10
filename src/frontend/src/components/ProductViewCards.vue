@@ -75,14 +75,16 @@
                     <div
                       style="margin-left: 10rem; margin-bottom: 1rem;"
                     >
-                      <h6>
+                      <span v-show="item.name.length > 36" class="strong-span">{{ item.name.substring(0,36)+"..." }}</span>
+                      <span v-show="item.name.length <= 36" class="strong-span">{{ item.name.length }}</span>
+                      <!-- <h6>
                         {{ item.name }}
-                      </h6>
+                      </h6> -->
 
                       <h6>
                         {{ item.priceHistory[0] }}€
                       </h6>
-                      <p>
+                      <p style="font-size: 0.8rem">
                         Kaina atnaujinta: {{ item.scanHistory[0] }}
                       </p>
                     </div>
