@@ -100,7 +100,9 @@
           role="tabpanel"
           aria-labelledby="history-tab"
         >
-          History
+
+         <line-chart :data="data"></line-chart>
+
         </div>
       </div>
     </div>
@@ -114,5 +116,22 @@
 <script>
 export default {
   props: ["prod"],
+  data() {
+    return {
+      data: null
+    }
+  },
+  created() {
+    this.chartHistory()
+  },
+  methods: {
+    chartHistory(){
+      const res = {};
+      const list = this.prod;
+      list.shops.forEach(d => d.scanHistory.forEach((s, i) => res[s] = d.priceHistory[i]));
+      this.data = res;
+      console.log(this.data);
+    }
+  }
 };
 </script>

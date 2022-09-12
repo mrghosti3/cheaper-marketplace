@@ -2,7 +2,7 @@
   <main>
     <div class="row justify-content-start prodview-main" style="margin: 3rem">
       <div class="col-lg-4">
-        <div class="row" >
+        <div class="row">
           <img
             :src="products[0].productIconUrl"
             alt=""
@@ -17,7 +17,7 @@
         <div class="row">
           <h4>
             Kainos nuo
-            <span style="color: #2f79c6">{{ products[0].shops[0].priceHistory[0] }}€</span>
+            <span style="color: #2f79c6">{{ products.shops[0].priceHistory[0] }}€</span>
           </h4>
         </div>
       </div>

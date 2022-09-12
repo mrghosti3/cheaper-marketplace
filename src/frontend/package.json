@@ -8,7 +8,10 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@coreui/vue-chartjs": "^2.0.1",
+    "chart.js": "^3.9.1",
     "vue": "^3.2.33",
+    "vue-chartkick": "^1.1.0",
     "vue-router": "^4.0.14",
     "vuex": "^4.0.2"
   },

@@ -68,14 +68,14 @@ export default class DevDB extends DataInterface {
                     name: "Ekologiškas kefyras, 2.5% rieb., 900 g",
                     productUrl: productUrls[1],
                     shopIconUrl: shopIconUrls[0],
-                    priceHistory: [2.99, 1.88, 1.47],
+                    priceHistory: [2.99, 1.99, 1.99],
                     scanHistory: ["2022-04-07", "2022-04-06", "2022-04-01"]
                 },
                 {
                     name: "Kava Lavazza 1kg",
                     productUrl: productUrls[1],
                     shopIconUrl: shopIconUrls[1],
-                    priceHistory: [3.99, 2.88, 2.47],
+                    priceHistory: [3.99, 2.99, 2.99],
                     scanHistory: ["2022-04-07", "2022-04-06", "2022-04-01"]
                 },
             ]
