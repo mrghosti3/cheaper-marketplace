@@ -12,11 +12,10 @@
       <span v-show="prod.name.length <= 36">{{ prod.name }}</span>
     </div>
     <div class="prod-price">
-      <span v-show="prod.shops[0].priceHistory[1] != null" class="prod-old-price"> {{ prod.shops[0].priceHistory[1] }}€</span>
-      <span class="prod-current-price">{{ prod.shops[0].priceHistory[0] }}€</span>
+      <span class="prod-current-price">{{ prod.shops[0].priceHistory[prod.shops[0].priceHistory.length-1] }}€</span>
     </div>
     <div class="price-date">
-      <span>{{ prod.shops[0].scanHistory[0].substring(0,10) }}</span>
+      <span>{{ prod.shops[0].scanHistory[prod.shops[0].scanHistory.length-1].substring(0,10) }}</span>
     </div>
   </div>
 </template>

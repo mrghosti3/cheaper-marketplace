@@ -26,7 +26,7 @@ CREATE TABLE cheaper.scan (
 );
 
 CREATE TABLE cheaper.product_relations (
-    pid             INT UNSIGNED,
+    pid             INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name            VARCHAR(512) NOT NULL,
     image_url       VARCHAR(1024) NOT NULL DEFAULT 'http://www.domain.lt/product_image_path',
     shops           JSON

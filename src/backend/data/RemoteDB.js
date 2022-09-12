@@ -97,7 +97,6 @@ export default class RemoteDB extends DataInterface {
             };
             let products = await this._models.product_relations.findAll(qOpt);
             products[0].shops = JSON.parse(products[0].shops) 
-
             return products;
             
         } catch (err) {

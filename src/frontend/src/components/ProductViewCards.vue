@@ -76,7 +76,7 @@
                       style="margin-left: 10rem; margin-bottom: 1rem;"
                     >
                       <span v-show="item.name.length > 36" class="strong-span">{{ item.name.substring(0,36)+"..." }}</span>
-                      <span v-show="item.name.length <= 36" class="strong-span">{{ item.name.length }}</span>
+                      <span v-show="item.name.length <= 36" class="strong-span">{{ item.name }}</span>
                       <!-- <h6>
                         {{ item.name }}
                       </h6> -->
@@ -85,7 +85,7 @@
                         {{ item.priceHistory[0] }}€
                       </h6>
                       <p style="font-size: 0.8rem">
-                        Kaina atnaujinta: {{ item.scanHistory[0] }}
+                        Kaina atnaujinta: {{ item.scanHistory[item.scanHistory.length-1] }}
                       </p>
                     </div>
                   </div>
@@ -130,7 +130,6 @@ export default {
       const list = this.prod;
       list.shops.forEach(d => d.scanHistory.forEach((s, i) => res[s] = d.priceHistory[i]));
       this.data = res;
-      console.log(this.data);
     }
   }
 };

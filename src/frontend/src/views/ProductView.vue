@@ -17,7 +17,7 @@
         <div class="row">
           <h4>
             Kainos nuo
-            <span style="color: #2f79c6">{{ products.shops[0].priceHistory[0] }}€</span>
+            <span style="color: #2f79c6">{{ products[0].shops[0].priceHistory[products[0].shops[0].priceHistory.length-1] }}€</span>
           </h4>
         </div>
       </div>
